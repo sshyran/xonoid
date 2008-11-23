@@ -1,0 +1,13 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+
+<div id="submenu">
+  <ul>
+    <li class="add"><a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'add'), '', true); ?>"><?php echo $tr->_("Add ticket");?></a></li> 
+  </ul>
+</div>
+
+<h2>Ticket list</h2>
+
+<?php echo $this->grid; ?>

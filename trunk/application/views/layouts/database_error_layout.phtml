@@ -1,0 +1,14 @@
+<?php
+echo "\x3c?xml version=\"1.0\" encoding=\"UTF-8\"?\x3e\n";
+echo $this->doctype() . "\n";
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>XoNoiD CRM</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <?php echo $this->headLink()->appendStylesheet($this->baseUrl() . '/css/'); ?> 
+</head>
+<body>
+  <?php echo $this->layout()->content; ?>
+</body>
+</html>
