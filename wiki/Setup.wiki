@@ -19,7 +19,7 @@ Example for Ubuntu:
 = Add MySQL Database =
   * Add MySQL Database
 
-= Configure XeNoiD =
+= Configure XoNoiD =
   * Modify `config.ini` with database settings
   * Generate string at _least 64 characters_ long as *salt* (a-z, A-Z, 0-9)
 
