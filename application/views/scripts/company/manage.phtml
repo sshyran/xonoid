@@ -1,0 +1,19 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+
+<div id="submenu">
+  <ul>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'index'), '', true); ?>"><?php echo $tr->_("Back");?></a></li>
+    <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add-branch-office', 'companyid' => $this->companyid), '', true); ?>"><?php echo $tr->_("Add branch office");?></a></li> 
+  </ul>
+</div>
+
+<br />
+<br />
+<?php echo $this->companyname;?>
+<br />
+
+<h2>Company offices</h2>
+
+<?php echo $this->grid;?>

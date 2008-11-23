@@ -1,0 +1,35 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+
+echo "\x3c?xml version=\"1.0\" encoding=\"UTF-8\"?\x3e\n";
+echo $this->doctype() . "\n";
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <link rel="icon" type="image/png" href="<?php echo $this->baseUrl();?>/images/favicon.png" />
+  <title>XoNoiD CRM</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <?php echo $this->headLink()->appendStylesheet($this->baseUrl() . '/css/'); ?> 
+</head>
+<body>
+  <h1 style="position:absolute;float:left; right:2em;top:0.1em;">XoNoiD CRM</h1>
+
+  <div id="menu">
+    <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index'), '', true); ?>"><img src="<?php echo $this->baseUrl();?>/images/icons/frontpage.png" alt="" border="0" /></a>
+    <a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'index'), '', true); ?>"><img src="<?php echo $this->baseUrl();?>/images/icons/customers.png" alt="" border="0" /></a>
+    <a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'index'), '', true); ?>"><img src="<?php echo $this->baseUrl();?>/images/icons/tickets.png" alt="" border="0" /></a>
+    <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout'), '', true); ?>"><img src="<?php echo $this->baseUrl();?>/images/icons/logout.png" alt="" border="0" /></a>
+  </div>
+
+  <hr />
+
+  <div id="content">
+    <?php echo $this->layout()->content; ?>
+  </div>
+
+  <br />
+  
+  <a href="http://framework.zend.com/"><img src="<?php echo $this->baseUrl();?>/images/misc/PoweredBy_ZF_4DarkBG.png" alt="" border="0" /></a>
+
+</body>
+</html>
