@@ -40,8 +40,17 @@ INSERT INTO `PORT_TYPES` (`name`) VALUES('ATM 155M');
 INSERT INTO `PORT_TYPES` (`name`) VALUES('Fiber 1000M');
 }}}
 
+Add first user so you can log in:
+
 {{{
-INSERT INTO `USERS` (`companyid`, `firstname`, `lastname`, `email`, `phone`, `password`) VALUES(NULL, 'My', 'Name', 'my.email@address-here.com', '1234567', MD5(CONCAT('insert your salt here from config.ini', 'password you want here')));
+INSERT INTO 
+  `USERS` (`companyid`, `firstname`, `lastname`, `email`, `phone`, `password`)
+VALUES
+  (
+    NULL, 'My', 'Name', 'my.email@address-here.com', '1234567', 
+    MD5(CONCAT('insert your salt here from config.ini', 'password you want here')
+  )
+);
 }}}
 
 Now you can login and add companies etc.
