@@ -36,6 +36,29 @@ class Users extends Zend_Db_Table_Abstract
 
     return $list;
   }
+  
+  public function emailExists($email)
+  {
+    $select = $this->select();
+    $select->from($this, array('c' => 'COUNT(id)'));
+    $select->where('email=?', $email);
+
+    $result = $this->fetchAll($select)->toArray();
+
+    return (bool) ((int)$result[0]['c'] == 1 ? true : false);
+  }
+  
+  public function emailToID($email)
+  {
+    $select = $this->select();
+    $select->from($this, array('id'));
+    $select->where('email=?', $email);
+
+    $result = $this->fetchAll($select)->toArray();
+
+    return (int)$result[0]['id'];
+  }
+  
 
 } // /class
 

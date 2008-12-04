@@ -85,7 +85,7 @@ class IndexController extends Zend_Controller_Action
     $submit = new Zend_Form_Element_Submit('submit');
     $submit->setLabel($this->tr->_('Log in'));
 
-    $email = new Zend_Form_Element_Text('username');
+    $email = new Zend_Form_Element_Text('email');
     $email->setRequired(true);
     $email->setLabel($this->tr->_('E-Mail'));
     $email->addFilter('StringTrim');
@@ -116,7 +116,7 @@ class IndexController extends Zend_Controller_Action
 
         $pw = md5($config->salt . $values['password']);
 
-        $authAdapter->setIdentity($values['username']);
+        $authAdapter->setIdentity($values['email']);
         $authAdapter->setCredential($pw);
 
         $result = $this->_auth->authenticate($authAdapter);
@@ -134,26 +134,94 @@ class IndexController extends Zend_Controller_Action
         }
         else
         {
-          switch ($result->getCode())
-          {
-            case Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND:
-              $this->view->message = $this->tr->_('User or password is wrong');
-            break;
+          $form->getElement('email')->markAsError();
+          $err = $this->tr->_("Check email address");
+          $form->getElement('email')->addError($err);
 
-            case Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID:
-              $this->view->message = $this->tr->_('User or password is wrong');
-            break;
+          $form->getElement('password')->markAsError();
+          $err = $this->tr->_("Check password");
+          $form->getElement('password')->addError($err);
 
-            default:
-              $this->view->message = $this->tr->_('Authentication Error');
-            break;
-          }
         }
+
       }
+
     }
 
     $this->view->form = $form;
     
   }
+  
+  public function resetPasswordAction()
+  {
 
-}
+    $config = new Zend_Config_Ini(dirname(__FILE__) . '/../../config.ini', array('database', 'contact'));
+    $users = new Users();
+    
+    $form = new crmForm();
+    $form->setMethod(Zend_Form::METHOD_POST);
+    $form->setAction($this->_request->getBaseUrl() . '/index/reset-password');
+
+    $submit = new Zend_Form_Element_Submit('submit');
+    $submit->setLabel($this->tr->_('Reset password'));
+
+    $email = new Zend_Form_Element_Text('email');
+    $email->setRequired(true);
+    $email->setLabel($this->tr->_('E-Mail'));
+    $email->addFilter('StringTrim');
+    $email->addFilter('StringToLower');
+    $email->addValidator('StringLength', false, array(7));
+    $email->addValidator('EmailAddress');
+
+    $form->addElement($email);
+    $form->addElement($submit);
+    
+    // Form POSTed
+    if ($this->getRequest()->isPost())
+    {
+      if ($form->isValid($_POST))
+      {
+        $values = $form->getValues();
+        $email = $values['email'];
+        $exists = $users->emailExists($email);
+        
+        if($exists)
+        {
+          // Get user ID
+          $user_id = $users->emailToID($email);
+        
+          // Generate new password
+          $new_password = uniqid(md5(mt_rand()), true);
+
+          // Translate it to SQL format: md5 checksum (salt + new password)
+          $pw = md5($config->salt . $new_password);
+          
+          $users->update(array('password' => $pw), $users->getAdapter()->quoteInto('id = ?', $user_id));
+
+          $body = sprintf($this->tr->_("Your password has been reseted.\nNew password: %s\n\n-- \nXoNoiD"), $new_password);
+        
+          $mail = new Zend_Mail('UTF-8');
+          $mail->setBodyText($body);
+          $mail->setFrom($config->sender, 'XoNoiD');
+          $mail->addTo($email, $email);
+          $mail->setSubject($this->tr->_('[XoNoiD] Reset password'));
+          $mail->send();
+          
+          // Redirect to index page
+          return $this->_helper->redirector('index');
+        }
+        else
+        {
+          $form->getElement('email')->markAsError();
+          $err = $this->tr->_("Check email address");
+          $form->getElement('email')->addError($err);
+        }
+
+      }
+    }
+
+    $this->view->form = $form;
+
+  }
+
+} // /class

@@ -1,0 +1,25 @@
+; Settings
+
+; email settings
+[contact]
+; email address used for sending emails
+; reset password etc
+sender = xonoid@example.com
+
+; database settings
+[database]
+; salt against database rainbow attacks
+salt     = generate-random-salt-here
+
+; Host of database
+; IP or address
+host     = localhost
+
+; Username for database
+username = xonoid
+
+; Password for database
+password = crm123
+
+; Database name
+dbname   = crm
