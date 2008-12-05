@@ -21,7 +21,7 @@ class Users extends Zend_Db_Table_Abstract
   public function getUserList()
   {
     $select = $this->select();
-    $select->from($this, array('id','firstname', 'lastname'));
+    $select->from($this, array('id','firstname', 'lastname', 'email', 'phone'));
     $select->order(array('lastname', 'firstname', 'id'));
 
     return $this->fetchAll($select)->toArray();
@@ -174,6 +174,19 @@ class Companies extends Zend_Db_Table_Abstract
     $res = $this->fetchAll($select)->toArray();
 
     return $res[0];
+  }
+
+  public function addressExists($streetaddress, $postnumber, $postoffice)
+  {
+    $select = $this->select();
+    $select->from($this, array('c' => 'COUNT(id)'));
+    $select->where('streetaddress=?', $streetaddress);
+    $select->where('postnumber=?', $postnumber);
+    $select->where('postoffice=?', $postoffice);
+
+    $result = $this->fetchAll($select)->toArray();
+
+    return (bool) ((int)$result[0]['c'] > 0 ? true : false);
   }
 
 } // /class

@@ -1,0 +1,12 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+<div id="submenu">
+  <ul>
+    <li class="add"><a href="<?php echo $this->url(array('controller' => 'user', 'action' => 'add'), '', true); ?>"><?php echo $tr->_("Add new user");?></a></li>
+  </ul>
+</div>
+
+
+<h2>User list</h2>
+<?php echo $this->grid;?>

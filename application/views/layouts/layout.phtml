@@ -13,10 +13,11 @@ echo $this->doctype() . "\n";
   <?php echo $this->headLink()->appendStylesheet($this->baseUrl() . '/css/'); ?> 
 </head>
 <body>
-  <h1 style="position:absolute;float:left; right:2em;top:0.1em;">XoNoiD CRM</h1>
+  <h1 style="position: absolute; float:left; right:1em; top:0.2em; color: #222;">XoNoiD CRM</h1>
 
   <div id="menu">
     <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index'), '', true); ?>"><img src="<?php echo $this->baseUrl();?>/images/icons/frontpage.png" alt="" border="0" /></a>
+    <a href="<?php echo $this->url(array('controller' => 'user', 'action' => 'index'), '', true); ?>"><img src="<?php echo $this->baseUrl();?>/images/icons/users.png" alt="" border="0" /></a>
     <a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'index'), '', true); ?>"><img src="<?php echo $this->baseUrl();?>/images/icons/customers.png" alt="" border="0" /></a>
     <a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'index'), '', true); ?>"><img src="<?php echo $this->baseUrl();?>/images/icons/tickets.png" alt="" border="0" /></a>
     <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout'), '', true); ?>"><img src="<?php echo $this->baseUrl();?>/images/icons/logout.png" alt="" border="0" /></a>
@@ -30,6 +31,9 @@ echo $this->doctype() . "\n";
 
   <br />
   
+  <hr />
+  <br />
+<div id="footer">
   <a href="http://framework.zend.com/"><img src="<?php echo $this->baseUrl();?>/images/misc/PoweredBy_ZF_4DarkBG.png" alt="" border="0" /></a><br />
 
 <small>
@@ -39,9 +43,9 @@ $profiler = $db->getProfiler();
 $totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 
-echo sprintf("Executed %s queries in %s seconds", $queryCount, $totalTime);
+echo sprintf("Executed %s SQL queries in %s seconds", $queryCount, round($totalTime,3));
 ?>
 </small>
-
+</div>
 </body>
 </html>

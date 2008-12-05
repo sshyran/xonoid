@@ -75,6 +75,18 @@ class CompanyController extends Zend_Controller_Action
       )
     ));
 
+    $grid->addColumn('remove', array(
+      'header' => 'Remove',
+      'sortable' => false,
+      'type' => 'action',
+      'actions' => array(
+        'url' => $this->view->baseUrl() . '/company/remove/id/$id/',
+        'class' => 'icon',
+        'caption' => 'Remove',
+        'image' => $this->view->baseUrl() . '/images/icons/remove.png'
+      )
+    ));
+
     $this->view->grid = $grid;
   }
 
@@ -164,45 +176,68 @@ class CompanyController extends Zend_Controller_Action
       {
         $values = $form->getValues();
         
-        if ($add_to_parent)
-        {
-          $resellerid = $parentcompanyid;
+        $exists = $branches->addressExists($values['streetaddress'], $values['postnumber'], $values['postoffice']);
+  
+        if(!$exists)
+        {      
+          if ($add_to_parent)
+          {
+            $resellerid = $parentcompanyid;
+          }
+          else
+          {
+            $resellerid = new Zend_Db_Expr('NULL');
+          }
+          
+          if ($add_to_parent && !$is_root_company)
+          {
+            // multilevel hierarcy is invalid
+            throw new Zend_Exception("No rights.");
+          }
+          
+          $insert = array(
+            'name' => $values['name'],
+            'contactid' => $values['contactid'],
+            'streetaddress' => $values['streetaddress'],
+            'postnumber' => $values['postnumber'],
+            'postoffice' => $values['postoffice'],
+            'resellerid' => $resellerid
+          );
+          
+          $this->_db->beginTransaction();
+  
+          try
+          {
+            $companies->insert($insert);
+  
+            $this->_db->commit();
+  
+            if ($add_to_parent)
+            {
+              return $this->_helper->redirector->gotoUrl("/company/manage/id/$resellerid");
+            }
+            else
+            {
+              return $this->_helper->redirector->gotoUrl("/company");
+            }
+            
+  
+          }
+          catch (Exception $e)
+          {
+            $this->_db->rollBack();
+            var_dump($e);
+          }
         }
         else
         {
-          $resellerid = new Zend_Db_Expr('NULL');
-        }
-        
-        if ($add_to_parent && !$is_root_company)
-        {
-          // multilevel hierarcy is invalid
-          throw new Zend_Exception("No rights.");
-        }
-        
-        $insert = array(
-          'name' => $values['name'],
-          'contactid' => $values['contactid'],
-          'streetaddress' => $values['streetaddress'],
-          'postnumber' => $values['postnumber'],
-          'postoffice' => $values['postoffice'],
-          'resellerid' => $resellerid
-        );
-        
-        $this->_db->beginTransaction();
-
-        try
-        {
-          $companies->insert($insert);
-
-          $this->_db->commit();
-
-          return $this->_helper->redirector->gotoUrl("/company");
-
-        }
-        catch (Exception $e)
-        {
-          $this->_db->rollBack();
-          var_dump($e);
+          $err = $this->tr->_("Given address exists already");
+          $form->getElement('streetaddress')->markAsError();
+          $form->getElement('streetaddress')->addError($err);
+          $form->getElement('postnumber')->markAsError();
+          $form->getElement('postnumber')->addError($err);
+          $form->getElement('postoffice')->markAsError();
+          $form->getElement('postoffice')->addError($err);
         }
 
       }
@@ -217,8 +252,74 @@ class CompanyController extends Zend_Controller_Action
    */
   public function editAction()
   {
-    // @TODO
+    $companyid = $this->getRequest()->getParam('id', false);
+    
+    if ($companyid === false)
+    {
+      throw new Zend_Exception("Fail.");
+    }
+    
+    // TODO
   }
+
+  /**
+   * Remove company billing information
+   */
+  public function removeAction()
+  {
+    $companyid = $this->getRequest()->getParam('id', false);
+    
+    if ($companyid === false)
+    {
+      throw new Zend_Exception("Fail.");
+    }
+
+    $this->view->companyid = $companyid;
+
+    $companies = new Companies();
+    
+    $is_root_company = $companies->isRootCompany($companyid);
+    $this->view->is_root_company = $is_root_company;
+
+    $this->view->companyname = $companies->getName($companyid); 
+
+    $form = new crmForm();
+    $form->setMethod(Zend_Form::METHOD_POST);
+    $form->setAction($this->_request->getBaseUrl() . "/company/remove/id/$companyid");
+
+    $submit = new Zend_Form_Element_Submit('submit');
+    $submit->setLabel($this->tr->_('Remove company'));
+    
+    $form->addElement($submit);
+
+    // Form POSTed
+    if ($this->getRequest()->isPost())
+    {
+      if ($form->isValid($_POST))
+      {
+        $this->_db->beginTransaction();
+
+        try
+        {
+          $companies->delete($companies->getAdapter()->quoteInto('id = ?', $companyid));
+
+          $this->_db->commit();
+
+          return $this->_helper->redirector->gotoUrl("/company");
+
+        }
+        catch (Exception $e)
+        {
+          $this->_db->rollBack();
+          var_dump($e);
+        }
+       
+      }
+    }
+
+    $this->view->form = $form;
+  }
+
 
   /**
    * Manage company
@@ -584,7 +685,7 @@ class CompanyController extends Zend_Controller_Action
 
     $company = new Zend_Form_Element_Select('companyid');
     $company->setRequired(true);
-    $company->setLabel($this->tr->_('Company'));
+    $company->setLabel($this->tr->_('Responsible company'));
     $company->addMultiOptions($company_list);
 
     $name = new Zend_Form_Element_Text('name');
