@@ -1,0 +1,27 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+
+<div id="submenu">
+  <ul>
+    <?php if($this->is_root_company):?>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'index'), '', true); ?>"><?php echo $tr->_("Back");?></a></li>
+    <?php else:?>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'manage', 'id' => $this->parent_company_id), '', true); ?>"><?php echo $tr->_("Back");?></a></li>
+    <?php endif;?>
+  </ul>
+</div>
+
+<br />
+<br />
+<?php echo $this->companyname;?>
+<br />
+
+<img src="/images/icons/remove.png" alt="" />
+<h2><?php echo sprintf("Remove company %s", $this->companyname);?>:</h2>
+
+<?php echo $tr->_("Note");?>:
+<?php echo $tr->_("All data considering this company is removed.");?>
+<?php echo $tr->_("This includes reselled companies, branch offices, everything.");?>
+
+<?php echo $this->form;?>
