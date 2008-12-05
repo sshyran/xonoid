@@ -16,6 +16,9 @@ class CompanyController extends Zend_Controller_Action
    */
   protected $tr;
 
+  /**
+   * Initialize  
+   */
   public function init()
   {
     $this->_db = Zend_Registry::get('DB');
@@ -33,10 +36,13 @@ class CompanyController extends Zend_Controller_Action
     }
   }
 
+  /**
+   * Front page  
+   */
   public function indexAction()
   {
     $companies = new Companies();
-    $company_list = $companies->getCompanyList();
+    $company_list = $companies->getCompanyRootList();
 
     $grid = new Core_DataGrid(new Core_DataGrid_DataSource_Array($company_list), 100);
     $grid->setDefaultSort(array('name' => 'asc'));
@@ -46,12 +52,13 @@ class CompanyController extends Zend_Controller_Action
       'sortable' => false,
       'type' => 'action',
       'actions' => array(
-        'url' => $this->view->baseUrl() . '/company/manage/id/$id/',
-        'class' => 'icon',
-        'caption' => 'Edit',
-        'image' => $this->view->baseUrl() . '/images/icons/view.png'
+          'url' => $this->view->baseUrl() . '/company/manage/id/$id/',
+          'class' => 'icon',
+          'caption' => 'Edit',
+          'image' => $this->view->baseUrl() . '/images/icons/view.png'
+        )
       )
-    ));
+    );
 
 		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
 		$grid->addColumn('name', new Core_DataGrid_Column('name', 'Title', null , 'left'));
@@ -71,14 +78,37 @@ class CompanyController extends Zend_Controller_Action
     $this->view->grid = $grid;
   }
 
+  /**
+   * Add new company billing information  
+   */
   public function addAction()
   {
+    $companies = new Companies();
+
+    $is_root_company = false;
+
+    $parentcompanyid = $this->getRequest()->getParam('parentcompanyid', false);
+    
+    if ($parentcompanyid === false)
+    {
+      $add_to_parent = false;
+    }
+    else
+    {
+      $add_to_parent = true;
+      $is_root_company = $companies->isRootCompany($parentcompanyid);
+    }
+
+    $this->view->add_to_parent = $add_to_parent;
+    $this->view->parentcompanyid = $parentcompanyid;
+    $this->view->is_root_company = $is_root_company;
+
     $users = new Users();
     $users_list = $users->getList();
   
     $form = new crmForm();
     $form->setMethod(Zend_Form::METHOD_POST);
-    $form->setAction($this->_request->getBaseUrl() . '/company/add');
+    $form->setAction($this->_request->getBaseUrl() . $this->getHelper('url')->url(array('controller' => 'company', 'action' => 'add', 'parentcompanyid' => $parentcompanyid), '', true));
 
     $submit = new Zend_Form_Element_Submit('submit');
     $submit->setLabel($this->tr->_('Add'));
@@ -90,7 +120,7 @@ class CompanyController extends Zend_Controller_Action
 
     $name = new Zend_Form_Element_Text('name');
     $name->setRequired(true);
-    $name->setLabel($this->tr->_('Name'));
+    $name->setLabel($this->tr->_('Company name'));
     $name->addFilter('StringTrim');
     $name->addValidator('NotEmpty', true);
     $name->addValidator('StringLength', false, array(3, 100));
@@ -134,13 +164,28 @@ class CompanyController extends Zend_Controller_Action
       {
         $values = $form->getValues();
         
+        if ($add_to_parent)
+        {
+          $resellerid = $parentcompanyid;
+        }
+        else
+        {
+          $resellerid = new Zend_Db_Expr('NULL');
+        }
+        
+        if ($add_to_parent && !$is_root_company)
+        {
+          // multilevel hierarcy is invalid
+          throw new Zend_Exception("No rights.");
+        }
+        
         $insert = array(
           'name' => $values['name'],
           'contactid' => $values['contactid'],
           'streetaddress' => $values['streetaddress'],
           'postnumber' => $values['postnumber'],
           'postoffice' => $values['postoffice'],
-          'resellerid' => null
+          'resellerid' => $resellerid
         );
         
         $this->_db->beginTransaction();
@@ -167,11 +212,17 @@ class CompanyController extends Zend_Controller_Action
     
   }
   
+  /**
+   * Edit company billing information
+   */
   public function editAction()
   {
-    
+    // @TODO
   }
 
+  /**
+   * Manage company
+   */
   public function manageAction()
   {
     $companyid = $this->getRequest()->getParam('id', false);
@@ -187,6 +238,12 @@ class CompanyController extends Zend_Controller_Action
 
     $branches = new CompanyBranchOffices();
     $branches_list = $branches->getBranchesList($companyid);
+    
+    $is_root_company = $Companies->isRootCompany($companyid);
+    $this->view->is_root_company = $is_root_company;
+    
+    $parent_company_id = $Companies->getParentID($companyid);
+    $this->view->parent_company_id = $parent_company_id;
 
     $grid = new Core_DataGrid(new Core_DataGrid_DataSource_Array($branches_list), 100);
     $grid->setDefaultSort(array('name' => 'asc'));
@@ -222,9 +279,59 @@ class CompanyController extends Zend_Controller_Action
         'image' => $this->view->baseUrl() . '/images/icons/edit.png'
       )
     ));
-    $this->view->grid = $grid;
+
+    $this->view->branches = $grid;
+
+    $customer_list = $Companies->getCompanyCustomerList($companyid);
+
+    if(!empty($customer_list))
+    {
+      $grid = new Core_DataGrid(new Core_DataGrid_DataSource_Array($customer_list), 100);
+      $grid->setDefaultSort(array('name' => 'asc'));
+  
+      $grid->addColumn('manage', array(
+        'header' => 'Manage',
+        'sortable' => false,
+        'type' => 'action',
+        'actions' => array(
+          'url' => $this->view->baseUrl() . '/company/manage/id/$id/',
+          'class' => 'icon',
+          'caption' => 'Edit',
+          'image' => $this->view->baseUrl() . '/images/icons/view.png'
+        )
+      ));
+  
+  		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
+  		$grid->addColumn('name', new Core_DataGrid_Column('name', 'Title', null , 'left'));
+  
+  		$grid->addColumn('streetaddress', new Core_DataGrid_Column('streetaddress', 'Street address', null , 'left'));
+  		$grid->addColumn('postnumber', new Core_DataGrid_Column('postnumber', 'Post number', null , 'left'));
+  		$grid->addColumn('postoffice', new Core_DataGrid_Column('postoffice', 'Post office', null , 'left'));
+  
+      $grid->addColumn('edit', array(
+        'header' => 'Edit',
+        'sortable' => false,
+        'type' => 'action',
+        'actions' => array(
+          'url' => $this->view->baseUrl() . '/company/edit/id/$id/',
+          'class' => 'icon',
+          'caption' => 'Edit',
+          'image' => $this->view->baseUrl() . '/images/icons/edit.png'
+        )
+      ));
+  
+      $this->view->customers = $grid;
+    }
+    else
+    {
+      $this->view->customers = null;
+    }
+
   }
 
+  /**
+   * Add branch office to company
+   */
   public function addBranchOfficeAction()
   {
     $companyid = $this->getRequest()->getParam('companyid', false);
@@ -262,13 +369,13 @@ class CompanyController extends Zend_Controller_Action
     $name->addValidator('NotEmpty', true);
     $name->addValidator('StringLength', false, array(3, 100));
 
+    $company_address = $companies->getAddress($companyid);
+
     // Load default value
     if (!$this->getRequest()->isPost())
     {
-      $name->setValue($companies->getName($companyid));
+      $name->setValue($companies->getName($companyid) . ' - ' . $company_address['postoffice']);
     }
-
-    $company_address = $companies->getAddress($companyid);
 
     $street = new Zend_Form_Element_Text('streetaddress');
     $street->setRequired(true);
@@ -330,30 +437,45 @@ class CompanyController extends Zend_Controller_Action
       {
         $values = $form->getValues();
         
-        $insert = array(
-          'name' => $values['name'],
-          'contactid' => $values['contactid'],
-          'streetaddress' => $values['streetaddress'],
-          'postnumber' => $values['postnumber'],
-          'postoffice' => $values['postoffice'],
-          'companyid' => $companyid
-        );
+        $exists = $branches->addressExists($values['streetaddress'], $values['postnumber'], $values['postoffice']);
         
-        $this->_db->beginTransaction();
-
-        try
+        if(!$exists)
         {
-          $branches->insert($insert);
-
-          $this->_db->commit();
-
-          return $this->_helper->redirector->gotoUrl("/company/manage/id/$companyid");
-
+          $insert = array(
+            'name' => $values['name'],
+            'contactid' => $values['contactid'],
+            'streetaddress' => $values['streetaddress'],
+            'postnumber' => $values['postnumber'],
+            'postoffice' => $values['postoffice'],
+            'companyid' => $companyid
+          );
+          
+          $this->_db->beginTransaction();
+  
+          try
+          {
+            $branches->insert($insert);
+  
+            $this->_db->commit();
+  
+            return $this->_helper->redirector->gotoUrl("/company/manage/id/$companyid");
+  
+          }
+          catch (Exception $e)
+          {
+            $this->_db->rollBack();
+            var_dump($e);
+          }
         }
-        catch (Exception $e)
+        else
         {
-          $this->_db->rollBack();
-          var_dump($e);
+          $err = $this->tr->_("Given address exists already");
+          $form->getElement('streetaddress')->markAsError();
+          $form->getElement('streetaddress')->addError($err);
+          $form->getElement('postnumber')->markAsError();
+          $form->getElement('postnumber')->addError($err);
+          $form->getElement('postoffice')->markAsError();
+          $form->getElement('postoffice')->addError($err);
         }
 
       }
@@ -409,7 +531,7 @@ class CompanyController extends Zend_Controller_Action
       'sortable' => false,
       'type' => 'action',
       'actions' => array(
-        'url' => $this->view->baseUrl() . '/company/edit-branch/id/$id/',
+        'url' => $this->view->baseUrl() . '/company/edit-network-device/id/$id/',
         'class' => 'icon',
         'caption' => 'Edit',
         'image' => $this->view->baseUrl() . '/images/icons/edit.png'
@@ -418,6 +540,11 @@ class CompanyController extends Zend_Controller_Action
 
     $this->view->grid = $grid;
 
+  }
+  
+  public function editBranchAction()
+  {
+    // TODO
   }
   
   public function addNetworkDeviceAction()

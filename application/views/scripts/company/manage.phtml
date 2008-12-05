@@ -4,8 +4,15 @@ $tr = Zend_Registry::get('Zend_Translate');
 
 <div id="submenu">
   <ul>
+    <?php if($this->is_root_company):?>
     <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'index'), '', true); ?>"><?php echo $tr->_("Back");?></a></li>
-    <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add-branch-office', 'companyid' => $this->companyid), '', true); ?>"><?php echo $tr->_("Add branch office");?></a></li> 
+    <?php else:?>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'manage', 'id' => $this->parent_company_id), '', true); ?>"><?php echo $tr->_("Back");?></a></li>
+    <?php endif;?>
+    <?php if($this->is_root_company):?>
+    <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add', 'parentcompanyid' => $this->companyid), '', true); ?>"><?php echo sprintf($tr->_("Add new customer for %s"), $this->companyname);?></a></li>
+    <?php endif;?>
+    <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add-branch-office', 'companyid' => $this->companyid), '', true); ?>"><?php echo sprintf($tr->_("Add new branch office for %s"), $this->companyname);?></a></li> 
   </ul>
 </div>
 
@@ -14,6 +21,11 @@ $tr = Zend_Registry::get('Zend_Translate');
 <?php echo $this->companyname;?>
 <br />
 
-<h2>Company offices</h2>
+<h2><?php echo sprintf("%s - Branch offices", $this->companyname);?>:</h2>
 
-<?php echo $this->grid;?>
+<?php echo $this->branches;?>
+
+<?php if(!empty($this->customers)):?>
+<h2><?php echo sprintf("%s - Customers", $this->companyname);?></h2>
+<?php echo $this->customers;?>
+<?php endif;?>
