@@ -1,5 +1,6 @@
 <?php
 $tr = Zend_Registry::get('Zend_Translate');
+$db = Zend_Registry::get('DB');
 
 echo "\x3c?xml version=\"1.0\" encoding=\"UTF-8\"?\x3e\n";
 echo $this->doctype() . "\n";
@@ -29,7 +30,18 @@ echo $this->doctype() . "\n";
 
   <br />
   
-  <a href="http://framework.zend.com/"><img src="<?php echo $this->baseUrl();?>/images/misc/PoweredBy_ZF_4DarkBG.png" alt="" border="0" /></a>
+  <a href="http://framework.zend.com/"><img src="<?php echo $this->baseUrl();?>/images/misc/PoweredBy_ZF_4DarkBG.png" alt="" border="0" /></a><br />
+
+<small>
+<?php
+$profiler = $db->getProfiler();
+
+$totalTime    = $profiler->getTotalElapsedSecs();
+$queryCount   = $profiler->getTotalNumQueries();
+
+echo sprintf("Executed %s queries in %s seconds", $queryCount, $totalTime);
+?>
+</small>
 
 </body>
 </html>

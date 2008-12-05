@@ -1,4 +1,7 @@
 <?php
+/**
+ * Users
+ */
 class Users extends Zend_Db_Table_Abstract
 {
   protected $_name = 'USERS';
@@ -62,6 +65,9 @@ class Users extends Zend_Db_Table_Abstract
 
 } // /class
 
+/**
+ * Companies
+ */
 class Companies extends Zend_Db_Table_Abstract
 {
   protected $_name = 'COMPANIES';
@@ -83,6 +89,51 @@ class Companies extends Zend_Db_Table_Abstract
     )
 
   );
+
+  public function isRootCompany($id)
+  {
+    $select = $this->select();
+    $select->from($this, array('c' => 'COUNT(id)'));
+    $select->where('(resellerid IS NULL) OR (resellerid=id)');
+    $select->where('id=?', $id);
+
+    $result = $this->fetchAll($select)->toArray();
+
+    return (bool) ((int)$result[0]['c'] == 1 ? true : false);
+  }
+
+  public function getParentID($id)
+  {
+    $select = $this->select();
+    $select->from($this, array('resellerid'));
+    $select->where('id=?', $id);
+
+    $result = $this->fetchAll($select)->toArray();
+
+    return $result[0]['resellerid'];
+  }
+
+
+  public function getCompanyRootList($id = -1)
+  {
+    $select = $this->select();
+    $select->from($this, array('id', 'name'));
+    $select->where('(resellerid IS NULL) OR (resellerid=id) OR (id=?)', $id);
+    $select->order(array('name', 'id'));
+    
+    return $this->fetchAll($select)->toArray();
+  }
+
+  public function getCompanyCustomerList($id)
+  {
+    $select = $this->select();
+    $select->from($this, array('id', 'name', 'streetaddress', 'postnumber', 'postoffice'));
+    $select->where('resellerid=?', $id);
+    $select->order(array('name', 'id'));
+    
+    return $this->fetchAll($select)->toArray();
+  }
+
 
   public function getCompanyList()
   {
@@ -127,6 +178,9 @@ class Companies extends Zend_Db_Table_Abstract
 
 } // /class
 
+/**
+ * Companies branch offices
+ */
 class CompanyBranchOffices extends Zend_Db_Table_Abstract
 {
   protected $_name = 'BRANCHES';
@@ -192,8 +246,24 @@ class CompanyBranchOffices extends Zend_Db_Table_Abstract
     return $res[0]['name'];
   }
 
-}
+  public function addressExists($streetaddress, $postnumber, $postoffice)
+  {
+    $select = $this->select();
+    $select->from($this, array('c' => 'COUNT(id)'));
+    $select->where('streetaddress=?', $streetaddress);
+    $select->where('postnumber=?', $postnumber);
+    $select->where('postoffice=?', $postoffice);
 
+    $result = $this->fetchAll($select)->toArray();
+
+    return (bool) ((int)$result[0]['c'] > 0 ? true : false);
+  }
+
+} // /class
+
+/**
+ * Network devices in branch offices
+ */
 class NetworkDevices extends Zend_Db_Table_Abstract
 {
   protected $_name = 'NETWORK_UNITS';
@@ -267,6 +337,9 @@ class NetworkDevices extends Zend_Db_Table_Abstract
 
 }
 
+/**
+ * Ports in network devices
+ */
 class NetworkDevicePorts extends Zend_Db_Table_Abstract
 {
   protected $_name = 'NETWORK_UNIT_PORTS';
@@ -312,6 +385,10 @@ class NetworkDevicePorts extends Zend_Db_Table_Abstract
   }
 
 }
+
+/**
+ * Different port types in network devices
+ */
 class Ports extends Zend_Db_Table_Abstract
 {
   protected $_name = 'PORT_TYPES';

@@ -8,7 +8,10 @@ $tr = Zend_Registry::get('Zend_Translate');
   </ul>
 </div>
 
-<h2>Add new company</h2>
+<img src="/images/icons/branch-office.png" alt="" /><h2>Add new company billing information</h2>
+<?php if ($this->add_to_parent):?>
+Parent company = <?php echo $this->parentcompanyid;?>
+<?php endif;?>
 
 <?php
 echo $this->form;
