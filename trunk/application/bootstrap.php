@@ -22,7 +22,7 @@ ini_set('xdebug.var_display_max_data', 1024);
 ini_set('xdebug.var_display_max_depth', 10);
 ini_set('xdebug.manual_url', 'http://fi.php.net');
 
-error_reporting(E_ALL | E_STRICT);  
+error_reporting(E_ALL | E_STRICT);
 ignore_user_abort(true);
 date_default_timezone_set('Europe/Helsinki');
  
@@ -34,6 +34,8 @@ Zend_Loader::registerAutoload();
 set_include_path(realpath(dirname(__FILE__) .'/../classes') . PATH_SEPARATOR . get_include_path());
 
 require_once 'db.php';
+require_once 'vat.php';
+require_once 'joker.php';
 
 $fi = array('' => '');
 $translate = new Zend_Translate('array', $fi, 'fi');

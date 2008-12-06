@@ -102,6 +102,8 @@ class UserController extends Zend_Controller_Action
    */
   public function addAction()
   {
+    $defined_companyid = $this->getRequest()->getParam('companyid', false);
+
     $companies = new Companies();
     $users = new Users();
 
@@ -118,6 +120,12 @@ class UserController extends Zend_Controller_Action
     $contact->setRequired(true);
     $contact->setLabel($this->tr->_('Works in company'));
     $contact->addMultiOptions($company_list);
+
+    // Company ID is defined, set it as default
+    if (!$this->getRequest()->isPost() && $defined_companyid !== false)
+    {
+      $contact->setValue($defined_companyid);
+    }
 
     $fname = new Zend_Form_Element_Text('firstname');
     $fname->setRequired(true);
