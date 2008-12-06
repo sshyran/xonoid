@@ -13,6 +13,7 @@ $tr = Zend_Registry::get('Zend_Translate');
     <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add', 'parentcompanyid' => $this->companyid), '', true); ?>"><?php echo sprintf($tr->_("Add new customer for %s"), $this->companyname);?></a></li>
     <?php endif;?>
     <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add-branch-office', 'companyid' => $this->companyid), '', true); ?>"><?php echo sprintf($tr->_("Add new branch office for %s"), $this->companyname);?></a></li> 
+    <li class="add"><a href="<?php echo $this->url(array('controller' => 'user', 'action' => 'add', 'companyid' => $this->companyid), '', true); ?>"><?php echo sprintf($tr->_("Add new user for %s"), $this->companyname);?></a></li> 
   </ul>
 </div>
 

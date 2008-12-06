@@ -50,6 +50,7 @@ class CompanyController extends Zend_Controller_Action
     $grid->addColumn('manage', array(
       'header' => 'Manage',
       'sortable' => false,
+      'width' => 1,
       'type' => 'action',
       'actions' => array(
           'url' => $this->view->baseUrl() . '/company/manage/id/$id/',
@@ -66,6 +67,7 @@ class CompanyController extends Zend_Controller_Action
     $grid->addColumn('edit', array(
       'header' => 'Edit',
       'sortable' => false,
+      'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit/id/$id/',
@@ -78,6 +80,7 @@ class CompanyController extends Zend_Controller_Action
     $grid->addColumn('remove', array(
       'header' => 'Remove',
       'sortable' => false,
+      'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/remove/id/$id/',
@@ -352,6 +355,7 @@ class CompanyController extends Zend_Controller_Action
     $grid->addColumn('manage', array(
       'header' => 'Manage',
       'sortable' => false,
+      'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/manage-branch/id/$id/',
@@ -372,6 +376,7 @@ class CompanyController extends Zend_Controller_Action
     $grid->addColumn('edit', array(
       'header' => 'Edit',
       'sortable' => false,
+      'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit-branch/id/$id/',
@@ -394,6 +399,7 @@ class CompanyController extends Zend_Controller_Action
         'header' => 'Manage',
         'sortable' => false,
         'type' => 'action',
+        'width' => 1,
         'actions' => array(
           'url' => $this->view->baseUrl() . '/company/manage/id/$id/',
           'class' => 'icon',
@@ -412,6 +418,7 @@ class CompanyController extends Zend_Controller_Action
       $grid->addColumn('edit', array(
         'header' => 'Edit',
         'sortable' => false,
+        'width' => 1,
         'type' => 'action',
         'actions' => array(
           'url' => $this->view->baseUrl() . '/company/edit/id/$id/',
@@ -613,6 +620,7 @@ class CompanyController extends Zend_Controller_Action
     $grid->addColumn('manage', array(
       'header' => 'Manage',
       'sortable' => false,
+      'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/manage-network-device/id/$id/',
@@ -630,6 +638,7 @@ class CompanyController extends Zend_Controller_Action
     $grid->addColumn('edit', array(
       'header' => 'Edit',
       'sortable' => false,
+      'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit-network-device/id/$id/',
@@ -791,6 +800,7 @@ class CompanyController extends Zend_Controller_Action
     $grid->addColumn('manage', array(
       'header' => 'Manage',
       'sortable' => false,
+      'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/manage-network-device-port/id/$id/',
@@ -810,6 +820,7 @@ class CompanyController extends Zend_Controller_Action
     $grid->addColumn('edit', array(
       'header' => 'Edit',
       'sortable' => false,
+      'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit-port/id/$id/',
