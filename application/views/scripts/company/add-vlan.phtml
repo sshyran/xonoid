@@ -1,0 +1,17 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+
+<div id="submenu">
+  <ul>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'manage-network-device-port', 'id' => $this->portid), '', true); ?>"><?php echo $tr->_("Back");?></a></li> 
+  </ul>
+</div>
+
+<br />
+
+<h2>Add VLAN ID</h2>
+
+<?php
+echo $this->form;
+?>

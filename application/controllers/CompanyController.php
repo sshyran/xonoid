@@ -99,6 +99,7 @@ class CompanyController extends Zend_Controller_Action
   public function addAction()
   {
     $companies = new Companies();
+    $branches = new CompanyBranchOffices();
 
     $is_root_company = false;
 
@@ -666,6 +667,8 @@ class CompanyController extends Zend_Controller_Action
       throw new Zend_Exception("Fail.");
     }
 
+    $NetworkDevices = new NetworkDevices();
+
     $users = new Users();
     $users_list = $users->getList();
 
@@ -792,7 +795,8 @@ class CompanyController extends Zend_Controller_Action
     $this->view->companyname = $Companies->getName($this->view->companyid); 
     
     $NetworkDevicePorts = new NetworkDevicePorts();
-    $portlist = $NetworkDevicePorts->getNetworkDevicePortList($networkdeviceid);
+    $VIEW_NUP_PT = new VIEW_NUP_PT();
+    $portlist = $VIEW_NUP_PT->fetchAll("networkunitid = $networkdeviceid")->toArray();
 
     $grid = new Core_DataGrid(new Core_DataGrid_DataSource_Array($portlist), 100);
     $grid->setDefaultSort(array('name' => 'asc'));
@@ -815,7 +819,7 @@ class CompanyController extends Zend_Controller_Action
 
 		$grid->addColumn('side', new Core_DataGrid_Column('side', 'Side', null , 'left'));
 
-		$grid->addColumn('porttypeid', new Core_DataGrid_Column('porttypeid', 'Type', null , 'left'));
+		$grid->addColumn('porttypename', new Core_DataGrid_Column('porttypeid', 'Type', null , 'left'));
 
     $grid->addColumn('edit', array(
       'header' => 'Edit',
@@ -884,8 +888,8 @@ class CompanyController extends Zend_Controller_Action
 
 
     $sidearr = array();
-    $sidearr['F'] = 'Front';
-    $sidearr['B'] = 'Back';
+    $sidearr['F'] = $this->tr->_('Front');
+    $sidearr['B'] = $this->tr->_('Back');
     
     $side = new Zend_Form_Element_Select('side');
     $side->setRequired(true);
@@ -951,7 +955,273 @@ class CompanyController extends Zend_Controller_Action
 
   public function manageNetworkDevicePortAction()
   {
+    $portid = $this->getRequest()->getParam('id', false);
+
+    if ($portid === false)
+    {
+      throw new Zend_Exception("Fail.");
+    }
+    
+    $this->view->portid = $portid;
+    
+    $NetworkDevicePorts = new NetworkDevicePorts();
+    $networkdeviceid = $NetworkDevicePorts->getNetworkDevice($portid);
+    $networkdevicename = $NetworkDevicePorts->getNetworkDeviceName($portid);
+    $this->view->deviceid = $networkdeviceid;
+    $this->view->portname = $networkdevicename;
+
+    $NetworkDevices = new NetworkDevices();
+    $this->view->devicename = $NetworkDevices->getName($networkdeviceid); 
+    $this->view->branchid = $NetworkDevices->getBranchID($networkdeviceid);
+
+    $CompanyBranchOffices = new CompanyBranchOffices();
+    $this->view->branchname = $CompanyBranchOffices->getName($this->view->branchid);
+    $this->view->companyid = $CompanyBranchOffices->getCompanyID($this->view->branchid);
+
+    $Companies = new Companies();
+    $this->view->companyname = $Companies->getName($this->view->companyid); 
+    
+    $VIEW_P_IP = new VIEW_P_IP();
+
+    $list = $VIEW_P_IP->fetchAll("portid = $portid")->toArray();
+
+    $grid = new Core_DataGrid(new Core_DataGrid_DataSource_Array($list), 100);
+    $grid->setDefaultSort(array('ipaddress' => 'asc'));
+
+		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
+		$grid->addColumn('ipaddress', new Core_DataGrid_Column('ipaddress', 'IP Address', null , 'left'));
+
+		$grid->addColumn('cidr', new Core_DataGrid_Column('cidr', 'CIDR', null , 'left'));
+		$grid->addColumn('mask', new Core_DataGrid_Column('mask', 'Mask', null , 'left'));
+
+		$grid->addColumn('network', new Core_DataGrid_Column('network', 'Network', null , 'left'));
+		$grid->addColumn('broadcast', new Core_DataGrid_Column('broadcast', 'Broadcast', null , 'left'));
+
+		$grid->addColumn('ipcount', new Core_DataGrid_Column('ipcount', 'IP Count', null , 'left'));
+
+    $grid->addColumn('edit', array(
+      'header' => 'Edit',
+      'sortable' => false,
+      'width' => 1,
+      'type' => 'action',
+      'actions' => array(
+        'url' => $this->view->baseUrl() . '/company/edit-port/id/$id/',
+        'class' => 'icon',
+        'caption' => 'Edit',
+        'image' => $this->view->baseUrl() . '/images/icons/edit.png'
+      )
+    ));
+
+    $this->view->ips = $grid;
+    
+    $VLANs = new VLANs();
+
+    $list = $VLANs->fetchAll("portid = $portid")->toArray();
+
+    $grid = new Core_DataGrid(new Core_DataGrid_DataSource_Array($list), 100);
+    $grid->setDefaultSort(array('vlanid' => 'asc'));
+
+		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
+		$grid->addColumn('vlanid', new Core_DataGrid_Column('vlanid', 'VLAN ID', null , 'left'));
+
+    $grid->addColumn('edit', array(
+      'header' => 'Edit',
+      'sortable' => false,
+      'width' => 1,
+      'type' => 'action',
+      'actions' => array(
+        'url' => $this->view->baseUrl() . '/company/edit-port/id/$id/',
+        'class' => 'icon',
+        'caption' => 'Edit',
+        'image' => $this->view->baseUrl() . '/images/icons/edit.png'
+      )
+    ));
+
+    $this->view->vlans = $grid;
+
+
   }
 
+
+  /**
+   * Add VLAN ID to port
+   */
+  public function addVlanAction()
+  {
+    $portid = $this->getRequest()->getParam('portid', false);
+
+    if ($portid === false)
+    {
+      throw new Zend_Exception("Fail.");
+    }
+
+    $this->view->portid = $portid;
+    
+    $VLANs = new VLANs();
+
+    $form = new crmForm();
+    $form->setMethod(Zend_Form::METHOD_POST);
+    $form->setAction($this->_request->getBaseUrl() . "/company/add-vlan/portid/$portid");
+
+    $submit = new Zend_Form_Element_Submit('submit');
+    $submit->setLabel($this->tr->_('Add'));
+
+    $vlan = new Zend_Form_Element_Text('vlan');
+    $vlan->setRequired(true);
+    $vlan->setLabel($this->tr->_('VLAN ID'));
+    $vlan->addFilter('StringTrim');
+    $vlan->addValidator('NotEmpty', true);
+    $vlan->addValidator('Between', false, array('min' => 0, 'max' => 4096));
+
+    // Load default as 1
+    if (!$this->getRequest()->isPost())
+    {
+      $vlan->setValue(1);
+    }
+
+    $form->addElement($vlan);
+    $form->addElement($submit);
+
+
+    // Form POSTed
+    if ($this->getRequest()->isPost())
+    {
+      if ($form->isValid($_POST))
+      {
+        $values = $form->getValues();
+        
+        $insert = array(
+          'vlanid' => $values['vlan'],
+          'portid' => $portid
+        );
+
+        $this->_db->beginTransaction();
+
+        try
+        {
+          $VLANs->insert($insert);
+
+          $this->_db->commit();
+
+          return $this->_helper->redirector->gotoUrl("/company/manage-network-device-port/id/$portid");
+
+        }
+        catch (Exception $e)
+        {
+          $this->_db->rollBack();
+          var_dump($e);
+        }
+
+      }
+    }
+
+    $this->view->form = $form;
+
+  }
+
+  /**
+   * Add IPv4 Address to port  
+   */
+  public function addIpAddressAction()
+  {
+    $portid = $this->getRequest()->getParam('portid', false);
+
+    if ($portid === false)
+    {
+      throw new Zend_Exception("Fail.");
+    }
+
+    $this->view->portid = $portid;
+    
+    $IPAddresses = new IPAddresses();
+
+    $form = new crmForm();
+    $form->setMethod(Zend_Form::METHOD_POST);
+    $form->setAction($this->_request->getBaseUrl() . "/company/add-ip-address/portid/$portid");
+
+    $submit = new Zend_Form_Element_Submit('submit');
+    $submit->setLabel($this->tr->_('Add'));
+
+    $ip = new Zend_Form_Element_Text('ip');
+    $ip->setRequired(true);
+    $ip->setLabel($this->tr->_('IPv4 Address'));
+    $ip->addFilter('StringTrim');
+    $ip->addValidator('NotEmpty', true);
+    $ip->addValidator('Ip', false);
+
+    $cidr_list = range(0,32);
+    
+    foreach ($cidr_list as $key => $value)
+    {
+      $count = (float)pow(2, (32-$value));
+      $for_use = null;
+
+      if($value <= 30)
+      {
+        $for_use = sprintf("%s IP(s) for use [Network,BC,GW]", $count-3);
+      }
+      
+      $mask = $value == 0 ? long2ip(0) : long2ip(0xffffffff << (32-$value));
+
+      $cidr_list[$key] = sprintf("/%s (Mask: %s), %s IP(s) %s", $value, $mask, $count, $for_use);
+    }
+    
+    // /31 is bogus
+    unset($cidr_list[31]);
+    
+    $cidr_list = array_reverse($cidr_list, true);
+
+    $cidr = new Zend_Form_Element_Select('cidr');
+    $cidr->setRequired(true);
+    $cidr->setLabel($this->tr->_('CIDR'));
+    $cidr->addMultiOptions($cidr_list);
+    $cidr->addValidator('Between', false, array('min' => 0, 'max' => 32));
+
+    // Load default as one IP (/32)
+    if (!$this->getRequest()->isPost())
+    {
+      $cidr->setValue(28);
+    }
+
+    $form->addElement($ip);
+    $form->addElement($cidr);
+    $form->addElement($submit);
+
+    // Form POSTed
+    if ($this->getRequest()->isPost())
+    {
+      if ($form->isValid($_POST))
+      {
+        $values = $form->getValues();
+        
+        $insert = array(
+          'ipaddr' => new Zend_Db_Expr("INET_ATON('{$values['ip']}')"),
+          'cidr' => $values['cidr'],
+          'portid' => $portid
+        );
+
+        $this->_db->beginTransaction();
+
+        try
+        {
+          $IPAddresses->insert($insert);
+
+          $this->_db->commit();
+
+          return $this->_helper->redirector->gotoUrl("/company/manage-network-device-port/id/$portid");
+
+        }
+        catch (Exception $e)
+        {
+          $this->_db->rollBack();
+          var_dump($e);
+        }
+
+      }
+    }
+
+    $this->view->form = $form;
+
+  }
 
 } // /class

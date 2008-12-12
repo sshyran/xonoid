@@ -348,7 +348,7 @@ class NetworkDevices extends Zend_Db_Table_Abstract
     return $res[0]['name'];
   }
 
-}
+} // /class
 
 /**
  * Ports in network devices
@@ -361,13 +361,13 @@ class NetworkDevicePorts extends Zend_Db_Table_Abstract
 
   protected $_referenceMap = array(
 
-    'PortType' => array(
+    'Ports' => array(
       'refTableClass' => 'Ports',
-      'refColumns'    => array('id'),
-      'columns'       => array('porttypeid'),
+      'refColumns'    => array('porttypeid'),
+      'columns'       => array('id'),
     ),
 
-    'Device' => array(
+    'NetworkDevices' => array(
       'refTableClass' => 'NetworkDevices',
       'refColumns'    => array('id'),
       'columns'       => array('networkunitid'),
@@ -397,7 +397,31 @@ class NetworkDevicePorts extends Zend_Db_Table_Abstract
     return $list;
   }
 
-}
+  public function getNetworkDevice($id)
+  {
+    $select = $this->select();
+    $select->from($this, array('networkunitid'));
+    $select->order(array('side', 'name', 'id'));
+    $select->where('id=?', $id);
+
+    $res = $this->fetchAll($select)->toArray();
+
+    return $res[0]['networkunitid'];
+  }
+
+  public function getNetworkDeviceName($id)
+  {
+    $select = $this->select();
+    $select->from($this, array('name'));
+    $select->order(array('side', 'name', 'id'));
+    $select->where('id=?', $id);
+
+    $res = $this->fetchAll($select)->toArray();
+
+    return $res[0]['name'];
+  }
+
+} // /class
 
 /**
  * Different port types in network devices
@@ -409,10 +433,10 @@ class Ports extends Zend_Db_Table_Abstract
   protected $_dependentTables = array('NetworkDevicePorts');
 
   protected $_referenceMap = array(
-    'DevicePort' => array(
-      'refTableClass' => 'NetworkDevices',
-      'refColumns'    => array('id'),
-      'columns'       => array('porttypeid'),
+    'NetworkDevicePorts' => array(
+      'refTableClass' => 'NetworkDevicePorts',
+      'refColumns'    => array('porttypeid'),
+      'columns'       => array('id'),
     )
   );
 
@@ -437,4 +461,49 @@ class Ports extends Zend_Db_Table_Abstract
     return $list;
   }
 
+} // /class
+
+/**
+ * Port(s) IP Address(es)
+ */
+class IPAddresses extends Zend_Db_Table_Abstract
+{
+  protected $_name = 'PORT_IP_ADDRESSES';
+  protected $_primary = 'id';
+} // /class
+
+/**
+ * Port(s) VLAN(s)
+ */
+class VLANs extends Zend_Db_Table_Abstract
+{
+  protected $_name = 'PORT_VLANS';
+  protected $_primary = 'id';
+} // /class
+
+
+/*******************************************************************************
+  VIEWS
+*******************************************************************************/
+
+
+/**
+ * NUP PT VIEW
+ */
+class VIEW_NUP_PT extends Zend_Db_Table_Abstract
+{
+  protected $_name = 'view_nup_pt';
+  protected $_primary = 'id';
+  protected $_dependentTables = array();
+
+}
+
+/**
+ * P IP VIEW
+ */
+class VIEW_P_IP extends Zend_Db_Table_Abstract
+{
+  protected $_name = 'view_p_ip';
+  protected $_primary = 'id';
+  protected $_dependentTables = array();
 }
