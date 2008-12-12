@@ -1222,6 +1222,128 @@ class CompanyController extends Zend_Controller_Action
 
     $this->view->form = $form;
 
+  } // /function
+  
+  public function branchToPdfAction()
+  {
+    $branchid = $this->getRequest()->getParam('id', false);
+    
+    if ($branchid === false)
+    {
+      throw new Zend_Exception("Fail.");
+    }
+    
+    $o = null;
+    
+    $pdf = new crmPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);
+    $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM); 
+    $pdf->AliasNbPages();
+
+    $pdf->AddPage(); 
+
+    $CompanyBranchOffices = new CompanyBranchOffices();
+    $NetworkDevices = new NetworkDevices();
+    $Companies = new Companies();
+
+    $branchname = $CompanyBranchOffices->getName($branchid);
+    $companyid = $CompanyBranchOffices->getCompanyID($branchid);
+    $companyname = $Companies->getName($companyid); 
+
+    $devices_list = $NetworkDevices->getNetworkDevicesList($branchid);
+    
+    $o .= "<h1>$companyname</h1>";
+    $o .= "<h2>Office $branchname</h2>";
+
+    $branch = $CompanyBranchOffices->fetchRow("id = $branchid")->toArray();
+
+    $o .= "{$branch['streetaddress']}<br />";
+    $o .= "{$branch['postnumber']} {$branch['postoffice']}<br />";
+   
+    foreach($devices_list as $d => $dev)
+    {
+      $o .= "<h2>{$dev['name']}</h2>";
+
+      $o .= "<table>";
+
+      $VIEW_NUP_PT = new VIEW_NUP_PT();
+      $portlist = $VIEW_NUP_PT->fetchAll("networkunitid = {$dev['id']}")->toArray();
+
+      foreach($portlist as $p => $port)
+      {
+        $o .= "<tr>";
+
+        $o .= "<td>";
+
+        switch($port['side'])
+        {
+          default:
+          case 'F':
+            $o .= "Front";
+          break;
+          case 'B':
+            $o .= "Back";
+          break;
+        }
+
+        $o .= ' : ';
+
+        $o .= $port['name'];
+        $o .= '<br />';
+
+        $o .= $port['porttypename'];
+        $o .= '<br />';
+
+        $o .= "</td>";
+
+        $VIEW_P_IP = new VIEW_P_IP();
+        $iplist = $VIEW_P_IP->fetchAll("portid = {$port['id']}")->toArray();
+
+        $o .= "<td>";
+
+        $o .= "IP Adresses:<br />";
+
+        foreach($iplist as $i => $ip)
+        {
+          $o .= $ip['ipaddress'] . '/' . $ip['cidr'] . '<br />';
+        } // /foreach ip list
+
+        $o .= "</td>";
+
+        $o .= "<td>";
+
+        $o .= "VLAN IDs:<br />";
+
+        $VLANs = new VLANs();
+
+        $vlanlist = $VLANs->fetchAll("portid = {$port['id']}")->toArray();
+
+        foreach($vlanlist as $v => $vlan)
+        {
+          $o .= $vlan['vlanid'] . '<br />';
+        } // /foreach ip list
+
+        $o .= "</td>";
+
+        $o .= "</tr>";
+        
+      } // /foreach port list
+
+      $o .= "</table>";
+
+
+    } // /foreach devices list
+    
+    $pdf->writeHTML($o); 
+
+    $this->_helper->layout->disableLayout();
+
+    $response = $this->getResponse();
+    $response->setHeader('Content-Type', 'application/pdf', true);
+    $response->setHeader('Content-Disposition', 'inline', true);
+    
+    $pdf->lastPage(); 
+
+    $this->view->pdf = $pdf->Output('', 'S');
   }
 
 } // /class

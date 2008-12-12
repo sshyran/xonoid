@@ -5,6 +5,7 @@ $tr = Zend_Registry::get('Zend_Translate');
   <ul>
     <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'manage', 'id' => $this->companyid), '', true); ?>"><?php echo $tr->_("Back");?></a></li>
     <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add-network-device', 'branchid' => $this->branchid), '', true); ?>"><?php echo $tr->_("Add Network device");?></a></li> 
+    <li class="document"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'branch-to-pdf', 'id' => $this->branchid, 'filename' => sprintf("%s - %s.pdf", $this->companyname, $this->branchname)), '', true); ?>"><?php echo $tr->_("PDF");?></a></li> 
   </ul>
 </div>
 

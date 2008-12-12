@@ -36,6 +36,7 @@ set_include_path(realpath(dirname(__FILE__) .'/../classes') . PATH_SEPARATOR . g
 require_once 'db.php';
 require_once 'vat.php';
 require_once 'joker.php';
+require_once 'pdf.php';
 
 $fi = array('' => '');
 $translate = new Zend_Translate('array', $fi, 'fi');
