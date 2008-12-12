@@ -1,375 +1,197 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
-CREATE SCHEMA IF NOT EXISTS `crm` DEFAULT CHARACTER SET utf8 COLLATE utf8_swedish_ci ;
-USE `crm`;
+CREATE TABLE IF NOT EXISTS `BRANCHES` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` text collate utf8_swedish_ci NOT NULL,
+  `companyid` int(10) unsigned NOT NULL,
+  `contactid` int(11) NOT NULL,
+  `streetaddress` text collate utf8_swedish_ci NOT NULL,
+  `postoffice` text collate utf8_swedish_ci NOT NULL,
+  `postnumber` text collate utf8_swedish_ci NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_RACKS_COMPANIES` (`companyid`),
+  KEY `fk_BRANCH_USERS` (`contactid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
--- -----------------------------------------------------
--- Table `crm`.`USERS`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`USERS` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `companyid` INT UNSIGNED NOT NULL ,
-  `firstname` TEXT NOT NULL ,
-  `lastname` TEXT NOT NULL ,
-  `email` TEXT NOT NULL ,
-  `phone` TEXT NULL ,
-  `password` VARCHAR(32) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_USERS_companies (`companyid` ASC) ,
-  CONSTRAINT `fk_USERS_companies`
-    FOREIGN KEY (`companyid` )
-    REFERENCES `crm`.`COMPANIES` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `COMPANIES` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `name` text collate utf8_swedish_ci NOT NULL,
+  `resellerid` int(10) unsigned default NULL,
+  `streetaddress` text collate utf8_swedish_ci NOT NULL,
+  `postoffice` text collate utf8_swedish_ci NOT NULL,
+  `postnumber` text collate utf8_swedish_ci NOT NULL,
+  `contactid` int(11) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_COMPANIES_COMPANIES` (`resellerid`),
+  KEY `fk_COMPANIES_USERS` (`contactid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
+CREATE TABLE IF NOT EXISTS `COMPANY_NETWORKS` (
+  `id` int(11) NOT NULL auto_increment,
+  `ipaddress` bigint(20) NOT NULL,
+  `cidr` int(11) NOT NULL,
+  `companyid` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_COMPANY_NETWORKS_COMPANIES` (`companyid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
--- -----------------------------------------------------
--- Table `crm`.`COMPANIES`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`COMPANIES` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` TEXT NOT NULL ,
-  `resellerid` INT UNSIGNED NOT NULL ,
-  `streetaddress` TEXT NOT NULL ,
-  `postoffice` TEXT NOT NULL ,
-  `postnumber` TEXT NOT NULL ,
-  `contactid` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_COMPANIES_COMPANIES (`resellerid` ASC) ,
-  INDEX fk_COMPANIES_USERS (`contactid` ASC) ,
-  CONSTRAINT `fk_COMPANIES_COMPANIES`
-    FOREIGN KEY (`resellerid` )
-    REFERENCES `crm`.`COMPANIES` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_COMPANIES_USERS`
-    FOREIGN KEY (`contactid` )
-    REFERENCES `crm`.`USERS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `NETWORK_SERVER_PORT_CONNECTIONS` (
+  `id` int(11) NOT NULL auto_increment,
+  `connected_from` int(11) NOT NULL,
+  `connected_to` int(11) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_RACK_SERVER_PORT_CONNECTIONS_RACK_UNIT_PORTS` (`connected_from`),
+  KEY `fk_RACK_SERVER_PORT_CONNECTIONS_RACK_UNIT_PORTS1` (`connected_to`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
-
--- -----------------------------------------------------
--- Table `crm`.`BRANCHES`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`BRANCHES` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` TEXT NOT NULL ,
-  `usize` INT NOT NULL DEFAULT 48 ,
-  `companyid` INT UNSIGNED NOT NULL ,
-  `contactid` INT NOT NULL ,
-  `streetaddress` TEXT NOT NULL ,
-  `postoffice` TEXT NOT NULL ,
-  `postnumber` TEXT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_RACKS_COMPANIES (`companyid` ASC) ,
-  INDEX fk_BRANCH_USERS (`contactid` ASC) ,
-  CONSTRAINT `fk_RACKS_COMPANIES`
-    FOREIGN KEY (`companyid` )
-    REFERENCES `crm`.`COMPANIES` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_BRANCH_USERS`
-    FOREIGN KEY (`contactid` )
-    REFERENCES `crm`.`USERS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `NETWORK_UNITS` (
+  `id` int(11) NOT NULL auto_increment,
+  `branchid` int(11) NOT NULL,
+  `companyid` int(10) unsigned NOT NULL,
+  `name` text collate utf8_swedish_ci NOT NULL,
+  `usize` int(11) NOT NULL default '4',
+  `contactid` int(11) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_RACK_SERVERS_COMPANIES` (`companyid`),
+  KEY `fk_RACK_SERVERS_RACKS` (`branchid`),
+  KEY `fk_NETWORK_UNITS_USERS` (`contactid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
 
--- -----------------------------------------------------
--- Table `crm`.`PORT_TYPES`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`PORT_TYPES` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` TEXT NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `NETWORK_UNIT_PORTS` (
+  `id` int(11) NOT NULL auto_increment,
+  `networkunitid` int(11) NOT NULL,
+  `side` enum('F','B') collate utf8_swedish_ci NOT NULL,
+  `porttypeid` int(11) NOT NULL,
+  `name` text collate utf8_swedish_ci NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_RACK_SERVER_PORTS_RACK_SERVERS` (`networkunitid`),
+  KEY `fk_RACK_SERVER_PORTS_RACK_PORT_TYPES` (`porttypeid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
 
--- -----------------------------------------------------
--- Table `crm`.`NETWORK_UNITS`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`NETWORK_UNITS` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `branchid` INT NOT NULL ,
-  `companyid` INT UNSIGNED NOT NULL ,
-  `name` TEXT NOT NULL ,
-  `usize` INT NOT NULL DEFAULT 4 ,
-  `contactid` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_RACK_SERVERS_COMPANIES (`companyid` ASC) ,
-  INDEX fk_RACK_SERVERS_RACKS (`branchid` ASC) ,
-  INDEX fk_NETWORK_UNITS_USERS (`contactid` ASC) ,
-  CONSTRAINT `fk_RACK_SERVERS_COMPANIES`
-    FOREIGN KEY (`companyid` )
-    REFERENCES `crm`.`COMPANIES` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_RACK_SERVERS_RACKS`
-    FOREIGN KEY (`branchid` )
-    REFERENCES `crm`.`BRANCHES` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_NETWORK_UNITS_USERS`
-    FOREIGN KEY (`contactid` )
-    REFERENCES `crm`.`USERS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `PORT_IP_ADDRESSES` (
+  `id` int(11) NOT NULL auto_increment,
+  `portid` int(11) NOT NULL,
+  `ipaddr` bigint(11) unsigned NOT NULL,
+  `cidr` int(11) unsigned NOT NULL default '28',
+  PRIMARY KEY  (`id`),
+  KEY `fk_IP_ADDRESSES_NETWORK_UNIT_PORTS` (`portid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
 
--- -----------------------------------------------------
--- Table `crm`.`NETWORK_UNIT_PORTS`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`NETWORK_UNIT_PORTS` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `networkunitid` INT NOT NULL ,
-  `side` ENUM('F','B') NOT NULL ,
-  `porttypeid` INT NOT NULL ,
-  `name` TEXT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_RACK_SERVER_PORTS_RACK_SERVERS (`networkunitid` ASC) ,
-  INDEX fk_RACK_SERVER_PORTS_RACK_PORT_TYPES (`porttypeid` ASC) ,
-  CONSTRAINT `fk_RACK_SERVER_PORTS_RACK_SERVERS`
-    FOREIGN KEY (`networkunitid` )
-    REFERENCES `crm`.`NETWORK_UNITS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_RACK_SERVER_PORTS_RACK_PORT_TYPES`
-    FOREIGN KEY (`porttypeid` )
-    REFERENCES `crm`.`PORT_TYPES` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `PORT_TYPES` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` text collate utf8_swedish_ci NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
 
--- -----------------------------------------------------
--- Table `crm`.`NETWORK_SERVER_PORT_CONNECTIONS`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`NETWORK_SERVER_PORT_CONNECTIONS` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `connected_from` INT NOT NULL ,
-  `connected_to` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_RACK_SERVER_PORT_CONNECTIONS_RACK_UNIT_PORTS (`connected_from` ASC) ,
-  INDEX fk_RACK_SERVER_PORT_CONNECTIONS_RACK_UNIT_PORTS1 (`connected_to` ASC) ,
-  CONSTRAINT `fk_RACK_SERVER_PORT_CONNECTIONS_RACK_UNIT_PORTS`
-    FOREIGN KEY (`connected_from` )
-    REFERENCES `crm`.`NETWORK_UNIT_PORTS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_RACK_SERVER_PORT_CONNECTIONS_RACK_UNIT_PORTS1`
-    FOREIGN KEY (`connected_to` )
-    REFERENCES `crm`.`NETWORK_UNIT_PORTS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `PORT_VLANS` (
+  `id` int(11) NOT NULL auto_increment,
+  `portid` int(11) NOT NULL,
+  `vlanid` int(11) unsigned NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_VLANS_NETWORK_UNIT_PORTS` (`portid`),
+  KEY `fk_PORT_VLANS_VLANS` (`vlanid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
 
--- -----------------------------------------------------
--- Table `crm`.`COMPANY_NETWORKS`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`COMPANY_NETWORKS` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `ipaddress` BIGINT NOT NULL ,
-  `cidr` INT NOT NULL ,
-  `companyid` INT UNSIGNED NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_COMPANY_NETWORKS_COMPANIES (`companyid` ASC) ,
-  CONSTRAINT `fk_COMPANY_NETWORKS_COMPANIES`
-    FOREIGN KEY (`companyid` )
-    REFERENCES `crm`.`COMPANIES` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `REPLY_ATTACHMENTS` (
+  `id` int(11) NOT NULL auto_increment,
+  `replyid` int(11) NOT NULL,
+  `mimetype` text collate utf8_swedish_ci NOT NULL,
+  `filedata` longblob NOT NULL,
+  `md5sum` varchar(45) collate utf8_swedish_ci NOT NULL,
+  `filesize` int(11) NOT NULL,
+  `filename` text collate utf8_swedish_ci NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_TICKET_ATTACHMENTS_TICKET_REPLY` (`replyid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
 
--- -----------------------------------------------------
--- Table `crm`.`VLANS`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`VLANS` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `vlanid` INT NOT NULL ,
-  `name` TEXT NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `TICKETS` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `subject` text collate utf8_swedish_ci NOT NULL,
+  `added` datetime NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
+
+CREATE TABLE IF NOT EXISTS `TICKET_REPLY` (
+  `id` int(11) NOT NULL auto_increment,
+  `ticketid` bigint(20) NOT NULL,
+  `descr` longtext collate utf8_swedish_ci NOT NULL,
+  `userid` int(11) NOT NULL,
+  `statusid` int(11) NOT NULL,
+  `added` datetime NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_TICKET_REPLY_TICKETS` (`ticketid`),
+  KEY `fk_TICKET_REPLY_USERS` (`userid`),
+  KEY `fk_TICKET_REPLY_TICKET_STATUSES` (`statusid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
 
--- -----------------------------------------------------
--- Table `crm`.`IP_ADDRESSES`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`IP_ADDRESSES` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `ipaddress` BIGINT NOT NULL ,
-  `cidr` INT NOT NULL ,
-  `name` TEXT NOT NULL ,
-  `vlanrefid` INT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_IP_ADDRESSES_VLANS (`vlanrefid` ASC) ,
-  CONSTRAINT `fk_IP_ADDRESSES_VLANS`
-    FOREIGN KEY (`vlanrefid` )
-    REFERENCES `crm`.`VLANS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `TICKET_STATUSES` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` text collate utf8_swedish_ci NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
 
--- -----------------------------------------------------
--- Table `crm`.`PORT_IP_ADDRESSES`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`PORT_IP_ADDRESSES` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `portid` INT NOT NULL ,
-  `ipaddressrefid` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_IP_ADDRESSES_NETWORK_UNIT_PORTS (`portid` ASC) ,
-  INDEX fk_PORT_IP_ADDRESSES_IP_ADDRESSES (`ipaddressrefid` ASC) ,
-  CONSTRAINT `fk_IP_ADDRESSES_NETWORK_UNIT_PORTS`
-    FOREIGN KEY (`portid` )
-    REFERENCES `crm`.`NETWORK_UNIT_PORTS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_PORT_IP_ADDRESSES_IP_ADDRESSES`
-    FOREIGN KEY (`ipaddressrefid` )
-    REFERENCES `crm`.`IP_ADDRESSES` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE TABLE IF NOT EXISTS `USERS` (
+  `id` int(11) NOT NULL auto_increment,
+  `companyid` int(10) unsigned default NULL,
+  `firstname` text collate utf8_swedish_ci NOT NULL,
+  `lastname` text collate utf8_swedish_ci NOT NULL,
+  `email` text collate utf8_swedish_ci NOT NULL,
+  `phone` text collate utf8_swedish_ci,
+  `password` varchar(32) collate utf8_swedish_ci NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `fk_USERS_companies` (`companyid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci CHECKSUM=1;
 
 
--- -----------------------------------------------------
--- Table `crm`.`PORT_VLANS`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`PORT_VLANS` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `portid` INT NOT NULL ,
-  `vlanrefid` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_VLANS_NETWORK_UNIT_PORTS (`portid` ASC) ,
-  INDEX fk_PORT_VLANS_VLANS (`vlanrefid` ASC) ,
-  CONSTRAINT `fk_VLANS_NETWORK_UNIT_PORTS`
-    FOREIGN KEY (`portid` )
-    REFERENCES `crm`.`NETWORK_UNIT_PORTS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_PORT_VLANS_VLANS`
-    FOREIGN KEY (`vlanrefid` )
-    REFERENCES `crm`.`VLANS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+CREATE VIEW `crm`.`view_nup_pt` AS select `nup`.`id` AS `id`,`nup`.`networkunitid` AS `networkunitid`,`nup`.`name` AS `name`,`nup`.`side` AS `side`,`pt`.`name` AS `porttypename`,`nup`.`porttypeid` AS `porttypeid` from (`crm`.`NETWORK_UNIT_PORTS` `nup` join `crm`.`PORT_TYPES` `pt`) where (`pt`.`id` = `nup`.`porttypeid`);
 
+CREATE VIEW `crm`.`view_p_ip` AS select `crm`.`PORT_IP_ADDRESSES`.`id` AS `id`,`crm`.`PORT_IP_ADDRESSES`.`portid` AS `portid`,inet_ntoa(`crm`.`PORT_IP_ADDRESSES`.`ipaddr`) AS `ipaddress`,`crm`.`PORT_IP_ADDRESSES`.`cidr` AS `cidr`,inet_ntoa(((0xffffffff << (32 - `crm`.`PORT_IP_ADDRESSES`.`cidr`)) & 0xffffffff)) AS `mask`,inet_ntoa((`crm`.`PORT_IP_ADDRESSES`.`ipaddr` & ((0xffffffff << (32 - `crm`.`PORT_IP_ADDRESSES`.`cidr`)) & 0xffffffff))) AS `network`,inet_ntoa(((`crm`.`PORT_IP_ADDRESSES`.`ipaddr` & ((0xffffffff << (32 - `crm`.`PORT_IP_ADDRESSES`.`cidr`)) & 0xffffffff)) | (~((0xffffffff << (32 - `crm`.`PORT_IP_ADDRESSES`.`cidr`))) & 0xffffffff))) AS `broadcast`,(nullif(((((`crm`.`PORT_IP_ADDRESSES`.`ipaddr` & (0xffffffff << (32 - `crm`.`PORT_IP_ADDRESSES`.`cidr`))) & 0xffffffff) | (~((0xffffffff << (32 - `crm`.`PORT_IP_ADDRESSES`.`cidr`))) & 0xffffffff)) - ((`crm`.`PORT_IP_ADDRESSES`.`ipaddr` & (0xffffffff << (32 - `crm`.`PORT_IP_ADDRESSES`.`cidr`))) & 0xffffffff)),0) - 1) AS `ipcount`,`crm`.`PORT_IP_ADDRESSES`.`ipaddr` AS `ipaddressint` from `crm`.`PORT_IP_ADDRESSES`;
 
--- -----------------------------------------------------
--- Table `crm`.`TICKET_STATUSES`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`TICKET_STATUSES` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` TEXT NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-CHECKSUM = 1;
+ALTER TABLE `BRANCHES`
+  ADD CONSTRAINT `BRANCHES_ibfk_1` FOREIGN KEY (`companyid`) REFERENCES `COMPANIES` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_BRANCH_USERS` FOREIGN KEY (`contactid`) REFERENCES `USERS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
+ALTER TABLE `COMPANIES`
+  ADD CONSTRAINT `COMPANIES_ibfk_1` FOREIGN KEY (`resellerid`) REFERENCES `COMPANIES` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_COMPANIES_USERS` FOREIGN KEY (`contactid`) REFERENCES `USERS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- -----------------------------------------------------
--- Table `crm`.`TICKETS`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`TICKETS` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT ,
-  `subject` TEXT NOT NULL ,
-  `added` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-CHECKSUM = 1;
+ALTER TABLE `COMPANY_NETWORKS`
+  ADD CONSTRAINT `fk_COMPANY_NETWORKS_COMPANIES` FOREIGN KEY (`companyid`) REFERENCES `COMPANIES` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
+ALTER TABLE `NETWORK_SERVER_PORT_CONNECTIONS`
+  ADD CONSTRAINT `fk_RACK_SERVER_PORT_CONNECTIONS_RACK_UNIT_PORTS` FOREIGN KEY (`connected_from`) REFERENCES `NETWORK_UNIT_PORTS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_RACK_SERVER_PORT_CONNECTIONS_RACK_UNIT_PORTS1` FOREIGN KEY (`connected_to`) REFERENCES `NETWORK_UNIT_PORTS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- -----------------------------------------------------
--- Table `crm`.`TICKET_REPLY`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`TICKET_REPLY` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `ticketid` BIGINT NOT NULL ,
-  `descr` LONGTEXT NOT NULL ,
-  `userid` INT NOT NULL ,
-  `statusid` INT NOT NULL ,
-  `added` DATETIME NOT NULL DEFAULT NOW() ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_TICKET_REPLY_TICKETS (`ticketid` ASC) ,
-  INDEX fk_TICKET_REPLY_USERS (`userid` ASC) ,
-  INDEX fk_TICKET_REPLY_TICKET_STATUSES (`statusid` ASC) ,
-  CONSTRAINT `fk_TICKET_REPLY_TICKETS`
-    FOREIGN KEY (`ticketid` )
-    REFERENCES `crm`.`TICKETS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TICKET_REPLY_USERS`
-    FOREIGN KEY (`userid` )
-    REFERENCES `crm`.`USERS` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TICKET_REPLY_TICKET_STATUSES`
-    FOREIGN KEY (`statusid` )
-    REFERENCES `crm`.`TICKET_STATUSES` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+ALTER TABLE `NETWORK_UNITS`
+  ADD CONSTRAINT `NETWORK_UNITS_ibfk_1` FOREIGN KEY (`branchid`) REFERENCES `BRANCHES` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `NETWORK_UNITS_ibfk_2` FOREIGN KEY (`companyid`) REFERENCES `COMPANIES` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `NETWORK_UNITS_ibfk_3` FOREIGN KEY (`contactid`) REFERENCES `USERS` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
+ALTER TABLE `NETWORK_UNIT_PORTS`
+  ADD CONSTRAINT `NETWORK_UNIT_PORTS_ibfk_1` FOREIGN KEY (`networkunitid`) REFERENCES `NETWORK_UNITS` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `NETWORK_UNIT_PORTS_ibfk_2` FOREIGN KEY (`porttypeid`) REFERENCES `PORT_TYPES` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
--- -----------------------------------------------------
--- Table `crm`.`REPLY_ATTACHMENTS`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`REPLY_ATTACHMENTS` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `replyid` INT NOT NULL ,
-  `mimetype` TEXT NOT NULL ,
-  `filedata` LONGBLOB NOT NULL ,
-  `md5sum` VARCHAR(45) NOT NULL ,
-  `filesize` INT NOT NULL ,
-  `filename` TEXT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX fk_TICKET_ATTACHMENTS_TICKET_REPLY (`replyid` ASC) ,
-  CONSTRAINT `fk_TICKET_ATTACHMENTS_TICKET_REPLY`
-    FOREIGN KEY (`replyid` )
-    REFERENCES `crm`.`TICKET_REPLY` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-CHECKSUM = 1;
+ALTER TABLE `PORT_IP_ADDRESSES`
+  ADD CONSTRAINT `fk_IP_ADDRESSES_NETWORK_UNIT_PORTS` FOREIGN KEY (`portid`) REFERENCES `NETWORK_UNIT_PORTS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
+ALTER TABLE `PORT_VLANS`
+  ADD CONSTRAINT `fk_VLANS_NETWORK_UNIT_PORTS` FOREIGN KEY (`portid`) REFERENCES `NETWORK_UNIT_PORTS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- -----------------------------------------------------
--- Table `crm`.`CALENDAR`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `crm`.`CALENDAR` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `starttime` DATETIME NOT NULL ,
-  `endtime` DATETIME NOT NULL ,
-  `name` TEXT NOT NULL ,
-  `descr` LONGTEXT NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-CHECKSUM = 1;
+ALTER TABLE `REPLY_ATTACHMENTS`
+  ADD CONSTRAINT `fk_TICKET_ATTACHMENTS_TICKET_REPLY` FOREIGN KEY (`replyid`) REFERENCES `TICKET_REPLY` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
+ALTER TABLE `TICKET_REPLY`
+  ADD CONSTRAINT `fk_TICKET_REPLY_TICKETS` FOREIGN KEY (`ticketid`) REFERENCES `TICKETS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_TICKET_REPLY_TICKET_STATUSES` FOREIGN KEY (`statusid`) REFERENCES `TICKET_STATUSES` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_TICKET_REPLY_USERS` FOREIGN KEY (`userid`) REFERENCES `USERS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+ALTER TABLE `USERS`
+  ADD CONSTRAINT `USERS_ibfk_1` FOREIGN KEY (`companyid`) REFERENCES `COMPANIES` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
