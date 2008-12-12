@@ -1,0 +1,25 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+<div id="submenu">
+  <ul>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'manage-network-device', 'id' => $this->deviceid), '', true); ?>"><?php echo $tr->_("Back");?></a></li>
+    <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add-vlan', 'portid' => $this->portid), '', true); ?>"><?php echo $tr->_("Add VLAN ID");?></a></li> 
+    <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add-ip-address', 'portid' => $this->portid), '', true); ?>"><?php echo $tr->_("Add IP Address");?></a></li> 
+  </ul>
+</div>
+
+<br />
+<br />
+<?php echo $this->companyname;?> &raquo; <?php echo $this->branchname;?> &raquo; <?php echo $this->devicename;?> &raquo; <?php echo $this->portname;?>
+<br />
+
+<h2>IPv4 addresses</h2>
+
+<?php echo $this->ips;?>
+
+<br />
+
+<h2>VLAN IDs</h2>
+
+<?php echo $this->vlans;?>

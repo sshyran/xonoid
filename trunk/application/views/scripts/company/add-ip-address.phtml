@@ -1,0 +1,19 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+
+<div id="submenu">
+  <ul>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'manage-network-device-port', 'id' => $this->portid), '', true); ?>"><?php echo $tr->_("Back");?></a></li> 
+  </ul>
+</div>
+
+<a href="http://en.wikipedia.org/wiki/CIDR">CIDR @ Wikipedia</a><br />
+
+<br />
+
+<h2>Add IP Address</h2>
+
+<?php
+echo $this->form;
+?>
