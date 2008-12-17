@@ -48,47 +48,47 @@ class UserController extends Zend_Controller_Action
     $grid->setDefaultSort(array('lastname' => 'asc'));
 
     $grid->addColumn('manage', array(
-      'header' => 'Manage',
+      'header' => $this->tr->_('Manage'),
       'width' => 1,
       'sortable' => false,
       'type' => 'action',
       'actions' => array(
           'url' => $this->view->baseUrl() . '/user/manage/id/$id/',
           'class' => 'icon',
-          'caption' => 'Edit',
+          'caption' => $this->tr->_('Manage'),
           'image' => $this->view->baseUrl() . '/images/icons/view.png'
         )
       )
     );
 
-		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
-		$grid->addColumn('lastname', new Core_DataGrid_Column('lastname', 'Last name', null , 'left'));
-		$grid->addColumn('firstname', new Core_DataGrid_Column('firstname', 'First name', null , 'left'));
-		$grid->addColumn('email', new Core_DataGrid_Column('email', 'Email', null , 'left'));
-		$grid->addColumn('phone', new Core_DataGrid_Column('phone', 'Phone', null , 'left'));
+		$grid->addColumn('id', new Core_DataGrid_Column('id', $this->tr->_('Id'), null , 'left'));
+		$grid->addColumn('lastname', new Core_DataGrid_Column('lastname', $this->tr->_('Last name'), null , 'left'));
+		$grid->addColumn('firstname', new Core_DataGrid_Column('firstname', $this->tr->_('First name'), null , 'left'));
+		$grid->addColumn('email', new Core_DataGrid_Column('email', $this->tr->_('Email'), null , 'left'));
+		$grid->addColumn('phone', new Core_DataGrid_Column('phone', $this->tr->_('Phone'), null , 'left'));
 
     $grid->addColumn('edit', array(
-      'header' => 'Edit',
+      'header' => $this->tr->_('Edit'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/user/edit/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Edit'),
         'image' => $this->view->baseUrl() . '/images/icons/edit.png'
       )
     ));
 
     $grid->addColumn('remove', array(
-      'header' => 'Remove',
+      'header' => $this->tr->_('Remove'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/user/remove/id/$id/',
         'class' => 'icon',
-        'caption' => 'Remove',
+        'caption' => $this->tr->_('Remove'),
         'image' => $this->view->baseUrl() . '/images/icons/remove.png'
       )
     ));

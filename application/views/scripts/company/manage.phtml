@@ -22,11 +22,11 @@ $tr = Zend_Registry::get('Zend_Translate');
 <?php echo $this->companyname;?>
 <br />
 
-<h2><?php echo sprintf("%s - Branch offices", $this->companyname);?>:</h2>
+<h2><?php echo sprintf($tr->_("%s - Branch offices"), $this->companyname);?>:</h2>
 
 <?php echo $this->branches;?>
 
 <?php if(!empty($this->customers)):?>
-<h2><?php echo sprintf("%s - Customers", $this->companyname);?></h2>
-<?php echo $this->customers;?>
+  <h2><?php echo sprintf($tr->_("%s - Customers"), $this->companyname);?></h2>
+  <?php echo $this->customers;?>
 <?php endif;?>

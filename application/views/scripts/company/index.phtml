@@ -8,6 +8,6 @@ $tr = Zend_Registry::get('Zend_Translate');
   </ul>
 </div>
 
-<h2>Company list</h2>
+<h2><?php echo $tr->_("Company list");?></h2>
 
 <?php echo $this->grid; ?>

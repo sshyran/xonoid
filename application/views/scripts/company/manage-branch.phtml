@@ -5,7 +5,7 @@ $tr = Zend_Registry::get('Zend_Translate');
   <ul>
     <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'manage', 'id' => $this->companyid), '', true); ?>"><?php echo $tr->_("Back");?></a></li>
     <li class="add"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'add-network-device', 'branchid' => $this->branchid), '', true); ?>"><?php echo $tr->_("Add Network device");?></a></li> 
-    <li class="document"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'branch-to-pdf', 'id' => $this->branchid, 'filename' => sprintf("%s - %s.pdf", $this->companyname, $this->branchname)), '', true); ?>"><?php echo $tr->_("PDF");?></a></li> 
+    <li class="document"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'branch-to-pdf', 'id' => $this->branchid, 'filename' => $this->escape(sprintf("%s - %s.pdf", $this->companyname, $this->branchname))), '', true); ?>"><?php echo $tr->_("Load PDF");?></a></li> 
   </ul>
 </div>
 
@@ -14,6 +14,6 @@ $tr = Zend_Registry::get('Zend_Translate');
 <?php echo $this->companyname;?> &raquo; <?php echo $this->branchname;?> 
 <br />
 
-<h2>Office's network devices</h2>
+<h2><?php echo $tr->_("Office's network devices");?></h2>
 
 <?php echo $this->grid;?>

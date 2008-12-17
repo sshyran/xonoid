@@ -1,14 +1,18 @@
 ; Settings
 
-; email settings
+; Language
+[language]
+language = en_US
+
+; E-mail settings
 [contact]
 ; email address used for sending emails
 ; reset password etc
 sender = xonoid@example.com
 
-; database settings
+; Database settings
 [database]
-; salt against database rainbow attacks
+; Salt against database rainbow attacks
 salt     = generate-random-salt-here
 
 ; Host of database

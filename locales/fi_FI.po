@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XoNoiD CRM 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-17 17:24+0200\n"
-"PO-Revision-Date: 2008-12-17 17:44+0200\n"
+"POT-Creation-Date: 2008-12-17 19:33+0200\n"
+"PO-Revision-Date: 2008-12-17 19:36+0200\n"
 "Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
 "Language-Team:  <pekka.jarvinen@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,66 @@ msgstr ""
 "X-Poedit-Language: Finnish\n"
 "X-Poedit-Country: FINLAND\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#: ../application/controllers/CompanyController.php:51
+#: ../application/controllers/CompanyController.php:357
+#: ../application/controllers/CompanyController.php:364
+#: ../application/controllers/CompanyController.php:400
+#: ../application/controllers/CompanyController.php:622
+#: ../application/controllers/CompanyController.php:629
+#: ../application/controllers/CompanyController.php:805
+#: ../application/controllers/CompanyController.php:812
+#: ../application/controllers/UserController.php:51
+#: ../application/controllers/UserController.php:58
+msgid "Manage"
+msgstr "Hallitse"
+
+#: ../application/controllers/CompanyController.php:58
+#: ../application/controllers/CompanyController.php:68
+#: ../application/controllers/CompanyController.php:75
+#: ../application/controllers/CompanyController.php:378
+#: ../application/controllers/CompanyController.php:385
+#: ../application/controllers/CompanyController.php:407
+#: ../application/controllers/CompanyController.php:420
+#: ../application/controllers/CompanyController.php:427
+#: ../application/controllers/CompanyController.php:640
+#: ../application/controllers/CompanyController.php:647
+#: ../application/controllers/CompanyController.php:825
+#: ../application/controllers/CompanyController.php:832
+#: ../application/controllers/CompanyController.php:1003
+#: ../application/controllers/CompanyController.php:1010
+#: ../application/controllers/CompanyController.php:1028
+#: ../application/controllers/CompanyController.php:1035
+#: ../application/controllers/UserController.php:71
+#: ../application/controllers/UserController.php:78
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: ../application/controllers/CompanyController.php:64
+#: ../application/controllers/CompanyController.php:369
+#: ../application/controllers/CompanyController.php:412
+#: ../application/controllers/CompanyController.php:634
+#: ../application/controllers/CompanyController.php:817
+#: ../application/controllers/CompanyController.php:991
+#: ../application/controllers/CompanyController.php:1024
+#: ../application/controllers/UserController.php:64
+msgid "Id"
+msgstr "ID-numero"
+
+#: ../application/controllers/CompanyController.php:65
+#: ../application/controllers/CompanyController.php:370
+#: ../application/controllers/CompanyController.php:413
+#: ../application/controllers/CompanyController.php:635
+#: ../application/controllers/CompanyController.php:818
+msgid "Title"
+msgstr "Otsikko"
+
+#: ../application/controllers/CompanyController.php:81
+#: ../application/controllers/CompanyController.php:88
+#: ../application/controllers/UserController.php:84
+#: ../application/controllers/UserController.php:91
+msgid "Remove"
+msgstr "Poista"
 
 #: ../application/controllers/CompanyController.php:130
 #: ../application/controllers/CompanyController.php:467
@@ -49,9 +109,15 @@ msgid "ZIP Code"
 msgstr "Postinumero"
 
 #: ../application/controllers/CompanyController.php:157
+#: ../application/controllers/CompanyController.php:374
+#: ../application/controllers/CompanyController.php:417
 #: ../application/controllers/CompanyController.php:516
 msgid "Post office"
 msgstr "Postitoimisto"
+
+#: ../application/controllers/CompanyController.php:199
+msgid "No rights."
+msgstr "Ei oikeuksia."
 
 #: ../application/controllers/CompanyController.php:238
 #: ../application/controllers/CompanyController.php:581
@@ -62,12 +128,30 @@ msgstr "Annettu osoite on jo olemassa"
 msgid "Remove company"
 msgstr "Poista yritys"
 
+#: ../application/controllers/CompanyController.php:372
+#: ../application/controllers/CompanyController.php:415
+msgid "Street address"
+msgstr "Katuosoite"
+
+#: ../application/controllers/CompanyController.php:373
+#: ../application/controllers/CompanyController.php:416
+msgid "Post number"
+msgstr "Postinumero"
+
+#: ../application/controllers/CompanyController.php:450
+msgid "Fail."
+msgstr "Epäonnistuminen."
+
 #: ../application/controllers/CompanyController.php:476
 #: ../application/controllers/CompanyController.php:705
 #: ../application/controllers/CompanyController.php:878
 #: ../application/controllers/TicketController.php:51
 msgid "Name"
 msgstr "Nimi"
+
+#: ../application/controllers/CompanyController.php:637
+msgid "Units"
+msgstr "Räkkiyksikköä (U)"
 
 #: ../application/controllers/CompanyController.php:700
 msgid "Responsible company"
@@ -77,11 +161,23 @@ msgstr "Vastuussa oleva yritys"
 msgid "Rack Unit Size"
 msgstr "Räkkiyksikön koko (U)"
 
+#: ../application/controllers/CompanyController.php:820
+#: ../application/controllers/CompanyController.php:896
+msgid "Side"
+msgstr "Puoli"
+
+#: ../application/controllers/CompanyController.php:822
+#: ../application/controllers/CompanyController.php:901
+msgid "Port type"
+msgstr "Portin tyyppi"
+
 #: ../application/controllers/CompanyController.php:891
+#: ../application/controllers/CompanyController.php:1281
 msgid "Front"
 msgstr "Edessä"
 
 #: ../application/controllers/CompanyController.php:892
+#: ../application/controllers/CompanyController.php:1284
 #: ../application/views/scripts/company/add-branch-office.phtml:7
 #: ../application/views/scripts/company/add-ip-address.phtml:7
 #: ../application/views/scripts/company/add-network-device-port.phtml:6
@@ -101,14 +197,32 @@ msgstr "Edessä"
 msgid "Back"
 msgstr "Takana"
 
-#: ../application/controllers/CompanyController.php:896
-msgid "Side"
-msgstr "Puoli"
+#: ../application/controllers/CompanyController.php:992
+msgid "IP Address"
+msgstr "IP-osoite"
 
-#: ../application/controllers/CompanyController.php:901
-msgid "Port type"
-msgstr "Portin tyyppi"
+#: ../application/controllers/CompanyController.php:994
+#: ../application/controllers/CompanyController.php:1176
+msgid "CIDR"
+msgstr "CIDR-notaatio"
 
+#: ../application/controllers/CompanyController.php:995
+msgid "Mask"
+msgstr "Aliverkon peite"
+
+#: ../application/controllers/CompanyController.php:997
+msgid "Network"
+msgstr "Verkko"
+
+#: ../application/controllers/CompanyController.php:998
+msgid "Broadcast"
+msgstr ""
+
+#: ../application/controllers/CompanyController.php:1000
+msgid "IP Count"
+msgstr "IP-osoitteiden määrä"
+
+#: ../application/controllers/CompanyController.php:1025
 #: ../application/controllers/CompanyController.php:1071
 msgid "VLAN ID"
 msgstr "VLAN-ID"
@@ -117,9 +231,9 @@ msgstr "VLAN-ID"
 msgid "IPv4 Address"
 msgstr "IPv4-osoite"
 
-#: ../application/controllers/CompanyController.php:1176
-msgid "CIDR"
-msgstr "CIDR-notaatio"
+#: ../application/controllers/CompanyController.php:1303
+msgid "IP Adresses:"
+msgstr "IP-osoitteet:"
 
 #: ../application/controllers/IndexController.php:86
 msgid "Log in"
@@ -146,6 +260,7 @@ msgid "Check password"
 msgstr "Tarkista salasana"
 
 #: ../application/controllers/IndexController.php:166
+#: ../application/views/scripts/index/reset-password.phtml:6
 msgid "Reset password"
 msgstr "Nollaa salasana"
 
@@ -171,6 +286,26 @@ msgstr "[XoNoiD] Salasanan nollaus"
 msgid "Description"
 msgstr "Kuvaus"
 
+#: ../application/controllers/UserController.php:65
+#: ../application/controllers/UserController.php:139
+#: ../application/controllers/UserController.php:314
+msgid "Last name"
+msgstr "Sukunimi"
+
+#: ../application/controllers/UserController.php:66
+#: ../application/controllers/UserController.php:132
+#: ../application/controllers/UserController.php:301
+msgid "First name"
+msgstr "Etunimi"
+
+#: ../application/controllers/UserController.php:67
+msgid "Email"
+msgstr "Sähköposti"
+
+#: ../application/controllers/UserController.php:68
+msgid "Phone"
+msgstr "Puhelinnumero"
+
 #: ../application/controllers/UserController.php:117
 #: ../application/views/scripts/user/index.phtml:6
 msgid "Add new user"
@@ -180,16 +315,6 @@ msgstr "Lisää uusi käyttäjä"
 #: ../application/controllers/UserController.php:290
 msgid "Works in company"
 msgstr "Työskentelee yrityksessä"
-
-#: ../application/controllers/UserController.php:132
-#: ../application/controllers/UserController.php:301
-msgid "First name"
-msgstr "Etunimi"
-
-#: ../application/controllers/UserController.php:139
-#: ../application/controllers/UserController.php:314
-msgid "Last name"
-msgstr "Sukunimi"
 
 #: ../application/controllers/UserController.php:154
 #: ../application/controllers/UserController.php:343
@@ -233,9 +358,46 @@ msgstr "Muokkaa käyttäjää"
 msgid "Given e-mail address is in use"
 msgstr "Annettu sähköpostiosoite on käytössä"
 
+#: ../application/views/layouts/layout.phtml:46
+#, php-format
+msgid "Executed %s SQL queries in %s seconds"
+msgstr "Suoritettiin %s SQL-kyselyä %s sekunnissa"
+
+#: ../application/views/scripts/company/add-branch-office.phtml:17
+#, php-format
+msgid "Add branch office for company %s"
+msgstr "Lisää uusi haaratoimisto yritykselle %s"
+
+#: ../application/views/scripts/company/add-ip-address.phtml:15
+#: ../application/views/scripts/company/manage-network-device-port.phtml:8
+msgid "Add IP Address"
+msgstr "Lisää IP-osoite"
+
+#: ../application/views/scripts/company/add-network-device-port.phtml:16
+#, php-format
+msgid "Add port for network device '%s'"
+msgstr "Lisää portti verkkolaitteeseen '%s'"
+
+#: ../application/views/scripts/company/add-network-device.phtml:17
+msgid "Add network device"
+msgstr "Lisää verkkolaite"
+
+#: ../application/views/scripts/company/add-vlan.phtml:13
+#: ../application/views/scripts/company/manage-network-device-port.phtml:7
+msgid "Add VLAN ID"
+msgstr "Lisää VLAN-ID"
+
+#: ../application/views/scripts/company/add.phtml:11
+msgid "Add new company billing information"
+msgstr "Lisää uuden yrityksen laskutustiedot"
+
 #: ../application/views/scripts/company/index.phtml:7
 msgid "Add company"
 msgstr "Lisää yritys"
+
+#: ../application/views/scripts/company/index.phtml:11
+msgid "Company list"
+msgstr "Yrityslista"
 
 #: ../application/views/scripts/company/manage-branch.phtml:7
 msgid "Add Network device"
@@ -245,17 +407,25 @@ msgstr "Lisää "
 msgid "Load PDF"
 msgstr "Lataa PDF-tiedosto"
 
-#: ../application/views/scripts/company/manage-network-device-port.phtml:7
-msgid "Add VLAN ID"
-msgstr "Lisää VLAN-ID"
+#: ../application/views/scripts/company/manage-branch.phtml:17
+msgid "Office's network devices"
+msgstr "Toimiston verkkolaitteet"
 
-#: ../application/views/scripts/company/manage-network-device-port.phtml:8
-msgid "Add IP Address"
-msgstr "Lisää IP-osoite"
+#: ../application/views/scripts/company/manage-network-device-port.phtml:17
+msgid "IPv4 addresses"
+msgstr "IPv4-osoitteet"
+
+#: ../application/views/scripts/company/manage-network-device-port.phtml:23
+msgid "VLAN IDs"
+msgstr "VLAN-ID:t"
 
 #: ../application/views/scripts/company/manage-network-device.phtml:7
 msgid "Add port to network device"
 msgstr "Lisää portti verkkolaitteeseen"
+
+#: ../application/views/scripts/company/manage-network-device.phtml:16
+msgid "Network device's ports"
+msgstr "Verkkolaitteiden portit"
 
 #: ../application/views/scripts/company/manage.phtml:13
 #, php-format
@@ -271,6 +441,21 @@ msgstr "Lisää uusi haaratoimisto yritykselle %s"
 #, php-format
 msgid "Add new user for %s"
 msgstr "Lisää uusi käyttäjä %s"
+
+#: ../application/views/scripts/company/manage.phtml:25
+#, php-format
+msgid "%s - Branch offices"
+msgstr "Yrityksen %s haarakonttorit"
+
+#: ../application/views/scripts/company/manage.phtml:30
+#, php-format
+msgid "%s - Customers"
+msgstr "Yrityksen %s asiakkaat"
+
+#: ../application/views/scripts/company/remove.phtml:21
+#, php-format
+msgid "Remove company '%s'"
+msgstr "Poista yritys '%s'"
 
 #: ../application/views/scripts/company/remove.phtml:23
 msgid "Note"
@@ -288,9 +473,17 @@ msgstr ""
 msgid "Forgot password?"
 msgstr "Unohditko salasanasi?"
 
+#: ../application/views/scripts/index/login.phtml:6
+msgid "Login"
+msgstr "Kirjaudu"
+
 #: ../application/views/scripts/index/reset-password.phtml:5
 msgid "Login page"
 msgstr "Kirjautumissivu"
+
+#: ../application/views/scripts/index/reset-password.phtml:11
+msgid "You'll be redirected to login page upon successful password reset."
+msgstr "Sinut ohjataan kirjautumissivulle kun salasanan nollaus sähköposti lähetetään."
 
 #: ../application/views/scripts/ticket/index.phtml:7
 msgid "Add ticket"

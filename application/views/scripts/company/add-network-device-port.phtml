@@ -13,6 +13,6 @@ $tr = Zend_Registry::get('Zend_Translate');
 <?php echo $this->companyname;?> &raquo; <?php echo $this->branchname;?> &raquo; <?php echo $this->devicename;?>
 <br />
 
-<img src="/images/icons/device-port.png" alt="" /><h2><?php echo sprintf("Add port for network device '%s'", $this->devicename);?> </h2>
+<img src="/images/icons/device-port.png" alt="" /><h2><?php echo sprintf($tr->_("Add port for network device '%s'"), $this->devicename);?> </h2>
 
 <?php echo $this->form;?>
