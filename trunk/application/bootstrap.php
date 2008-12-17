@@ -25,11 +25,48 @@ ini_set('xdebug.manual_url', 'http://fi.php.net');
 error_reporting(E_ALL | E_STRICT);
 ignore_user_abort(true);
 date_default_timezone_set('Europe/Helsinki');
- 
+
+if (!extension_loaded('gettext'))
+{
+  // Gettext module not found
+  // Note: You can't translate this error
+  echo "Gettext PHP module not loaded!";
+  die;
+}
+
+// Check PHP version
+if (version_compare(PHP_VERSION, '5.2') === -1)
+{
+  printf (_("Too old PHP version (%s). Please update."), PHP_VERSION);
+  die;
+}
+
+$required_extensions = array(
+  'session', 'spl', 'reflection', 'standard', 'mbstring', 'gd', 'pdo', 'pdo_mysql', 'date', 'pcre', 'soap'
+);
+
+$loaded_extensions = array_map('strtolower', get_loaded_extensions());
+
+for($i = 0; $i < count($required_extensions); $i++)
+{
+  if (!in_array($required_extensions[$i], $loaded_extensions, false))
+  {
+    printf(_("Extension '%s' not found!"), $required_extensions[$i]);
+    die;
+  } // /if
+} // /for
+
 set_include_path(realpath(dirname(__FILE__) . '/../library') . PATH_SEPARATOR . get_include_path());  
  
 require_once 'Zend/Loader.php'; 
 Zend_Loader::registerAutoload();
+
+// Check ZF version
+if (Zend_Version::compareVersion('1.7') >= 0)
+{
+  printf (_("Too old ZF (%s). Please update."), Zend_Version::VERSION);
+  die;
+}
 
 set_include_path(realpath(dirname(__FILE__) .'/../classes') . PATH_SEPARATOR . get_include_path());
 
@@ -68,6 +105,17 @@ try
   $conn = $db->getConnection();
   Zend_Db_Table_Abstract::setDefaultAdapter($db);
   Zend_Registry::set('DB', $db);
+  
+  // Check MySQL version
+  $select = $db->select();
+  $select->from('', array('v' => 'VERSION()'));
+  $sqlver = $db->fetchRow($select);
+  if (version_compare($sqlver['v'], '5.0') === -1)
+  {
+    echo "Too old MySQL server. Please update.";
+    die;
+  }
+  
   $db_conn_initialized = true;
 }
 catch (Exception $e)
