@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XoNoiD CRM 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-17 19:33+0200\n"
+"POT-Creation-Date: 2008-12-17 19:57+0200\n"
 "PO-Revision-Date: 2008-12-17 19:25+0200\n"
 "Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
 "Language-Team: \n"
@@ -173,28 +173,12 @@ msgstr ""
 
 #: ../application/controllers/CompanyController.php:891
 #: ../application/controllers/CompanyController.php:1281
-msgid "Front"
+msgid "Front side"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:892
 #: ../application/controllers/CompanyController.php:1284
-#: ../application/views/scripts/company/add-branch-office.phtml:7
-#: ../application/views/scripts/company/add-ip-address.phtml:7
-#: ../application/views/scripts/company/add-network-device-port.phtml:6
-#: ../application/views/scripts/company/add-network-device.phtml:7
-#: ../application/views/scripts/company/add-vlan.phtml:7
-#: ../application/views/scripts/company/add.phtml:7
-#: ../application/views/scripts/company/manage-branch.phtml:6
-#: ../application/views/scripts/company/manage-network-device-port.phtml:6
-#: ../application/views/scripts/company/manage-network-device.phtml:6
-#: ../application/views/scripts/company/manage.phtml:8
-#: ../application/views/scripts/company/manage.phtml:10
-#: ../application/views/scripts/company/remove.phtml:8
-#: ../application/views/scripts/company/remove.phtml:10
-#: ../application/views/scripts/ticket/add.phtml:7
-#: ../application/views/scripts/user/add.phtml:6
-#: ../application/views/scripts/user/edit.phtml:6
-msgid "Back"
+msgid "Back side"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:992
@@ -351,6 +335,25 @@ msgstr ""
 #: ../application/views/layouts/layout.phtml:46
 #, php-format
 msgid "Executed %s SQL queries in %s seconds"
+msgstr ""
+
+#: ../application/views/scripts/company/add-branch-office.phtml:7
+#: ../application/views/scripts/company/add-ip-address.phtml:7
+#: ../application/views/scripts/company/add-network-device-port.phtml:6
+#: ../application/views/scripts/company/add-network-device.phtml:7
+#: ../application/views/scripts/company/add-vlan.phtml:7
+#: ../application/views/scripts/company/add.phtml:7
+#: ../application/views/scripts/company/manage-branch.phtml:6
+#: ../application/views/scripts/company/manage-network-device-port.phtml:6
+#: ../application/views/scripts/company/manage-network-device.phtml:6
+#: ../application/views/scripts/company/manage.phtml:8
+#: ../application/views/scripts/company/manage.phtml:10
+#: ../application/views/scripts/company/remove.phtml:8
+#: ../application/views/scripts/company/remove.phtml:10
+#: ../application/views/scripts/ticket/add.phtml:7
+#: ../application/views/scripts/user/add.phtml:6
+#: ../application/views/scripts/user/edit.phtml:6
+msgid "Back"
 msgstr ""
 
 #: ../application/views/scripts/company/add-branch-office.phtml:17
