@@ -14,12 +14,12 @@ $tr = Zend_Registry::get('Zend_Translate');
 <?php echo $this->companyname;?> &raquo; <?php echo $this->branchname;?> &raquo; <?php echo $this->devicename;?> &raquo; <?php echo $this->portname;?>
 <br />
 
-<h2>IPv4 addresses</h2>
+<h2><?php echo $tr->_("IPv4 addresses");?></h2>
 
 <?php echo $this->ips;?>
 
 <br />
 
-<h2>VLAN IDs</h2>
+<h2><?php echo $tr->_("VLAN IDs");?></h2>
 
 <?php echo $this->vlans;?>

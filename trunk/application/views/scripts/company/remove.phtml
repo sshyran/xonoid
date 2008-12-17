@@ -18,7 +18,7 @@ $tr = Zend_Registry::get('Zend_Translate');
 <br />
 
 <img src="/images/icons/remove.png" alt="" />
-<h2><?php echo sprintf("Remove company %s", $this->companyname);?>:</h2>
+<h2><?php echo sprintf($tr->_("Remove company '%s'"), $this->companyname);?>:</h2>
 
 <?php echo $tr->_("Note");?>:
 <?php echo $tr->_("All data considering this company is removed.");?>

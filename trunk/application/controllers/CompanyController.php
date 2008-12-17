@@ -48,44 +48,44 @@ class CompanyController extends Zend_Controller_Action
     $grid->setDefaultSort(array('name' => 'asc'));
 
     $grid->addColumn('manage', array(
-      'header' => 'Manage',
+      'header' => $this->tr->_('Manage'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
           'url' => $this->view->baseUrl() . '/company/manage/id/$id/',
           'class' => 'icon',
-          'caption' => 'Edit',
+          'caption' => $this->tr->_('Edit'),
           'image' => $this->view->baseUrl() . '/images/icons/view.png'
         )
       )
     );
 
-		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
-		$grid->addColumn('name', new Core_DataGrid_Column('name', 'Title', null , 'left'));
+		$grid->addColumn('id', new Core_DataGrid_Column('id', $this->tr->_('Id'), null , 'left'));
+		$grid->addColumn('name', new Core_DataGrid_Column('name', $this->tr->_('Title'), null , 'left'));
 
     $grid->addColumn('edit', array(
-      'header' => 'Edit',
+      'header' => $this->tr->_('Edit'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Edit'),
         'image' => $this->view->baseUrl() . '/images/icons/edit.png'
       )
     ));
 
     $grid->addColumn('remove', array(
-      'header' => 'Remove',
+      'header' => $this->tr->_('Remove'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/remove/id/$id/',
         'class' => 'icon',
-        'caption' => 'Remove',
+        'caption' => $this->tr->_('Remove'),
         'image' => $this->view->baseUrl() . '/images/icons/remove.png'
       )
     ));
@@ -196,7 +196,7 @@ class CompanyController extends Zend_Controller_Action
           if ($add_to_parent && !$is_root_company)
           {
             // multilevel hierarcy is invalid
-            throw new Zend_Exception("No rights.");
+            throw new Zend_Exception($this->tr->_("No rights."));
           }
           
           $insert = array(
@@ -354,35 +354,35 @@ class CompanyController extends Zend_Controller_Action
     $grid->setDefaultSort(array('name' => 'asc'));
 
     $grid->addColumn('manage', array(
-      'header' => 'Manage',
+      'header' => $this->tr->_('Manage'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/manage-branch/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Manage'),
         'image' => $this->view->baseUrl() . '/images/icons/view.png'
       )
     ));
 
-		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
-		$grid->addColumn('name', new Core_DataGrid_Column('name', 'Title', null , 'left'));
+		$grid->addColumn('id', new Core_DataGrid_Column('id', $this->tr->_('Id'), null , 'left'));
+		$grid->addColumn('name', new Core_DataGrid_Column('name', $this->tr->_('Title'), null , 'left'));
 
-		$grid->addColumn('streetaddress', new Core_DataGrid_Column('streetaddress', 'Street address', null , 'left'));
-		$grid->addColumn('postnumber', new Core_DataGrid_Column('postnumber', 'Post number', null , 'left'));
-		$grid->addColumn('postoffice', new Core_DataGrid_Column('postoffice', 'Post office', null , 'left'));
+		$grid->addColumn('streetaddress', new Core_DataGrid_Column('streetaddress', $this->tr->_('Street address'), null , 'left'));
+		$grid->addColumn('postnumber', new Core_DataGrid_Column('postnumber', $this->tr->_('Post number'), null , 'left'));
+		$grid->addColumn('postoffice', new Core_DataGrid_Column('postoffice', $this->tr->_('Post office'), null , 'left'));
 
 
     $grid->addColumn('edit', array(
-      'header' => 'Edit',
+      'header' => $this->tr->_('Edit'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit-branch/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Edit'),
         'image' => $this->view->baseUrl() . '/images/icons/edit.png'
       )
     ));
@@ -397,34 +397,34 @@ class CompanyController extends Zend_Controller_Action
       $grid->setDefaultSort(array('name' => 'asc'));
   
       $grid->addColumn('manage', array(
-        'header' => 'Manage',
+        'header' => $this->tr->_('Manage'),
         'sortable' => false,
         'type' => 'action',
         'width' => 1,
         'actions' => array(
           'url' => $this->view->baseUrl() . '/company/manage/id/$id/',
           'class' => 'icon',
-          'caption' => 'Edit',
+          'caption' => $this->tr->_('Edit'),
           'image' => $this->view->baseUrl() . '/images/icons/view.png'
         )
       ));
   
-  		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
-  		$grid->addColumn('name', new Core_DataGrid_Column('name', 'Title', null , 'left'));
+  		$grid->addColumn('id', new Core_DataGrid_Column('id', $this->tr->_('Id'), null , 'left'));
+  		$grid->addColumn('name', new Core_DataGrid_Column('name', $this->tr->_('Title'), null , 'left'));
   
-  		$grid->addColumn('streetaddress', new Core_DataGrid_Column('streetaddress', 'Street address', null , 'left'));
-  		$grid->addColumn('postnumber', new Core_DataGrid_Column('postnumber', 'Post number', null , 'left'));
-  		$grid->addColumn('postoffice', new Core_DataGrid_Column('postoffice', 'Post office', null , 'left'));
+  		$grid->addColumn('streetaddress', new Core_DataGrid_Column('streetaddress', $this->tr->_('Street address'), null , 'left'));
+  		$grid->addColumn('postnumber', new Core_DataGrid_Column('postnumber', $this->tr->_('Post number'), null , 'left'));
+  		$grid->addColumn('postoffice', new Core_DataGrid_Column('postoffice', $this->tr->_('Post office'), null , 'left'));
   
       $grid->addColumn('edit', array(
-        'header' => 'Edit',
+        'header' => $this->tr->_('Edit'),
         'sortable' => false,
         'width' => 1,
         'type' => 'action',
         'actions' => array(
           'url' => $this->view->baseUrl() . '/company/edit/id/$id/',
           'class' => 'icon',
-          'caption' => 'Edit',
+          'caption' => $this->tr->_('Edit'),
           'image' => $this->view->baseUrl() . '/images/icons/edit.png'
         )
       ));
@@ -447,7 +447,7 @@ class CompanyController extends Zend_Controller_Action
     
     if ($companyid === false)
     {
-      throw new Zend_Exception("Fail.");
+      throw new Zend_Exception($this->tr->_("Fail."));
     }
 
     $users = new Users();
@@ -619,32 +619,32 @@ class CompanyController extends Zend_Controller_Action
     $grid->setDefaultSort(array('name' => 'asc'));
 
     $grid->addColumn('manage', array(
-      'header' => 'Manage',
+      'header' => $this->tr->_('Manage'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/manage-network-device/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Manage'),
         'image' => $this->view->baseUrl() . '/images/icons/view.png'
       )
     ));
 
-		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
-		$grid->addColumn('name', new Core_DataGrid_Column('name', 'Title', null , 'left'));
+		$grid->addColumn('id', new Core_DataGrid_Column('id', $this->tr->_('Id'), null , 'left'));
+		$grid->addColumn('name', new Core_DataGrid_Column('name', $this->tr->_('Title'), null , 'left'));
 
-		$grid->addColumn('usize', new Core_DataGrid_Column('usize', 'Units', null , 'left'));
+		$grid->addColumn('usize', new Core_DataGrid_Column('usize', $this->tr->_('Units'), null , 'left'));
 
     $grid->addColumn('edit', array(
-      'header' => 'Edit',
+      'header' => $this->tr->_('Edit'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit-network-device/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Edit'),
         'image' => $this->view->baseUrl() . '/images/icons/edit.png'
       )
     ));
@@ -802,34 +802,34 @@ class CompanyController extends Zend_Controller_Action
     $grid->setDefaultSort(array('name' => 'asc'));
 
     $grid->addColumn('manage', array(
-      'header' => 'Manage',
+      'header' => $this->tr->_('Manage'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/manage-network-device-port/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Manage'),
         'image' => $this->view->baseUrl() . '/images/icons/view.png'
       )
     ));
 
-		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
-		$grid->addColumn('name', new Core_DataGrid_Column('name', 'Title', null , 'left'));
+		$grid->addColumn('id', new Core_DataGrid_Column('id', $this->tr->_('Id'), null , 'left'));
+		$grid->addColumn('name', new Core_DataGrid_Column('name', $this->tr->_('Title'), null , 'left'));
 
-		$grid->addColumn('side', new Core_DataGrid_Column('side', 'Side', null , 'left'));
+		$grid->addColumn('side', new Core_DataGrid_Column('side', $this->tr->_('Side'), null , 'left'));
 
-		$grid->addColumn('porttypename', new Core_DataGrid_Column('porttypeid', 'Type', null , 'left'));
+		$grid->addColumn('porttypename', new Core_DataGrid_Column('porttypeid', $this->tr->_('Port type'), null , 'left'));
 
     $grid->addColumn('edit', array(
-      'header' => 'Edit',
+      'header' => $this->tr->_('Edit'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit-port/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Edit'),
         'image' => $this->view->baseUrl() . '/images/icons/edit.png'
       )
     ));
@@ -988,26 +988,26 @@ class CompanyController extends Zend_Controller_Action
     $grid = new Core_DataGrid(new Core_DataGrid_DataSource_Array($list), 100);
     $grid->setDefaultSort(array('ipaddress' => 'asc'));
 
-		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
-		$grid->addColumn('ipaddress', new Core_DataGrid_Column('ipaddress', 'IP Address', null , 'left'));
+		$grid->addColumn('id', new Core_DataGrid_Column('id', $this->tr->_('Id'), null , 'left'));
+		$grid->addColumn('ipaddress', new Core_DataGrid_Column('ipaddress', $this->tr->_('IP Address'), null , 'left'));
 
-		$grid->addColumn('cidr', new Core_DataGrid_Column('cidr', 'CIDR', null , 'left'));
-		$grid->addColumn('mask', new Core_DataGrid_Column('mask', 'Mask', null , 'left'));
+		$grid->addColumn('cidr', new Core_DataGrid_Column('cidr', $this->tr->_('CIDR'), null , 'left'));
+		$grid->addColumn('mask', new Core_DataGrid_Column('mask', $this->tr->_('Mask'), null , 'left'));
 
-		$grid->addColumn('network', new Core_DataGrid_Column('network', 'Network', null , 'left'));
-		$grid->addColumn('broadcast', new Core_DataGrid_Column('broadcast', 'Broadcast', null , 'left'));
+		$grid->addColumn('network', new Core_DataGrid_Column('network', $this->tr->_('Network'), null , 'left'));
+		$grid->addColumn('broadcast', new Core_DataGrid_Column('broadcast', $this->tr->_('Broadcast'), null , 'left'));
 
-		$grid->addColumn('ipcount', new Core_DataGrid_Column('ipcount', 'IP Count', null , 'left'));
+		$grid->addColumn('ipcount', new Core_DataGrid_Column('ipcount', $this->tr->_('IP Count'), null , 'left'));
 
     $grid->addColumn('edit', array(
-      'header' => 'Edit',
+      'header' => $this->tr->_('Edit'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit-port/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Edit'),
         'image' => $this->view->baseUrl() . '/images/icons/edit.png'
       )
     ));
@@ -1021,18 +1021,18 @@ class CompanyController extends Zend_Controller_Action
     $grid = new Core_DataGrid(new Core_DataGrid_DataSource_Array($list), 100);
     $grid->setDefaultSort(array('vlanid' => 'asc'));
 
-		$grid->addColumn('id', new Core_DataGrid_Column('id', 'Id', null , 'left'));
-		$grid->addColumn('vlanid', new Core_DataGrid_Column('vlanid', 'VLAN ID', null , 'left'));
+		$grid->addColumn('id', new Core_DataGrid_Column('id', $this->tr->_('Id'), null , 'left'));
+		$grid->addColumn('vlanid', new Core_DataGrid_Column('vlanid', $this->tr->_('VLAN ID'), null , 'left'));
 
     $grid->addColumn('edit', array(
-      'header' => 'Edit',
+      'header' => $this->tr->_('Edit'),
       'sortable' => false,
       'width' => 1,
       'type' => 'action',
       'actions' => array(
         'url' => $this->view->baseUrl() . '/company/edit-port/id/$id/',
         'class' => 'icon',
-        'caption' => 'Edit',
+        'caption' => $this->tr->_('Edit'),
         'image' => $this->view->baseUrl() . '/images/icons/edit.png'
       )
     ));
@@ -1235,7 +1235,7 @@ class CompanyController extends Zend_Controller_Action
     
     $o = null;
     
-    $pdf = new crmPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);
+    $pdf = new crmPDF();
     $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM); 
     $pdf->AliasNbPages();
 
@@ -1261,7 +1261,7 @@ class CompanyController extends Zend_Controller_Action
    
     foreach($devices_list as $d => $dev)
     {
-      $o .= "<h2>{$dev['name']}</h2>";
+      $o .= "<h3>{$dev['name']} ({$dev['usize']}U)</h3>";
 
       $o .= "<table>";
 
@@ -1278,10 +1278,10 @@ class CompanyController extends Zend_Controller_Action
         {
           default:
           case 'F':
-            $o .= "Front";
+            $o .= $this->tr->_("Front");
           break;
           case 'B':
-            $o .= "Back";
+            $o .= $this->tr->_("Back");
           break;
         }
 
@@ -1300,7 +1300,8 @@ class CompanyController extends Zend_Controller_Action
 
         $o .= "<td>";
 
-        $o .= "IP Adresses:<br />";
+        $o .= $this->tr->_("IP Adresses:"); 
+        $o .= "<br />";
 
         foreach($iplist as $i => $ip)
         {
@@ -1333,17 +1334,19 @@ class CompanyController extends Zend_Controller_Action
 
     } // /foreach devices list
     
+   
     $pdf->writeHTML($o); 
 
     $this->_helper->layout->disableLayout();
 
     $response = $this->getResponse();
     $response->setHeader('Content-Type', 'application/pdf', true);
-    $response->setHeader('Content-Disposition', 'inline', true);
+    $fname = sprintf('"%s - %s (%s).pdf"', $companyname, $branchname, date("j.n.Y"));
+    $response->setHeader('Content-Disposition', "attachment; filename=$fname", true);
     
     $pdf->lastPage(); 
 
     $this->view->pdf = $pdf->Output('', 'S');
-  }
+  } // /function
 
 } // /class

@@ -33,18 +33,16 @@ Zend_Loader::registerAutoload();
 
 set_include_path(realpath(dirname(__FILE__) .'/../classes') . PATH_SEPARATOR . get_include_path());
 
+$language_config = new Zend_Config_Ini(dirname(__FILE__) . '/../config.ini', 'language');
+
+$translate = new Zend_Translate('gettext', dirname(__FILE__) . '/../locales/' . $language_config->language . '.mo', $language_config->language);
+$translate->setLocale($language_config->language);
+Zend_Registry::set('Zend_Translate', $translate);
+
 require_once 'db.php';
 require_once 'vat.php';
 require_once 'joker.php';
 require_once 'pdf.php';
-
-$fi = array('' => '');
-$translate = new Zend_Translate('array', $fi, 'fi');
-$translate->addTranslation($fi, 'fi');
-$translate->setLocale("fi");
-Zend_Registry::set('Zend_Translate', $translate);
-
-
 require_once 'crmform.php';
 
 $config = new Zend_Config_Ini(dirname(__FILE__) . '/../config.ini', 'database');

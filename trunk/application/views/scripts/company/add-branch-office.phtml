@@ -14,6 +14,6 @@ $tr = Zend_Registry::get('Zend_Translate');
 <?php echo $this->companyname;?>
 <br />
 
-<img src="/images/icons/branch-office.png" alt="" /><h2><?php echo sprintf("Add branch office for company %s", $this->companyname);?> </h2>
+<img src="/images/icons/branch-office.png" alt="" /><h2><?php echo sprintf($tr->_("Add branch office for company %s"), $this->companyname);?> </h2>
 
 <?php echo $this->form;?>

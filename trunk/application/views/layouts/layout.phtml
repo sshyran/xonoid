@@ -40,10 +40,10 @@ echo $this->doctype() . "\n";
 <?php
 $profiler = $db->getProfiler();
 
-$totalTime    = $profiler->getTotalElapsedSecs();
-$queryCount   = $profiler->getTotalNumQueries();
+$totalTime = $profiler->getTotalElapsedSecs();
+$queryCount = $profiler->getTotalNumQueries();
 
-echo sprintf("Executed %s SQL queries in %s seconds", $queryCount, round($totalTime,3));
+echo sprintf($tr->_("Executed %s SQL queries in %s seconds"), $queryCount, round($totalTime,3));
 ?>
 </small>
 </div>

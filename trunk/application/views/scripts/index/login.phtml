@@ -3,10 +3,11 @@ $tr = Zend_Registry::get('Zend_Translate');
 ?>
 <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'reset-password'), '', true); ?>"><?php echo $tr->_("Forgot password?");?></a>
 
-<h2>Login</h2>
+<h2><?php echo $tr->_("Login");?></h2>
 <table style="margin: auto auto; background-color: #fafafa; padding:1em; -moz-border-radius: 10px; border: 1px solid #000;">
   <tr>
-    <td valign="top"><?php echo $this->form;?></td><td><img src="/images/icons/login.png" border="0" alt="" /></td>
+    <td valign="top"><?php echo $this->form;?></td>
+    <td><img src="/images/icons/login.png" border="0" alt="" /></td>
   </tr>
 </table>
 </div>
