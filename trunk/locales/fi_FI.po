@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XoNoiD CRM 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-17 19:57+0200\n"
-"PO-Revision-Date: 2008-12-17 19:57+0200\n"
+"POT-Creation-Date: 2008-12-17 21:58+0200\n"
+"PO-Revision-Date: 2008-12-17 22:02+0200\n"
 "Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
 "Language-Team:  <pekka.jarvinen@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,21 @@ msgstr ""
 "X-Poedit-Language: Finnish\n"
 "X-Poedit-Country: FINLAND\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#: ../application/bootstrap.php:40
+#, php-format
+msgid "Too old PHP version (%s). Please update."
+msgstr "Liian vanha PHP:n versio (%s). Ole hyvä ja päivitä."
+
+#: ../application/bootstrap.php:54
+#, php-format
+msgid "Extension '%s' not found!"
+msgstr "Lisäosaa '%s' ei löytynyt!"
+
+#: ../application/bootstrap.php:67
+#, php-format
+msgid "Too old ZF (%s). Please update."
+msgstr "Liian vanha ZF (%s). Ole hyvä ja päivitä."
 
 #: ../application/controllers/CompanyController.php:51
 #: ../application/controllers/CompanyController.php:357
@@ -343,6 +358,31 @@ msgid "Given e-mail address is in use"
 msgstr "Annettu sähköpostiosoite on käytössä"
 
 #: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "Disabled"
+msgstr "Pois päältä"
+
+#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "Enabled"
+msgstr "Päällä"
+
+#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "Encryption:"
+msgstr "Salaus:"
+
+#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "SSL"
+msgstr "SSL"
+
+#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "Secure Socket Layer"
+msgstr "Secure Socket Layer -salausprotokolla"
+
+#: ../application/views/layouts/layout.phtml:56
 #, php-format
 msgid "Executed %s SQL queries in %s seconds"
 msgstr "Suoritettiin %s SQL-kyselyä %s sekunnissa"
