@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XoNoiD CRM 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-17 19:57+0200\n"
+"POT-Creation-Date: 2008-12-17 21:58+0200\n"
 "PO-Revision-Date: 2008-12-17 19:26+0200\n"
 "Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
 "Language-Team: \n"
@@ -17,6 +17,21 @@ msgstr ""
 "X-Poedit-Language: English\n"
 "X-Poedit-Country: UNITED KINGDOM\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#: ../application/bootstrap.php:40
+#, php-format
+msgid "Too old PHP version (%s). Please update."
+msgstr ""
+
+#: ../application/bootstrap.php:54
+#, php-format
+msgid "Extension '%s' not found!"
+msgstr ""
+
+#: ../application/bootstrap.php:67
+#, php-format
+msgid "Too old ZF (%s). Please update."
+msgstr ""
 
 #: ../application/controllers/CompanyController.php:51
 #: ../application/controllers/CompanyController.php:357
@@ -333,6 +348,31 @@ msgid "Given e-mail address is in use"
 msgstr ""
 
 #: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "Disabled"
+msgstr ""
+
+#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "Enabled"
+msgstr ""
+
+#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "Encryption:"
+msgstr ""
+
+#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "SSL"
+msgstr ""
+
+#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/login_layout.phtml:31
+msgid "Secure Socket Layer"
+msgstr ""
+
+#: ../application/views/layouts/layout.phtml:56
 #, php-format
 msgid "Executed %s SQL queries in %s seconds"
 msgstr ""

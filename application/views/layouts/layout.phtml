@@ -2,6 +2,15 @@
 $tr = Zend_Registry::get('Zend_Translate');
 $db = Zend_Registry::get('DB');
 
+if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on")
+{
+  $ssl_enabled = true;
+}
+else
+{
+  $ssl_enabled = false;
+}
+
 echo "\x3c?xml version=\"1.0\" encoding=\"UTF-8\"?\x3e\n";
 echo $this->doctype() . "\n";
 ?>
@@ -34,6 +43,7 @@ echo $this->doctype() . "\n";
   <hr />
   <br />
 <div id="footer">
+  <span id="ssl-status-<?php echo ($ssl_enabled ? 'on' : 'off');?>"><abbr title="<?php echo $tr->_("Secure Socket Layer");?>"><?php echo $tr->_("SSL");?></abbr> <?php echo $tr->_("Encryption:");?> <?php echo ($ssl_enabled ? $tr->_("Enabled") : $tr->_("Disabled"));?></span>
   <a href="http://framework.zend.com/"><img src="<?php echo $this->baseUrl();?>/images/misc/PoweredBy_ZF_4LightBG.png" alt="" border="0" /></a><br />
 
 <small>
