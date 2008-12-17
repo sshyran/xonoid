@@ -1,0 +1,593 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: XoNoiD CRM 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-17 17:24+0200\n"
+"PO-Revision-Date: 2008-12-17 17:44+0200\n"
+"Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
+"Language-Team:  <pekka.jarvinen@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Finnish\n"
+"X-Poedit-Country: FINLAND\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../application/controllers/CompanyController.php:130
+#: ../application/controllers/CompanyController.php:467
+#: ../application/controllers/CompanyController.php:691
+#: ../application/controllers/CompanyController.php:874
+#: ../application/controllers/CompanyController.php:1067
+#: ../application/controllers/CompanyController.php:1143
+#: ../application/controllers/TicketController.php:47
+msgid "Add"
+msgstr "Lisää"
+
+#: ../application/controllers/CompanyController.php:134
+#: ../application/controllers/CompanyController.php:471
+#: ../application/controllers/CompanyController.php:695
+msgid "Contact person"
+msgstr "Yhteyshenkilö"
+
+#: ../application/controllers/CompanyController.php:139
+msgid "Company name"
+msgstr "Yrityksen nimi"
+
+#: ../application/controllers/CompanyController.php:146
+#: ../application/controllers/CompanyController.php:491
+msgid "Street"
+msgstr "Katuosoite"
+
+#: ../application/controllers/CompanyController.php:151
+#: ../application/controllers/CompanyController.php:503
+msgid "ZIP Code"
+msgstr "Postinumero"
+
+#: ../application/controllers/CompanyController.php:157
+#: ../application/controllers/CompanyController.php:516
+msgid "Post office"
+msgstr "Postitoimisto"
+
+#: ../application/controllers/CompanyController.php:238
+#: ../application/controllers/CompanyController.php:581
+msgid "Given address exists already"
+msgstr "Annettu osoite on jo olemassa"
+
+#: ../application/controllers/CompanyController.php:295
+msgid "Remove company"
+msgstr "Poista yritys"
+
+#: ../application/controllers/CompanyController.php:476
+#: ../application/controllers/CompanyController.php:705
+#: ../application/controllers/CompanyController.php:878
+#: ../application/controllers/TicketController.php:51
+msgid "Name"
+msgstr "Nimi"
+
+#: ../application/controllers/CompanyController.php:700
+msgid "Responsible company"
+msgstr "Vastuussa oleva yritys"
+
+#: ../application/controllers/CompanyController.php:712
+msgid "Rack Unit Size"
+msgstr "Räkkiyksikön koko (U)"
+
+#: ../application/controllers/CompanyController.php:891
+msgid "Front"
+msgstr "Edessä"
+
+#: ../application/controllers/CompanyController.php:892
+#: ../application/views/scripts/company/add-branch-office.phtml:7
+#: ../application/views/scripts/company/add-ip-address.phtml:7
+#: ../application/views/scripts/company/add-network-device-port.phtml:6
+#: ../application/views/scripts/company/add-network-device.phtml:7
+#: ../application/views/scripts/company/add-vlan.phtml:7
+#: ../application/views/scripts/company/add.phtml:7
+#: ../application/views/scripts/company/manage-branch.phtml:6
+#: ../application/views/scripts/company/manage-network-device-port.phtml:6
+#: ../application/views/scripts/company/manage-network-device.phtml:6
+#: ../application/views/scripts/company/manage.phtml:8
+#: ../application/views/scripts/company/manage.phtml:10
+#: ../application/views/scripts/company/remove.phtml:8
+#: ../application/views/scripts/company/remove.phtml:10
+#: ../application/views/scripts/ticket/add.phtml:7
+#: ../application/views/scripts/user/add.phtml:6
+#: ../application/views/scripts/user/edit.phtml:6
+msgid "Back"
+msgstr "Takana"
+
+#: ../application/controllers/CompanyController.php:896
+msgid "Side"
+msgstr "Puoli"
+
+#: ../application/controllers/CompanyController.php:901
+msgid "Port type"
+msgstr "Portin tyyppi"
+
+#: ../application/controllers/CompanyController.php:1071
+msgid "VLAN ID"
+msgstr "VLAN-ID"
+
+#: ../application/controllers/CompanyController.php:1147
+msgid "IPv4 Address"
+msgstr "IPv4-osoite"
+
+#: ../application/controllers/CompanyController.php:1176
+msgid "CIDR"
+msgstr "CIDR-notaatio"
+
+#: ../application/controllers/IndexController.php:86
+msgid "Log in"
+msgstr "Kirjaudu"
+
+#: ../application/controllers/IndexController.php:90
+#: ../application/controllers/IndexController.php:170
+#: ../application/controllers/UserController.php:146
+#: ../application/controllers/UserController.php:328
+msgid "E-Mail"
+msgstr "Sähköposti"
+
+#: ../application/controllers/IndexController.php:98
+msgid "Password"
+msgstr "Salasana"
+
+#: ../application/controllers/IndexController.php:138
+#: ../application/controllers/IndexController.php:216
+msgid "Check email address"
+msgstr "Tarkista sähköpostiosoite"
+
+#: ../application/controllers/IndexController.php:142
+msgid "Check password"
+msgstr "Tarkista salasana"
+
+#: ../application/controllers/IndexController.php:166
+msgid "Reset password"
+msgstr "Nollaa salasana"
+
+#: ../application/controllers/IndexController.php:201
+#, php-format
+msgid ""
+"Your password has been reseted.\n"
+"New password: %s\n"
+"\n"
+"-- \n"
+"XoNoiD"
+msgstr ""
+"Salasanasi on nollattu.\n"
+"Uusi salasana: %s\n"
+"-- \n"
+"XoNoiD"
+
+#: ../application/controllers/IndexController.php:207
+msgid "[XoNoiD] Reset password"
+msgstr "[XoNoiD] Salasanan nollaus"
+
+#: ../application/controllers/TicketController.php:58
+msgid "Description"
+msgstr "Kuvaus"
+
+#: ../application/controllers/UserController.php:117
+#: ../application/views/scripts/user/index.phtml:6
+msgid "Add new user"
+msgstr "Lisää uusi käyttäjä"
+
+#: ../application/controllers/UserController.php:121
+#: ../application/controllers/UserController.php:290
+msgid "Works in company"
+msgstr "Työskentelee yrityksessä"
+
+#: ../application/controllers/UserController.php:132
+#: ../application/controllers/UserController.php:301
+msgid "First name"
+msgstr "Etunimi"
+
+#: ../application/controllers/UserController.php:139
+#: ../application/controllers/UserController.php:314
+msgid "Last name"
+msgstr "Sukunimi"
+
+#: ../application/controllers/UserController.php:154
+#: ../application/controllers/UserController.php:343
+msgid "Phone number"
+msgstr "Puhelinnumero"
+
+#: ../application/controllers/UserController.php:161
+msgid "Send login information"
+msgstr "Lähetä kirjautumistiedot"
+
+#: ../application/controllers/UserController.php:217
+#, php-format
+msgid ""
+"You have been added.\n"
+"Login: %s\n"
+"Password: %s\n"
+"\n"
+"-- \n"
+"XoNoiD"
+msgstr ""
+"Olit lisätty järjestelmään.\n"
+"Tunnus: %s\n"
+"Salasana: %s\n"
+"\n"
+"-- \n"
+"XoNoiD"
+
+#: ../application/controllers/UserController.php:223
+msgid "[XoNoiD] Register"
+msgstr "[XoNoiD] Rekisteröinti"
+
+#: ../application/controllers/UserController.php:238
+msgid "Given e-mail address exists already"
+msgstr "Annettu sähköpostiosoite on jo käytössä"
+
+#: ../application/controllers/UserController.php:286
+msgid "Edit user"
+msgstr "Muokkaa käyttäjää"
+
+#: ../application/controllers/UserController.php:410
+msgid "Given e-mail address is in use"
+msgstr "Annettu sähköpostiosoite on käytössä"
+
+#: ../application/views/scripts/company/index.phtml:7
+msgid "Add company"
+msgstr "Lisää yritys"
+
+#: ../application/views/scripts/company/manage-branch.phtml:7
+msgid "Add Network device"
+msgstr "Lisää "
+
+#: ../application/views/scripts/company/manage-branch.phtml:8
+msgid "Load PDF"
+msgstr "Lataa PDF-tiedosto"
+
+#: ../application/views/scripts/company/manage-network-device-port.phtml:7
+msgid "Add VLAN ID"
+msgstr "Lisää VLAN-ID"
+
+#: ../application/views/scripts/company/manage-network-device-port.phtml:8
+msgid "Add IP Address"
+msgstr "Lisää IP-osoite"
+
+#: ../application/views/scripts/company/manage-network-device.phtml:7
+msgid "Add port to network device"
+msgstr "Lisää portti verkkolaitteeseen"
+
+#: ../application/views/scripts/company/manage.phtml:13
+#, php-format
+msgid "Add new customer for %s"
+msgstr "Lisää uusi asiakas yritykselle %s"
+
+#: ../application/views/scripts/company/manage.phtml:15
+#, php-format
+msgid "Add new branch office for %s"
+msgstr "Lisää uusi haaratoimisto yritykselle %s"
+
+#: ../application/views/scripts/company/manage.phtml:16
+#, php-format
+msgid "Add new user for %s"
+msgstr "Lisää uusi käyttäjä %s"
+
+#: ../application/views/scripts/company/remove.phtml:23
+msgid "Note"
+msgstr "Huomaa"
+
+#: ../application/views/scripts/company/remove.phtml:24
+msgid "All data considering this company is removed."
+msgstr "Kaikki tieto koskien tätä yritystä poistetaan."
+
+#: ../application/views/scripts/company/remove.phtml:25
+msgid "This includes reselled companies, branch offices, everything."
+msgstr ""
+
+#: ../application/views/scripts/index/login.phtml:4
+msgid "Forgot password?"
+msgstr "Unohditko salasanasi?"
+
+#: ../application/views/scripts/index/reset-password.phtml:5
+msgid "Login page"
+msgstr "Kirjautumissivu"
+
+#: ../application/views/scripts/ticket/index.phtml:7
+msgid "Add ticket"
+msgstr "Lisää tiketti"
+
+#: ../classes/form_translation.php:5
+msgid "'%value%' has not only alphabetic and digit characters"
+msgstr "'%value%' sisältää muita kuin aakkosia ja numeroita"
+
+#: ../classes/form_translation.php:6
+#: ../classes/form_translation.php:8
+#: ../classes/form_translation.php:21
+msgid "'%value%' is an empty string"
+msgstr "'%value%' on tyhjä merkkijono"
+
+#: ../classes/form_translation.php:7
+msgid "'%value%' has not only alphabetic characters"
+msgstr "'%value%' sisältää muita merkkejä kuin aakkosia"
+
+#: ../classes/form_translation.php:9
+msgid "'%value%' is an invalid EAN-13 barcode"
+msgstr "'%value%' on epäkelpo EAN-13-viivakoodi"
+
+#: ../classes/form_translation.php:10
+msgid "'%value%' should be 13 characters"
+msgstr "'%value%' pitäisi olla 13 merkkiä pitkä"
+
+#: ../classes/form_translation.php:11
+msgid "'%value%' is an invalid UPC-A barcode"
+msgstr "'%value%' on epäkelpo UPC-A-viivakoodi"
+
+#: ../classes/form_translation.php:12
+msgid "'%value%' should be 12 characters"
+msgstr "'%value%' pitäisi olla 12 merkkiä pitkä"
+
+#: ../classes/form_translation.php:13
+msgid "'%value%' is not between '%min%' and '%max%', inclusively"
+msgstr "'%value%' ei ole %min% ja %max% -arvojen välissä"
+
+#: ../classes/form_translation.php:14
+msgid "'%value%' is not strictly between '%min%' and '%max%'"
+msgstr "'%value%' ei ole %min% ja %max% -arvojen välissä"
+
+#: ../classes/form_translation.php:15
+msgid "'%value%' must contain between 13 and 19 digits"
+msgstr "'%value%' pitää olla 13-19 merkkiä pitkä"
+
+#: ../classes/form_translation.php:16
+msgid "Luhn algorithm (mod-10 checksum) failed on '%value%'"
+msgstr "'%value%' ei läpäissyt Luhn-algoritmia"
+
+#: ../classes/form_translation.php:17
+msgid "'%value%' is not of the format YYYY-MM-DD"
+msgstr "'%value%' ei ole muodossa VVVV-KK-PP"
+
+#: ../classes/form_translation.php:18
+msgid "'%value%' does not appear to be a valid date"
+msgstr "'%value%' ei ole kelvollinen päiväys"
+
+#: ../classes/form_translation.php:19
+msgid "'%value%' does not fit given date format"
+msgstr "'%value%' ei mahdu annettuun aikaformaattiin"
+
+#: ../classes/form_translation.php:20
+msgid "'%value%' contains not only digit characters"
+msgstr "'%value%' sisältää muita kuin numeroita"
+
+#: ../classes/form_translation.php:22
+msgid "'%value%' is not a valid email address in the basic format local-part@hostname"
+msgstr "'%value%' ei ole kelvollinen sähköpostiosoite"
+
+#: ../classes/form_translation.php:23
+msgid "'%hostname%' is not a valid hostname for email address '%value%'"
+msgstr "'%hostname%' ei ole kelvollinen sähköpostin domain osoitteelle '%value%'"
+
+#: ../classes/form_translation.php:24
+msgid "'%hostname%' does not appear to have a valid MX record for the email address '%value%'"
+msgstr "'%hostname%' ei sisällä kelvollista MX-tietuetta nimipalvelimella annetulle sähköpostiosoitteelle '%value%'"
+
+#: ../classes/form_translation.php:25
+msgid "'%localPart%' not matched against dot-atom format"
+msgstr ""
+
+#: ../classes/form_translation.php:26
+msgid "'%localPart%' not matched against quoted-string format"
+msgstr ""
+
+#: ../classes/form_translation.php:27
+msgid "'%localPart%' is not a valid local part for email address '%value%'"
+msgstr "'%value%' ei ole kelvollinen sähköpostiosoite"
+
+#: ../classes/form_translation.php:28
+msgid "'%value%' does not appear to be a float"
+msgstr "'%value%' ei ole kelvollinen liukuluku"
+
+#: ../classes/form_translation.php:29
+msgid "'%value%' is not greater than '%min%'"
+msgstr "'%value%' ei ole suurempi kuin '%min%'"
+
+#: ../classes/form_translation.php:30
+msgid "'%value%' has not only hexadecimal digit characters"
+msgstr "'%value%' sisältää muita kuin heksadesimaalisia merkkejä (0-9a-f)"
+
+#: ../classes/form_translation.php:31
+msgid "'%value%' appears to be an IP address, but IP addresses are not allowed"
+msgstr "'%value%' näyttää olevan IP-osoite, mutta IP-osoitteet eivät ole sallittuja"
+
+#: ../classes/form_translation.php:32
+msgid "'%value%' appears to be a DNS hostname but cannot match TLD against known list"
+msgstr ""
+
+#: ../classes/form_translation.php:33
+msgid "'%value%' appears to be a DNS hostname but contains a dash (-) in an invalid position"
+msgstr ""
+
+#: ../classes/form_translation.php:34
+msgid "'%value%' appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
+msgstr ""
+
+#: ../classes/form_translation.php:35
+msgid "'%value%' appears to be a DNS hostname but cannot extract TLD part"
+msgstr ""
+
+#: ../classes/form_translation.php:36
+msgid "'%value%' does not match the expected structure for a DNS hostname"
+msgstr "'%value%' ei vastaa domain-nimen rakennetta"
+
+#: ../classes/form_translation.php:37
+msgid "'%value%' does not appear to be a valid local network name"
+msgstr ""
+
+#: ../classes/form_translation.php:38
+msgid "'%value%' appears to be a local network name but local network names are not allowed"
+msgstr ""
+
+#: ../classes/form_translation.php:39
+msgid "Tokens do not match"
+msgstr ""
+
+#: ../classes/form_translation.php:40
+msgid "No token was provided to match against"
+msgstr ""
+
+#: ../classes/form_translation.php:41
+msgid "'%value%' was not found in the haystack"
+msgstr ""
+
+#: ../classes/form_translation.php:42
+msgid "'%value%' does not appear to be an integer"
+msgstr "'%value%' ei ole kokonaisluku"
+
+#: ../classes/form_translation.php:43
+msgid "'%value%' does not appear to be a valid IP address"
+msgstr "'%value%' ei ole IP-osoite"
+
+#: ../classes/form_translation.php:44
+msgid "'%value%' is not less than '%max%'"
+msgstr "'%value%' ei ole pienempi kuin '%max%'"
+
+#: ../classes/form_translation.php:45
+msgid "Value is empty, but a non-empty value is required"
+msgstr "Pakollinen kenttä"
+
+#: ../classes/form_translation.php:46
+msgid "'%value%' does not match against pattern '%pattern%'"
+msgstr "'%value%' ei osu sääntöön '%pattern%'"
+
+#: ../classes/form_translation.php:47
+msgid "'%value%' is less than %min% characters long"
+msgstr "'%value%' on vähemmän kuin %min% merkkiä pitkä"
+
+#: ../classes/form_translation.php:48
+msgid "'%value%' is greater than %max% characters long"
+msgstr "'%value%' on pitempi kuin sallittu %max% merkkiä pitkä"
+
+#: ../classes/form_translation.php:49
+msgid "Too much files, only '%value%' are allowed"
+msgstr "Liian monta tiedostoa, vain %value% on sallittu"
+
+#: ../classes/form_translation.php:50
+msgid "Too less files, minimum '%value%' must be given"
+msgstr "Liian vähän tiedostoja, %value% pitää lähettää minimissään"
+
+#: ../classes/form_translation.php:51
+msgid "The file '%value%' has a false extension"
+msgstr "Tiedostolla '%value%' on väärä tai väärennetty tiedostopääte"
+
+#: ../classes/form_translation.php:52
+#: ../classes/form_translation.php:73
+msgid "The file '%value%' was not found"
+msgstr "Tiedostoa '%value%' ei löytynyt"
+
+#: ../classes/form_translation.php:53
+msgid "The files in sum exceed the maximum allowed size"
+msgstr "Tiedostojen summa ylittää ylärajan"
+
+#: ../classes/form_translation.php:54
+msgid "All files are in sum smaller than required"
+msgstr "Kaikkien tiedostojen summa on pienempi kuin sallittu"
+
+#: ../classes/form_translation.php:55
+msgid "One or more files can not be read"
+msgstr "Yhtä tai useampaa tiedostoa ei voitu lukea"
+
+#: ../classes/form_translation.php:56
+msgid "Width of the image '%value%' is bigger than allowed"
+msgstr "Kuvan '%value%' leveys on suurempi kuin sallittu"
+
+#: ../classes/form_translation.php:57
+msgid "Width of the image '%value%' is smaller than allowed"
+msgstr "Kuvan '%value%' leveys on pienempi kuin sallittu"
+
+#: ../classes/form_translation.php:58
+msgid "Height of the image '%value%' is bigger than allowed"
+msgstr "Kuvan '%value%' pituus on suurempi kuin sallittu"
+
+#: ../classes/form_translation.php:59
+msgid "Height of the image '%value%' is smaller than allowed"
+msgstr "Kuvan '%value%' pituus on pienempi kuin sallittu"
+
+#: ../classes/form_translation.php:60
+msgid "Size if the image '%value%' could not be detected"
+msgstr "Kuvan '%value%' pituutta ja leveyttä ei saatu selville"
+
+#: ../classes/form_translation.php:61
+msgid "The image '%value%' can not be read"
+msgstr "Kuvaa '%value%' ei voitu lukea"
+
+#: ../classes/form_translation.php:62
+msgid "The file '%value%' is bigger than allowed"
+msgstr "Tiedosto '%value%' on suurempi kuin sallittu koko"
+
+#: ../classes/form_translation.php:63
+msgid "The file '%value%' is smaller than allowed"
+msgstr "Tiedosto '%value%' on pienempi kuin sallittu koko"
+
+#: ../classes/form_translation.php:64
+msgid "The file '%value%' could not be found"
+msgstr "Tiedostoa '%value%' ei löytynyt"
+
+#: ../classes/form_translation.php:65
+msgid "The file '%value%' exceeds the defined ini size"
+msgstr "Tiedoston '%value%' koko ylittää INI-tiedostossa määritetyn koon"
+
+#: ../classes/form_translation.php:66
+msgid "The file '%value%' exceeds the defined form size"
+msgstr "Tiedoston '%value%' koko ylittää lomakkeeseen asetetun koon"
+
+#: ../classes/form_translation.php:67
+msgid "The file '%value%' was only partially uploaded"
+msgstr "Tiedosto '%value%' ei saapunut perille kokonaisena"
+
+#: ../classes/form_translation.php:68
+msgid "The file '%value%' was not uploaded"
+msgstr "Tiedostoa '%value%' ei lähetetty"
+
+#: ../classes/form_translation.php:69
+msgid "No temporary directory was found for the file '%value%'"
+msgstr "Väliaikaista hakemistoa ei löydetty tiedostolle '%value%'"
+
+#: ../classes/form_translation.php:70
+msgid "The file '%value%' can't be written"
+msgstr "Tiedostoa '%value%' ei voida kirjoittaa"
+
+#: ../classes/form_translation.php:71
+msgid "The extension returned an error while uploading the file '%value%'"
+msgstr "Tiedostoa '%value%' lähetettäessä tiedostonkäsittelijä palautti virheen"
+
+#: ../classes/form_translation.php:72
+msgid "The file '%value%' was illegal uploaded, possible attack"
+msgstr "Tiedosto '%value%' lähetettiin järjestelmään epäkelvolla tavalla, tämä on mahdollinen hyökkäys"
+
+#: ../classes/form_translation.php:74
+msgid "Unknown error while uploading the file '%value%'"
+msgstr "Tuntematon virhe lähetettäessä tiedostoa '%value%'"
+
+#: ../classes/vat.php:23
+msgid "Unknown error. Try again later"
+msgstr "Tuntematon virhe. Koita myöhemmin uudestaan."
+
+#: ../classes/vat.php:24
+msgid "The provided CountryCode is invalid or the VAT number is empty"
+msgstr "Maakoodi on virheellinen tai VAT-numero on tyhjä"
+
+#: ../classes/vat.php:25
+msgid "The SOAP service is unavailable, try again later"
+msgstr "SOAP-palvelu ei ole saatavilla, koita myöhemmin uudelleen"
+
+#: ../classes/vat.php:26
+msgid "The Member State service is unavailable, try again later or with another Member State"
+msgstr ""
+
+#: ../classes/vat.php:27
+msgid "The Member State service could not be reach in time, try again later or with another Member State"
+msgstr ""
+
+#: ../classes/vat.php:28
+msgid "The service can't process your request. Try again later."
+msgstr "Palvelu ei voi käsitellä pyyntöäsi. Koita uudelleen myöhemmin."
+
