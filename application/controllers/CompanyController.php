@@ -888,8 +888,8 @@ class CompanyController extends Zend_Controller_Action
 
 
     $sidearr = array();
-    $sidearr['F'] = $this->tr->_('Front');
-    $sidearr['B'] = $this->tr->_('Back');
+    $sidearr['F'] = $this->tr->_('Front side');
+    $sidearr['B'] = $this->tr->_('Back side');
     
     $side = new Zend_Form_Element_Select('side');
     $side->setRequired(true);
@@ -1278,10 +1278,10 @@ class CompanyController extends Zend_Controller_Action
         {
           default:
           case 'F':
-            $o .= $this->tr->_("Front");
+            $o .= $this->tr->_("Front side");
           break;
           case 'B':
-            $o .= $this->tr->_("Back");
+            $o .= $this->tr->_("Back side");
           break;
         }
 
