@@ -6,6 +6,26 @@ class crmDefaultForm extends Zend_Dojo_Form
 class crmForm extends crmDefaultForm
 {
 
+  public function __construct($options = null)
+  {
+    parent::__construct($options);
+    Zend_Dojo::enableForm($this);
+    
+/*
+    $this->setDecorators(array(
+      'FormElements',
+      array('TabContainer', array(
+          'id'          => 'tabContainer',
+          'style'       => 'width: 600px; height: 500px;',
+          'dijitParams' => array(
+              'tabPosition' => 'top'
+          ),
+      )),
+      'DijitForm',
+    ));
+*/
+  }
+
   public function addElement($element, $name = null, $options = null)
   {
     parent::addElement($element, $name = null, $options = null);

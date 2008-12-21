@@ -41,7 +41,7 @@ class TicketController extends Zend_Controller_Action
   {
     $form = new crmForm();
     $form->setMethod(Zend_Form::METHOD_POST);
-    $form->setAction($this->_request->getBaseUrl() . '/company/add');
+    $form->setAction($this->_request->getBaseUrl() . '/ticket/add');
 
     $submit = new Zend_Form_Element_Submit('submit');
     $submit->setLabel($this->tr->_('Add'));
@@ -53,7 +53,7 @@ class TicketController extends Zend_Controller_Action
     $name->addValidator('NotEmpty', true);
     $name->addValidator('StringLength', false, array(3, 100));
 
-    $descr = new Zend_Form_Element_Textarea('description');
+    $descr = new Zend_Dojo_Form_Element_Editor('description');
     $descr->setRequired(true);
     $descr->setLabel($this->tr->_('Description'));
     $descr->addFilter('StringTrim');
