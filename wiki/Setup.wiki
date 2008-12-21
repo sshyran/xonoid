@@ -1,6 +1,14 @@
 #summary Setup
 #labels Featured,Phase-Deploy
 
+= Install PHP5, Apache2, MySQL5 =
+Ubuntu Intrepid Ibex:
+{{{
+aptitude install libapache2-mod-php5 
+aptitude install mysql-server-5.0 
+aptitude install php5 php5-{curl,gd,mysql,mcrypt,mhash} phpmyadmin
+}}}
+
 = Add Apache virtual host =
 Example for Ubuntu:
   * Open file `/etc/apache2/sites-available/crm.vhost` with your favorite editor
@@ -25,7 +33,12 @@ Example for Ubuntu:
 
 = Initialize database =
 
-Use MySQL Workbench or dump db.sql to your database.
+Use MySQL Workbench to open `crm.mwb` or dump `db.sql` to your database with phpmyadmin or `mysql` CLI command.
+
+Example:
+{{{
+mysql -u crm -p < db.sql
+}}}
 
 After that add:
 
