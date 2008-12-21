@@ -2,7 +2,7 @@
 $tr = Zend_Registry::get('Zend_Translate');
 $db = Zend_Registry::get('DB');
 
-if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on")
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on")
 {
   $ssl_enabled = true;
 }
@@ -19,9 +19,20 @@ echo $this->doctype() . "\n";
   <link rel="icon" type="image/png" href="<?php echo $this->baseUrl();?>/images/favicon.png" />
   <title>XoNoiD CRM</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <?php echo $this->headLink()->appendStylesheet($this->baseUrl() . '/css/'); ?> 
+<?php
+echo $this->headLink()->appendStylesheet($this->baseUrl() . '/css/');
+
+// Dojo
+if ($this->dojo()->isEnabled())
+{
+  $this->dojo()->setLocalPath('/javascript/dojo/dojo.js');
+  $this->dojo()->addStyleSheetModule('dijit.themes.tundra');
+
+  echo $this->dojo();
+}
+?> 
 </head>
-<body>
+<body class="tundra">
   <h1 style="position: absolute; float:left; right:1em; top:0.2em; color: #222;">XoNoiD CRM</h1>
 
   <div id="menu">
