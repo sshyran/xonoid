@@ -111,7 +111,7 @@ class UserController extends Zend_Controller_Action
 
     $form = new crmForm();
     $form->setMethod(Zend_Form::METHOD_POST);
-    $form->setAction($this->_request->getBaseUrl() . '/user/edit');
+    $form->setAction($this->_request->getBaseUrl() . '/user/add');
 
     $submit = new Zend_Form_Element_Submit('submit');
     $submit->setLabel($this->tr->_('Add new user'));
