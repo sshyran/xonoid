@@ -62,6 +62,8 @@ class IndexController extends Zend_Controller_Action
     {
       return $this->_helper->redirector('login');
     }
+    
+    $this->view->name = sprintf("%s %s", $this->_auth->getIdentity()->firstname, $this->_auth->getIdentity()->lastname);
   }
 
   public function logoutAction()

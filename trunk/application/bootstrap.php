@@ -148,8 +148,8 @@ $view->setEncoding('UTF-8');
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
-// Enable Dojo
 Zend_Dojo::enableView($view);
+//$view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
 
 $auth = Zend_Auth::getInstance();
 

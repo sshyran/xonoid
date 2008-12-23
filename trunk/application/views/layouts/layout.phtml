@@ -15,6 +15,9 @@ echo "\x3c?xml version=\"1.0\" encoding=\"UTF-8\"?\x3e\n";
 echo $this->doctype() . "\n";
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--
+XoNoiD CRM
+-->
 <head>
   <link rel="icon" type="image/png" href="<?php echo $this->baseUrl();?>/images/favicon.png" />
   <title>XoNoiD CRM</title>
@@ -30,7 +33,7 @@ if ($this->dojo()->isEnabled())
 
   echo $this->dojo();
 }
-?> 
+?>
 </head>
 <body class="tundra">
   <h1 style="position: absolute; float:left; right:1em; top:0.2em; color: #222;">XoNoiD CRM</h1>
@@ -45,9 +48,11 @@ if ($this->dojo()->isEnabled())
 
   <hr />
 
+  <!-- CONTENT -->
   <div id="content">
     <?php echo $this->layout()->content; ?>
   </div>
+  <!-- /CONTENT -->
 
   <br />
   
@@ -57,16 +62,23 @@ if ($this->dojo()->isEnabled())
   <span id="ssl-status-<?php echo ($ssl_enabled ? 'on' : 'off');?>"><abbr title="<?php echo $tr->_("Secure Socket Layer");?>"><?php echo $tr->_("SSL");?></abbr> <?php echo $tr->_("Encryption:");?> <?php echo ($ssl_enabled ? $tr->_("Enabled") : $tr->_("Disabled"));?></span>
   <a href="http://framework.zend.com/"><img src="<?php echo $this->baseUrl();?>/images/misc/PoweredBy_ZF_4LightBG.png" alt="" border="0" /></a><br />
 
-<small>
-<?php
+<br />
+
+<div id="page-stats">
+<small><?php
 $profiler = $db->getProfiler();
 
 $totalTime = $profiler->getTotalElapsedSecs();
 $queryCount = $profiler->getTotalNumQueries();
 
-echo sprintf($tr->_("Executed %s SQL queries in %s seconds"), $queryCount, round($totalTime,3));
-?>
-</small>
+echo sprintf($tr->_("Executed %s SQL queries in %s seconds"), $queryCount, round($totalTime, 3));
+?></small>
+ | 
+<small><?php 
+echo sprintf($tr->_("Rendered in %s seconds"), round(microtime(true) - SCRIPT_START_TIME, 3));
+?></small>
+</div>
+
 </div>
 </body>
 </html>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XoNoiD CRM 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-17 21:58+0200\n"
+"POT-Creation-Date: 2008-12-22 05:15+0200\n"
 "PO-Revision-Date: 2008-12-17 19:25+0200\n"
 "Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
 "Language-Team: \n"
@@ -160,7 +160,6 @@ msgstr ""
 #: ../application/controllers/CompanyController.php:476
 #: ../application/controllers/CompanyController.php:705
 #: ../application/controllers/CompanyController.php:878
-#: ../application/controllers/TicketController.php:51
 msgid "Name"
 msgstr ""
 
@@ -234,36 +233,36 @@ msgstr ""
 msgid "IP Adresses:"
 msgstr ""
 
-#: ../application/controllers/IndexController.php:86
+#: ../application/controllers/IndexController.php:88
 msgid "Log in"
 msgstr ""
 
-#: ../application/controllers/IndexController.php:90
-#: ../application/controllers/IndexController.php:170
+#: ../application/controllers/IndexController.php:92
+#: ../application/controllers/IndexController.php:172
 #: ../application/controllers/UserController.php:146
 #: ../application/controllers/UserController.php:328
 msgid "E-Mail"
 msgstr ""
 
-#: ../application/controllers/IndexController.php:98
+#: ../application/controllers/IndexController.php:100
 msgid "Password"
 msgstr ""
 
-#: ../application/controllers/IndexController.php:138
-#: ../application/controllers/IndexController.php:216
+#: ../application/controllers/IndexController.php:140
+#: ../application/controllers/IndexController.php:218
 msgid "Check email address"
 msgstr ""
 
-#: ../application/controllers/IndexController.php:142
+#: ../application/controllers/IndexController.php:144
 msgid "Check password"
 msgstr ""
 
-#: ../application/controllers/IndexController.php:166
+#: ../application/controllers/IndexController.php:168
 #: ../application/views/scripts/index/reset-password.phtml:6
 msgid "Reset password"
 msgstr ""
 
-#: ../application/controllers/IndexController.php:201
+#: ../application/controllers/IndexController.php:203
 #, php-format
 msgid ""
 "Your password has been reseted.\n"
@@ -273,8 +272,12 @@ msgid ""
 "XoNoiD"
 msgstr ""
 
-#: ../application/controllers/IndexController.php:207
+#: ../application/controllers/IndexController.php:209
 msgid "[XoNoiD] Reset password"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:51
+msgid "Subject"
 msgstr ""
 
 #: ../application/controllers/TicketController.php:58
@@ -340,6 +343,7 @@ msgid "Given e-mail address exists already"
 msgstr ""
 
 #: ../application/controllers/UserController.php:286
+#: ../application/views/scripts/user/edit.phtml:11
 msgid "Edit user"
 msgstr ""
 
@@ -347,34 +351,39 @@ msgstr ""
 msgid "Given e-mail address is in use"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Disabled"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Enabled"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Encryption:"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "SSL"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Secure Socket Layer"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:56
+#: ../application/views/layouts/layout.phtml:74
 #, php-format
 msgid "Executed %s SQL queries in %s seconds"
+msgstr ""
+
+#: ../application/views/layouts/layout.phtml:78
+#, php-format
+msgid "Rendered in %s seconds"
 msgstr ""
 
 #: ../application/views/scripts/company/add-branch-office.phtml:7
@@ -518,8 +527,20 @@ msgstr ""
 msgid "You'll be redirected to login page upon successful password reset."
 msgstr ""
 
+#: ../application/views/scripts/ticket/add.phtml:11
+msgid "Add new ticket"
+msgstr ""
+
 #: ../application/views/scripts/ticket/index.phtml:7
 msgid "Add ticket"
+msgstr ""
+
+#: ../application/views/scripts/ticket/index.phtml:11
+msgid "Ticket list"
+msgstr ""
+
+#: ../application/views/scripts/user/index.phtml:11
+msgid "User list"
 msgstr ""
 
 #: ../classes/form_translation.php:5
