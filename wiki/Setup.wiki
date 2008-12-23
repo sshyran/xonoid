@@ -66,4 +66,8 @@ VALUES
 );
 }}}
 
+= Add permissions =
+  * Add write permissions to `cache` directory
+
+= Ready to go =
 Now you can login and add companies etc.
