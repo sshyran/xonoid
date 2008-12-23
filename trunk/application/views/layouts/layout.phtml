@@ -77,6 +77,59 @@ echo sprintf($tr->_("Executed %s SQL queries in %s seconds"), $queryCount, round
 <small><?php 
 echo sprintf($tr->_("Rendered in %s seconds"), round(microtime(true) - SCRIPT_START_TIME, 3));
 ?></small>
+ | 
+<small><?php 
+echo sprintf($tr->_("Version %s"), VERSION);
+echo " ";
+
+$version_cache_time = 60*60*24; // Cache time in seconds
+
+$LATEST_VERSION_FILE = CACHE_DIRECTORY . '/LATEST_VERSION';
+
+clearstatcache();
+
+if (!file_exists($LATEST_VERSION_FILE))
+{
+  file_put_contents($LATEST_VERSION_FILE, VERSION);
+  @chmod($LATEST_VERSION_FILE, 0777);
+  @touch($LATEST_VERSION_FILE, 1, 1);
+}
+
+if (file_exists($LATEST_VERSION_FILE))
+{
+  // Cache expired
+  if (filemtime($LATEST_VERSION_FILE) < (time() - $version_cache_time))
+  {
+    $data = file_get_contents('http://xonoid.googlecode.com/svn/wiki/VERSION.wiki');
+  
+    // Error getting version
+    if ($data === false)
+    {
+      // Read from cache..
+    }
+    else
+    {
+      $data = trim($data);
+
+      // valid digit.digit.digit format
+      if (preg_match("/^\d+\.\d+\.\d+$/", $data))
+      {
+        file_put_contents($LATEST_VERSION_FILE, $data);
+        @touch($LATEST_VERSION_FILE, time(), time());
+      }
+    }
+
+  }
+
+  $LATEST_VERSION = file_get_contents($LATEST_VERSION_FILE);
+
+  if (version_compare(VERSION, $LATEST_VERSION) === -1)
+  {
+    echo " ";
+    echo sprintf($tr->_("New version %s is available!"), $LATEST_VERSION);
+  }
+}
+?></small>
 </div>
 
 </div>

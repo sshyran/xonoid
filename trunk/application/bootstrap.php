@@ -1,5 +1,6 @@
 <?php
 // Bootstrap
+define('VERSION', '0.1.0');
 
 // Default settings
 ini_set('display_startup_errors', 1);  
@@ -55,6 +56,8 @@ for($i = 0; $i < count($required_extensions); $i++)
     die;
   } // /if
 } // /for
+
+define('CACHE_DIRECTORY', realpath(dirname(__FILE__) . '/../cache'));
 
 set_include_path(realpath(dirname(__FILE__) . '/../library') . PATH_SEPARATOR . get_include_path());  
  
@@ -149,7 +152,6 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
 Zend_Dojo::enableView($view);
-//$view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
 
 $auth = Zend_Auth::getInstance();
 
