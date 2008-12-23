@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XoNoiD CRM 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-17 21:58+0200\n"
-"PO-Revision-Date: 2008-12-17 22:02+0200\n"
+"POT-Creation-Date: 2008-12-22 05:15+0200\n"
+"PO-Revision-Date: 2008-12-22 05:16+0200\n"
 "Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
 "Language-Team:  <pekka.jarvinen@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -160,7 +160,6 @@ msgstr "Epäonnistuminen."
 #: ../application/controllers/CompanyController.php:476
 #: ../application/controllers/CompanyController.php:705
 #: ../application/controllers/CompanyController.php:878
-#: ../application/controllers/TicketController.php:51
 msgid "Name"
 msgstr "Nimi"
 
@@ -234,36 +233,36 @@ msgstr "IPv4-osoite"
 msgid "IP Adresses:"
 msgstr "IP-osoitteet:"
 
-#: ../application/controllers/IndexController.php:86
+#: ../application/controllers/IndexController.php:88
 msgid "Log in"
 msgstr "Kirjaudu"
 
-#: ../application/controllers/IndexController.php:90
-#: ../application/controllers/IndexController.php:170
+#: ../application/controllers/IndexController.php:92
+#: ../application/controllers/IndexController.php:172
 #: ../application/controllers/UserController.php:146
 #: ../application/controllers/UserController.php:328
 msgid "E-Mail"
 msgstr "Sähköposti"
 
-#: ../application/controllers/IndexController.php:98
+#: ../application/controllers/IndexController.php:100
 msgid "Password"
 msgstr "Salasana"
 
-#: ../application/controllers/IndexController.php:138
-#: ../application/controllers/IndexController.php:216
+#: ../application/controllers/IndexController.php:140
+#: ../application/controllers/IndexController.php:218
 msgid "Check email address"
 msgstr "Tarkista sähköpostiosoite"
 
-#: ../application/controllers/IndexController.php:142
+#: ../application/controllers/IndexController.php:144
 msgid "Check password"
 msgstr "Tarkista salasana"
 
-#: ../application/controllers/IndexController.php:166
+#: ../application/controllers/IndexController.php:168
 #: ../application/views/scripts/index/reset-password.phtml:6
 msgid "Reset password"
 msgstr "Nollaa salasana"
 
-#: ../application/controllers/IndexController.php:201
+#: ../application/controllers/IndexController.php:203
 #, php-format
 msgid ""
 "Your password has been reseted.\n"
@@ -277,9 +276,13 @@ msgstr ""
 "-- \n"
 "XoNoiD"
 
-#: ../application/controllers/IndexController.php:207
+#: ../application/controllers/IndexController.php:209
 msgid "[XoNoiD] Reset password"
 msgstr "[XoNoiD] Salasanan nollaus"
+
+#: ../application/controllers/TicketController.php:51
+msgid "Subject"
+msgstr "Otsikko"
 
 #: ../application/controllers/TicketController.php:58
 msgid "Description"
@@ -350,6 +353,7 @@ msgid "Given e-mail address exists already"
 msgstr "Annettu sähköpostiosoite on jo käytössä"
 
 #: ../application/controllers/UserController.php:286
+#: ../application/views/scripts/user/edit.phtml:11
 msgid "Edit user"
 msgstr "Muokkaa käyttäjää"
 
@@ -357,35 +361,40 @@ msgstr "Muokkaa käyttäjää"
 msgid "Given e-mail address is in use"
 msgstr "Annettu sähköpostiosoite on käytössä"
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Disabled"
 msgstr "Pois päältä"
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Enabled"
 msgstr "Päällä"
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Encryption:"
 msgstr "Salaus:"
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "SSL"
 msgstr "SSL"
 
-#: ../application/views/layouts/layout.phtml:46
+#: ../application/views/layouts/layout.phtml:62
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Secure Socket Layer"
 msgstr "Secure Socket Layer -salausprotokolla"
 
-#: ../application/views/layouts/layout.phtml:56
+#: ../application/views/layouts/layout.phtml:74
 #, php-format
 msgid "Executed %s SQL queries in %s seconds"
 msgstr "Suoritettiin %s SQL-kyselyä %s sekunnissa"
+
+#: ../application/views/layouts/layout.phtml:78
+#, php-format
+msgid "Rendered in %s seconds"
+msgstr "Sivu luotiin %s sekunnissa"
 
 #: ../application/views/scripts/company/add-branch-office.phtml:7
 #: ../application/views/scripts/company/add-ip-address.phtml:7
@@ -528,9 +537,21 @@ msgstr "Kirjautumissivu"
 msgid "You'll be redirected to login page upon successful password reset."
 msgstr "Sinut ohjataan kirjautumissivulle kun salasanan nollaus sähköposti lähetetään."
 
+#: ../application/views/scripts/ticket/add.phtml:11
+msgid "Add new ticket"
+msgstr "Lisää uusi tiketti"
+
 #: ../application/views/scripts/ticket/index.phtml:7
 msgid "Add ticket"
 msgstr "Lisää tiketti"
+
+#: ../application/views/scripts/ticket/index.phtml:11
+msgid "Ticket list"
+msgstr "Tikettilista"
+
+#: ../application/views/scripts/user/index.phtml:11
+msgid "User list"
+msgstr "Käyttäjälista"
 
 #: ../classes/form_translation.php:5
 msgid "'%value%' has not only alphabetic and digit characters"

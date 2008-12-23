@@ -48,7 +48,7 @@ class TicketController extends Zend_Controller_Action
 
     $name = new Zend_Form_Element_Text('name');
     $name->setRequired(true);
-    $name->setLabel($this->tr->_('Name'));
+    $name->setLabel($this->tr->_('Subject'));
     $name->addFilter('StringTrim');
     $name->addValidator('NotEmpty', true);
     $name->addValidator('StringLength', false, array(3, 100));
@@ -68,12 +68,15 @@ class TicketController extends Zend_Controller_Action
     $form->addDisplayGroup(array('name', 'description'), 'info');
     $form->addDisplayGroup(array('submit'), 'submit');
     
+   
     // Form POSTed
     if ($this->getRequest()->isPost())
     {
+    
       if ($form->isValid($_POST))
       {
         $values = $form->getValues();
+        echo $values['description'];
         
 /*
         $insert = array(
