@@ -1,0 +1,58 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+
+<div id="submenu">
+  <ul>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'index'), '', true); ?>"><?php echo $tr->_("Back");?></a></li> 
+  </ul>
+</div>
+
+<h2><?php echo sprintf($tr->_("Ticket #%s: %s"), $this->id, $this->escape($this->subject));?></h2>
+<?php echo sprintf($tr->_("Considers company: %s"), $this->company);?><br />
+<?php echo sprintf($tr->_("Priority: %s"), $this->priority);?><br />
+<?php echo sprintf($tr->_("Added: %s"), $this->date);?><br />
+<?php echo sprintf($tr->_("Reported by %s | %s | %s"), $this->personname, $this->email, $this->phone);?><br />
+<br />
+
+<?php echo $tr->_("People worked with this ticket:");?><br />
+<?php
+$p = $this->people;
+echo "<ul>";
+for($i=0; $i<count($p); $i++)
+{
+  echo "<li>{$p[$i]['writer']} ({$p[$i]['writeremail']})</li>";
+}
+echo "</ul>";
+?>
+
+<br />
+
+<h2><?php echo $tr->_("History");?></h2>
+<?php
+$r = $this->replies;
+echo "<table>\n";
+
+$odd = true;
+for($i=0; $i<count($r); $i++)
+{
+  $class = $odd ? 'rowOdd' : 'rowEven';
+
+  echo "<tr class=\"$class\">\n";
+  echo "  <td valign=\"top\">{$r[$i]['added']}<br />{$r[$i]['writer']} {$r[$i]['writerphone']}<br />{$r[$i]['writeremail']}</td>\n";
+  echo "  <td width=\"100%\" valign=\"top\">{$r[$i]['descr']}</td>\n";
+  echo "</tr>\n";
+  
+  $odd = !$odd;
+}
+
+echo "</table>\n";
+?>
+
+<br />
+
+<h2><?php echo $tr->_("Reply to this ticket");?></h2>
+
+<?php
+echo $this->form;
+?>
