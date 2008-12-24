@@ -3,6 +3,8 @@
 define('VERSION', '0.1.0');
 
 // Default settings
+ini_set('magic_quotes_gpc', false);
+ini_set('magic_quotes_runtime', false);
 ini_set('display_startup_errors', 1);  
 ini_set('display_errors', 1);
 ini_set('default_charset', 'utf-8'); 
@@ -84,6 +86,9 @@ require_once 'vat.php';
 require_once 'joker.php';
 require_once 'pdf.php';
 require_once 'crmform.php';
+require_once 'function.hexdump.php';
+require_once 'function.mb_trim.php';
+require_once 'valid_xml.php';
 
 $config = new Zend_Config_Ini(dirname(__FILE__) . '/../config.ini', 'database');
 

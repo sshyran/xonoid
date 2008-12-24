@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XoNoiD CRM 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-22 05:15+0200\n"
-"PO-Revision-Date: 2008-12-22 05:16+0200\n"
+"POT-Creation-Date: 2008-12-24 09:44+0200\n"
+"PO-Revision-Date: 2008-12-24 09:49+0200\n"
 "Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
 "Language-Team:  <pekka.jarvinen@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -18,17 +18,17 @@ msgstr ""
 "X-Poedit-Country: FINLAND\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../application/bootstrap.php:40
+#: ../application/bootstrap.php:43
 #, php-format
 msgid "Too old PHP version (%s). Please update."
 msgstr "Liian vanha PHP:n versio (%s). Ole hyvä ja päivitä."
 
-#: ../application/bootstrap.php:54
+#: ../application/bootstrap.php:57
 #, php-format
 msgid "Extension '%s' not found!"
 msgstr "Lisäosaa '%s' ei löytynyt!"
 
-#: ../application/bootstrap.php:67
+#: ../application/bootstrap.php:72
 #, php-format
 msgid "Too old ZF (%s). Please update."
 msgstr "Liian vanha ZF (%s). Ole hyvä ja päivitä."
@@ -74,6 +74,7 @@ msgstr "Muokkaa"
 #: ../application/controllers/CompanyController.php:817
 #: ../application/controllers/CompanyController.php:991
 #: ../application/controllers/CompanyController.php:1024
+#: ../application/controllers/TicketController.php:57
 #: ../application/controllers/UserController.php:64
 msgid "Id"
 msgstr "ID-numero"
@@ -99,7 +100,8 @@ msgstr "Poista"
 #: ../application/controllers/CompanyController.php:874
 #: ../application/controllers/CompanyController.php:1067
 #: ../application/controllers/CompanyController.php:1143
-#: ../application/controllers/TicketController.php:47
+#: ../application/controllers/TicketController.php:153
+#: ../application/controllers/TicketController.php:304
 msgid "Add"
 msgstr "Lisää"
 
@@ -280,13 +282,61 @@ msgstr ""
 msgid "[XoNoiD] Reset password"
 msgstr "[XoNoiD] Salasanan nollaus"
 
-#: ../application/controllers/TicketController.php:51
+#: ../application/controllers/TicketController.php:45
+#: ../application/controllers/TicketController.php:52
+msgid "Read"
+msgstr "Lue"
+
+#: ../application/controllers/TicketController.php:58
+msgid "Date added"
+msgstr "Lisäyspvm"
+
+#: ../application/controllers/TicketController.php:60
+#: ../application/controllers/TicketController.php:157
 msgid "Subject"
 msgstr "Otsikko"
 
-#: ../application/controllers/TicketController.php:58
+#: ../application/controllers/TicketController.php:64
+msgid "Company"
+msgstr "Yritys"
+
+#: ../application/controllers/TicketController.php:65
+msgid "Added by"
+msgstr "Lisääjä"
+
+#: ../application/controllers/TicketController.php:68
+msgid "Priority"
+msgstr "Tärkeys"
+
+#: ../application/controllers/TicketController.php:85
+msgid "Move up"
+msgstr "Siirrä ylöspäin"
+
+#: ../application/controllers/TicketController.php:98
+msgid "Move down"
+msgstr "Siirrä alaspäin"
+
+#: ../application/controllers/TicketController.php:111
+msgid "Move to first"
+msgstr "Siirrä ensimmäiseksi"
+
+#: ../application/controllers/TicketController.php:124
+msgid "Move to last"
+msgstr "Siirrä viimeiseksi"
+
+#: ../application/controllers/TicketController.php:164
+#: ../application/controllers/TicketController.php:165
 msgid "Description"
 msgstr "Kuvaus"
+
+#: ../application/controllers/TicketController.php:180
+msgid "Add to company"
+msgstr "Lisää yritykselle"
+
+#: ../application/controllers/TicketController.php:308
+#: ../application/controllers/TicketController.php:309
+msgid "Reply"
+msgstr "Vastaa"
 
 #: ../application/controllers/UserController.php:65
 #: ../application/controllers/UserController.php:139
@@ -361,40 +411,50 @@ msgstr "Muokkaa käyttäjää"
 msgid "Given e-mail address is in use"
 msgstr "Annettu sähköpostiosoite on käytössä"
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Disabled"
 msgstr "Pois päältä"
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Enabled"
 msgstr "Päällä"
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Encryption:"
 msgstr "Salaus:"
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "SSL"
 msgstr "SSL"
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Secure Socket Layer"
 msgstr "Secure Socket Layer -salausprotokolla"
 
-#: ../application/views/layouts/layout.phtml:74
+#: ../application/views/layouts/layout.phtml:77
 #, php-format
 msgid "Executed %s SQL queries in %s seconds"
 msgstr "Suoritettiin %s SQL-kyselyä %s sekunnissa"
 
-#: ../application/views/layouts/layout.phtml:78
+#: ../application/views/layouts/layout.phtml:81
 #, php-format
 msgid "Rendered in %s seconds"
 msgstr "Sivu luotiin %s sekunnissa"
+
+#: ../application/views/layouts/layout.phtml:85
+#, php-format
+msgid "Version %s"
+msgstr "Versio %s"
+
+#: ../application/views/layouts/layout.phtml:132
+#, php-format
+msgid "New version %s is available!"
+msgstr "Uusi versio %s on saatavilla!"
 
 #: ../application/views/scripts/company/add-branch-office.phtml:7
 #: ../application/views/scripts/company/add-ip-address.phtml:7
@@ -410,6 +470,7 @@ msgstr "Sivu luotiin %s sekunnissa"
 #: ../application/views/scripts/company/remove.phtml:8
 #: ../application/views/scripts/company/remove.phtml:10
 #: ../application/views/scripts/ticket/add.phtml:7
+#: ../application/views/scripts/ticket/read.phtml:7
 #: ../application/views/scripts/user/add.phtml:6
 #: ../application/views/scripts/user/edit.phtml:6
 msgid "Back"
@@ -548,6 +609,43 @@ msgstr "Lisää tiketti"
 #: ../application/views/scripts/ticket/index.phtml:11
 msgid "Ticket list"
 msgstr "Tikettilista"
+
+#: ../application/views/scripts/ticket/read.phtml:11
+#, php-format
+msgid "Ticket #%s: %s"
+msgstr "Tiketti #%s: %s"
+
+#: ../application/views/scripts/ticket/read.phtml:12
+#, php-format
+msgid "Considers company: %s"
+msgstr "Koskee yritystä: %s"
+
+#: ../application/views/scripts/ticket/read.phtml:13
+#, php-format
+msgid "Priority: %s"
+msgstr "Tärkeys: %s"
+
+#: ../application/views/scripts/ticket/read.phtml:14
+#, php-format
+msgid "Added: %s"
+msgstr "Lisätty: %s"
+
+#: ../application/views/scripts/ticket/read.phtml:15
+#, php-format
+msgid "Reported by %s | %s | %s"
+msgstr "Ilmoittanut %s | %s | %s"
+
+#: ../application/views/scripts/ticket/read.phtml:18
+msgid "People worked with this ticket:"
+msgstr "Tikettiin vastanneet ihmiset:"
+
+#: ../application/views/scripts/ticket/read.phtml:31
+msgid "History"
+msgstr "Historia"
+
+#: ../application/views/scripts/ticket/read.phtml:54
+msgid "Reply to this ticket"
+msgstr "Vastaa tähän tikettiin"
 
 #: ../application/views/scripts/user/index.phtml:11
 msgid "User list"

@@ -16,6 +16,7 @@
 ../application/views/scripts/index/reset-password.phtml
 ../application/views/scripts/ticket/index.phtml
 ../application/views/scripts/ticket/add.phtml
+../application/views/scripts/ticket/read.phtml
 ../application/views/scripts/user/edit.phtml
 ../application/views/scripts/user/index.phtml
 ../application/views/scripts/user/add.phtml
@@ -42,3 +43,4 @@
 ../classes/pdf.php
 ../classes/vat.php
 ../classes/db.php
+../classes/valid_xml.php

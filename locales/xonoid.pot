@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XoNoiD CRM 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-22 05:15+0200\n"
+"POT-Creation-Date: 2008-12-24 09:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,17 +16,17 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../application/bootstrap.php:40
+#: ../application/bootstrap.php:43
 #, php-format
 msgid "Too old PHP version (%s). Please update."
 msgstr ""
 
-#: ../application/bootstrap.php:54
+#: ../application/bootstrap.php:57
 #, php-format
 msgid "Extension '%s' not found!"
 msgstr ""
 
-#: ../application/bootstrap.php:67
+#: ../application/bootstrap.php:72
 #, php-format
 msgid "Too old ZF (%s). Please update."
 msgstr ""
@@ -72,6 +72,7 @@ msgstr ""
 #: ../application/controllers/CompanyController.php:817
 #: ../application/controllers/CompanyController.php:991
 #: ../application/controllers/CompanyController.php:1024
+#: ../application/controllers/TicketController.php:57
 #: ../application/controllers/UserController.php:64
 msgid "Id"
 msgstr ""
@@ -97,7 +98,8 @@ msgstr ""
 #: ../application/controllers/CompanyController.php:874
 #: ../application/controllers/CompanyController.php:1067
 #: ../application/controllers/CompanyController.php:1143
-#: ../application/controllers/TicketController.php:47
+#: ../application/controllers/TicketController.php:153
+#: ../application/controllers/TicketController.php:304
 msgid "Add"
 msgstr ""
 
@@ -274,12 +276,60 @@ msgstr ""
 msgid "[XoNoiD] Reset password"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:51
-msgid "Subject"
+#: ../application/controllers/TicketController.php:45
+#: ../application/controllers/TicketController.php:52
+msgid "Read"
 msgstr ""
 
 #: ../application/controllers/TicketController.php:58
+msgid "Date added"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:60
+#: ../application/controllers/TicketController.php:157
+msgid "Subject"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:64
+msgid "Company"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:65
+msgid "Added by"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:68
+msgid "Priority"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:85
+msgid "Move up"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:98
+msgid "Move down"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:111
+msgid "Move to first"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:124
+msgid "Move to last"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:164
+#: ../application/controllers/TicketController.php:165
 msgid "Description"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:180
+msgid "Add to company"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:308
+#: ../application/controllers/TicketController.php:309
+msgid "Reply"
 msgstr ""
 
 #: ../application/controllers/UserController.php:65
@@ -349,39 +399,49 @@ msgstr ""
 msgid "Given e-mail address is in use"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Disabled"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Enabled"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Encryption:"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "SSL"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:62
+#: ../application/views/layouts/layout.phtml:65
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Secure Socket Layer"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:74
+#: ../application/views/layouts/layout.phtml:77
 #, php-format
 msgid "Executed %s SQL queries in %s seconds"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:78
+#: ../application/views/layouts/layout.phtml:81
 #, php-format
 msgid "Rendered in %s seconds"
+msgstr ""
+
+#: ../application/views/layouts/layout.phtml:85
+#, php-format
+msgid "Version %s"
+msgstr ""
+
+#: ../application/views/layouts/layout.phtml:132
+#, php-format
+msgid "New version %s is available!"
 msgstr ""
 
 #: ../application/views/scripts/company/add-branch-office.phtml:7
@@ -398,6 +458,7 @@ msgstr ""
 #: ../application/views/scripts/company/remove.phtml:8
 #: ../application/views/scripts/company/remove.phtml:10
 #: ../application/views/scripts/ticket/add.phtml:7
+#: ../application/views/scripts/ticket/read.phtml:7
 #: ../application/views/scripts/user/add.phtml:6
 #: ../application/views/scripts/user/edit.phtml:6
 msgid "Back"
@@ -535,6 +596,43 @@ msgstr ""
 
 #: ../application/views/scripts/ticket/index.phtml:11
 msgid "Ticket list"
+msgstr ""
+
+#: ../application/views/scripts/ticket/read.phtml:11
+#, php-format
+msgid "Ticket #%s: %s"
+msgstr ""
+
+#: ../application/views/scripts/ticket/read.phtml:12
+#, php-format
+msgid "Considers company: %s"
+msgstr ""
+
+#: ../application/views/scripts/ticket/read.phtml:13
+#, php-format
+msgid "Priority: %s"
+msgstr ""
+
+#: ../application/views/scripts/ticket/read.phtml:14
+#, php-format
+msgid "Added: %s"
+msgstr ""
+
+#: ../application/views/scripts/ticket/read.phtml:15
+#, php-format
+msgid "Reported by %s | %s | %s"
+msgstr ""
+
+#: ../application/views/scripts/ticket/read.phtml:18
+msgid "People worked with this ticket:"
+msgstr ""
+
+#: ../application/views/scripts/ticket/read.phtml:31
+msgid "History"
+msgstr ""
+
+#: ../application/views/scripts/ticket/read.phtml:54
+msgid "Reply to this ticket"
 msgstr ""
 
 #: ../application/views/scripts/user/index.phtml:11
