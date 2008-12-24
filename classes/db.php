@@ -482,13 +482,48 @@ class VLANs extends Zend_Db_Table_Abstract
 } // /class
 
 
+/**
+ * 
+ */
+class Tickets extends Zend_Db_Table_Abstract
+{
+  protected $_name = 'TICKETS';
+  protected $_primary = 'id';
+  protected $_dependentTables = array('Users', 'Companies');
+  
+  public function ticketIdExists($id)
+  {
+    $select = $this->select();
+    $select->from($this, array('c' => 'COUNT(id)'));
+    $select->where('id=?', $id);
+
+    $result = $this->fetchAll($select)->toArray();
+
+    return (bool) ((int)$result[0]['c'] == 1 ? true : false);
+
+  }
+
+} // /class
+
+/**
+ * 
+ */
+class TicketReplies extends Zend_Db_Table_Abstract
+{
+  protected $_name = 'TICKET_REPLY';
+  protected $_primary = 'id';
+  protected $_dependentTables = array('Users', 'Companies');
+
+} // /class
+
+
 /*******************************************************************************
   VIEWS
 *******************************************************************************/
 
 
 /**
- * NUP PT VIEW
+ * VIEW: NUP PT
  */
 class VIEW_NUP_PT extends Zend_Db_Table_Abstract
 {
@@ -499,11 +534,46 @@ class VIEW_NUP_PT extends Zend_Db_Table_Abstract
 }
 
 /**
- * P IP VIEW
+ * VIEW: P IP
  */
 class VIEW_P_IP extends Zend_Db_Table_Abstract
 {
   protected $_name = 'view_p_ip';
   protected $_primary = 'id';
   protected $_dependentTables = array();
+}
+
+/**
+ * VIEW: T OPEN
+ */
+class VIEW_T_OPEN extends Zend_Db_Table_Abstract
+{
+  protected $_name = 'view_t_open';
+  protected $_primary = 'id';
+  protected $_dependentTables = array();
+}
+
+/**
+ * VIEW: T REPLIES
+ */
+class VIEW_T_REPLIES extends Zend_Db_Table_Abstract
+{
+  protected $_name = 'view_t_replies';
+  protected $_primary = 'id';
+  protected $_dependentTables = array();
+
+  public function getPeople($id)
+  {
+    $select = $this->select();
+    $select->from($this, array('userid', 'writer', 'writeremail'));
+    $select->where('ticketid=?', $id);
+    $select->group(array('userid'));
+    $select->order(array('writer'));
+
+    $result = $this->fetchAll($select)->toArray();
+
+    return $result;
+
+  }
+
 }
