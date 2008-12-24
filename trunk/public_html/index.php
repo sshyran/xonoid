@@ -1,17 +1,32 @@
 <?php
 define('SCRIPT_START_TIME', microtime(true), 0);
 
-function stripslashes_deep ($value = null)
+if (version_compare(phpversion(), 6) === -1)
 {
-  return is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value); 
-}
-
-// get_magic_quotes_gpc is enabled, strip stupid slashes off
-if (function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc())
-{
-  if (isset($_POST) && !empty($_POST))
+  // get_magic_quotes_gpc is enabled, strip stupid slashes off
+  if (function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc())
   {
-    $_POST = stripslashes_deep($_POST);
+    function stripinputslashes(&$input)
+    {
+      if (is_array($input))
+      {
+        foreach ($input as $key => $value)
+        {
+          $input[$key] = stripinputslashes($value);
+        }
+      }
+      else
+      {
+        $input = stripslashes($input);
+      }
+
+      return true;
+    }
+
+    array_walk_recursive($_GET, 'stripinputslashes');
+    array_walk_recursive($_POST, 'stripinputslashes');
+    array_walk_recursive($_REQUEST, 'stripinputslashes');
+
   }
 }
 
