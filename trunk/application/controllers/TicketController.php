@@ -33,6 +33,9 @@ class TicketController extends Zend_Controller_Action
     }
   }
 
+  /**
+   * List tickets  
+   */
   public function indexAction()
   {
     $VIEW_T_OPEN = new VIEW_T_OPEN();
@@ -55,10 +58,16 @@ class TicketController extends Zend_Controller_Action
     ));
 
     $grid->addColumn('id', new Core_DataGrid_Column('text', $this->tr->_('Id'), 1, 'left'));
+
+    $ticket_url = $this->view->baseUrl() . '/ticket/read/id/$id/subject/$subject';
+    $tid = new Core_DataGrid_Column('link', $this->tr->_('Id'), 1, 'left');
+    $tid->setLinks($ticket_url);
+    $grid->addColumn('id', $tid);
+
     $grid->addColumn('added', new Core_DataGrid_Column('text', $this->tr->_('Date added'), 1, 'left'));
 
     $subject = new Core_DataGrid_Column('link', $this->tr->_('Subject'), null , 'left');
-    $subject->setLinks($this->view->baseUrl() . '/ticket/read/id/$id/subject/$subject');
+    $subject->setLinks($ticket_url);
     $grid->addColumn('subject', $subject);
 
     $grid->addColumn('companyname', new Core_DataGrid_Column('text', $this->tr->_('Company'), 150, 'left'));
@@ -132,6 +141,9 @@ class TicketController extends Zend_Controller_Action
 
   }
   
+  /**
+   * Add new ticket  
+   */
   public function addAction()
   {
     $tickets = new Tickets();
@@ -199,12 +211,16 @@ class TicketController extends Zend_Controller_Action
     // Form POSTed
     if ($this->getRequest()->isPost())
     {
+      if (isset($_POST['description']))
+      {
+        $_POST['description'] = html_trim($_POST['description']);
+      }
+
+
       if ($form->isValid($_POST))
       {
         $values = $form->getValues();
 
-        $values['description'] = mb_trim($values['description']);
-        
         // Strip HTML tags
         $values['description'] = strip_tags($values['description'], '<p><a><span><ul><li><ol><div><img><br><h1><h2><h3><b><strong><pre><code><abbr><dt><dd><dl>');
         
@@ -265,6 +281,9 @@ class TicketController extends Zend_Controller_Action
     
   }
   
+  /**
+   * Read and reply to ticket  
+   */
   public function readAction()
   {
     $ticketid = $this->getRequest()->getParam('id', false);
@@ -277,17 +296,37 @@ class TicketController extends Zend_Controller_Action
     $VIEW_T_OPEN = new VIEW_T_OPEN();
     $VIEW_T_REPLIES = new VIEW_T_REPLIES();
     $ticketreplies = new TicketReplies();
+    $tickets = new Tickets();
+    $companies = new Companies();
+
+    if (!$tickets->ticketIdExists($ticketid))
+    {
+      throw new Zend_Exception("Invalid ticket ID");
+    }
+    
+    $this->view->message = null;
+    
+    $reply_session = new Zend_Session_Namespace('ticket_reply');
+    if (!isset($reply_session->ok) || !$this->getRequest()->isPost())
+    {
+      $reply_session->ok = false;
+    }
 
     $td = $VIEW_T_OPEN->fetchRow("id = $ticketid")->toArray();
+
+    // User is in reseller company so he can 
+    // - Set minutes and hours used for reply
+    // - Close ticket
+    $user_is_in_reseller_company = $companies->isRootCompany($this->_auth->getIdentity()->companyid);
     
-    $this->view->personname = $td['addername']; 
-    $this->view->id = $td['id'];    
-    $this->view->subject = $td['subject'];    
-    $this->view->date = $td['added'];    
-    $this->view->company = $td['companyname'];    
-    $this->view->priority = $td['priority'];    
-    $this->view->phone = $td['adderphone'];    
-    $this->view->email = $td['adderemail'];    
+    $this->view->personname = $td['addername'];
+    $this->view->id = $td['id'];
+    $this->view->subject = $td['subject'];
+    $this->view->date = $td['added'];
+    $this->view->company = $td['companyname'];
+    $this->view->priority = $td['priority'];
+    $this->view->phone = $td['adderphone'];
+    $this->view->email = $td['adderemail'];
 
     $replies = $VIEW_T_REPLIES->fetchAll("ticketid = $ticketid")->toArray();
     
@@ -302,14 +341,15 @@ class TicketController extends Zend_Controller_Action
 
     $submit = new Zend_Form_Element_Submit('submit');
     $submit->setLabel($this->tr->_('Add'));
+    $submit->setOrder(1000);
 
     $descr = new Zend_Dojo_Form_Element_Editor('description');
     $descr->setRequired(true);
-    $descr->setLabel($this->tr->_('Reply'));
-    $descr->setDescription($this->tr->_('Reply'));
+    $descr->setLabel($this->tr->_('My reply'));
+    $descr->setDescription($this->tr->_('My reply'));
     $descr->addFilter('StringTrim');
     $descr->addValidator(new CRM_Validate_XML());
-    $descr->addValidator('NotEmpty', true);
+    $descr->addValidator('NotEmpty', false);
     $descr->addValidator('StringLength', false, array(5, 65535));
     $descr->setPlugins(array(
       'undo', 'redo', '|', 
@@ -319,49 +359,175 @@ class TicketController extends Zend_Controller_Action
       'createLink', 'unlink', 'formatBlock'
     ));
 
+    if ($user_is_in_reseller_company)
+    {
+      $hours_list = range(0,24);
+  
+      $used_hours = new Zend_Form_Element_Select('usedhours');
+      $used_hours->setRequired(true);
+      $used_hours->setLabel($this->tr->_('Used hours:'));
+      $used_hours->addMultiOptions($hours_list);
+  
+      // Load default value
+      if (!$this->getRequest()->isPost())
+      {
+        $used_hours->setValue(0);
+      }
+  
+      $mins_list = range(0,59,5);
+  
+      $used_mins = new Zend_Form_Element_Select('usedmins');
+      $used_mins->setRequired(true);
+      $used_mins->setLabel($this->tr->_('Used minutes:'));
+      $used_mins->addMultiOptions($mins_list);
+  
+      // Load default value
+      if (!$this->getRequest()->isPost())
+      {
+        $used_mins->setValue(0);
+      }
+  
+      $form->addElement($used_hours);
+      $form->addElement($used_mins);
+    } // /if
+
     $form->addElement($descr);
 
-    $form->addElement($submit);
+    $confirmed = new Zend_Form_Element_Checkbox('confirmed');
+    $confirmed->setLabel($this->tr->_('Confirm'));
+
+    if ($user_is_in_reseller_company)
+    {
+      // Used time
+      $form->addDisplayGroup(array('usedhours', 'usedmins'), 'usedtime', array('legend' => 'Time used', 'class' => 'used-time'));
+    }
 
     $form->addDisplayGroup(array('description'), 'info');
+
+    if ($user_is_in_reseller_company)
+    {
+      // Unique IDs!
+      $ticket_statuses = array(
+              0 => '------------------------------------------------',
+          10000 => $this->tr->_('Waits customer reply'),
+        1000000 =>$this->tr->_('Closed')
+      );
+
+      $ticketstatus = new Zend_Form_Element_Select('setstatus');
+      $ticketstatus->setLabel($this->tr->_('Set ticket status to'));
+      $ticketstatus->addMultiOptions($ticket_statuses);
+
+      $form->addElement($ticketstatus);
+      $form->addDisplayGroup(array('setstatus'), 'set-status');
+
+    }
+
+    if ($user_is_in_reseller_company && $reply_session->ok)
+    {
+      // Add 'All fields confirmed'
+
+      $form->addElement($confirmed);
+      $form->addDisplayGroup(array('confirmed'), 'confirmed');
+    }
+
+    $form->addElement($submit);
     $form->addDisplayGroup(array('submit'), 'submit');
 
     // Form POSTed
     if ($this->getRequest()->isPost())
     {
+      if (isset($_POST['description']))
+      {
+        $_POST['description'] = html_trim($_POST['description']);
+      }
+    
       if ($form->isValid($_POST))
       {
+
         $values = $form->getValues();
 
-        $insert = array(
-          'userid' => $this->_auth->getIdentity()->id,
-          'ticketid' => $td['id'],
-          'descr' => $values['description'],
-          'usedminutes' => '0',
-          'added' => new Zend_Db_Expr('NOW()'),
-          'replytype' => 1,
-          'statusid' => 1
-        );
+        $values['description'] = mb_trim($values['description']);
 
-        $this->_db->beginTransaction();
-
-        try
-        {
+        // Strip HTML tags
+        $values['description'] = strip_tags($values['description'], '<p><a><span><ul><li><ol><div><img><br><h1><h2><h3><b><strong><pre><code><abbr><dt><dd><dl>');
         
-           $ticketreplies->insert($insert);
+        $used_minutes = 0;
 
-          $this->_db->commit();
+        $field_is_confirmed = false;
+        
+        if ($user_is_in_reseller_company)
+        {
+          // Reseller
+          if (!isset($values['confirmed']) || (int)$values['confirmed'] != 1)
+          {
+            $reply_session->ok = true;
+            $field_is_confirmed = false;
+          }
+          else
+          {
+            if ($reply_session->ok)
+            {
+              $field_is_confirmed = true;
+            }
+          }
+        
+          $used_minutes += $values['usedhours'] * 60;
+          $used_minutes += $values['usedmins'];
 
-          return $this->_helper->redirector->gotoUrl("/ticket/read/id/$ticketid");
+        } // /if
+        else
+        {
+          // Normal user
+          $field_is_confirmed = true;
+        }
+        
+        if ($field_is_confirmed)
+        {
+          $insert = array(
+            'userid' => $this->_auth->getIdentity()->id,
+            'ticketid' => $td['id'],
+            'descr' => $values['description'],
+            'usedminutes' => $used_minutes,
+            'added' => new Zend_Db_Expr('NOW()'),
+            'replytype' => 1,
+            'statusid' => 1
+          );
+  
+          $this->_db->beginTransaction();
+  
+          try
+          {
+            $ticketreplies->insert($insert);
+            $this->_db->commit();
+  
+            $reply_session->ok = false;
+            return $this->_helper->redirector->gotoUrl("/ticket/read/id/$ticketid");
+          }
+          catch (Exception $e)
+          {
+            $this->_db->rollBack();
+            var_dump($e);
+          }
 
         }
-        catch (Exception $e)
+        else
         {
-          $this->_db->rollBack();
-          var_dump($e);
+          if ($user_is_in_reseller_company && $reply_session->ok)
+          {
+            $this->view->message = $this->tr->_('Confirm all fields');
+            $form->markAsError();
+
+            $form->addElement($confirmed);
+            $form->addDisplayGroup(array('confirmed'), 'confirmed');
+          }
         }
 
       } // / if is valid
+      else
+      {
+        $reply_session->ok = false;
+        $form->removeElement($confirmed);
+      }
 
     }// / is POST
 
@@ -375,6 +541,8 @@ class TicketController extends Zend_Controller_Action
    */
   public function editPriorityAction()
   {
-  }
+    $this->_helper->layout->disableLayout();
+    $this->getHelper('viewRenderer')->setNoRender();
+  } // /function
 
-}
+} // /class

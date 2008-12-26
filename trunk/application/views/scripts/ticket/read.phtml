@@ -2,6 +2,17 @@
 $tr = Zend_Registry::get('Zend_Translate');
 ?>
 
+<style type="text/css">
+#fieldset-usedtime dl dt, #fieldset-usedtime dl dd 
+{
+  display: inline;
+}
+#fieldset-usedtime dl dd 
+{
+  padding-right: 1em;
+}
+</style>
+
 <div id="submenu">
   <ul>
     <li class="back"><a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'index'), '', true); ?>"><?php echo $tr->_("Back");?></a></li> 
@@ -52,7 +63,10 @@ echo "</table>\n";
 <br />
 
 <h2><?php echo $tr->_("Reply to this ticket");?></h2>
-
+<?php if(!empty($this->message)):?>
+<span class="error"><?php echo $this->message;?></span><br />
 <?php
+endif;
+
 echo $this->form;
 ?>
