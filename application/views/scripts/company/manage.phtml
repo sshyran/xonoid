@@ -22,7 +22,7 @@ $tr = Zend_Registry::get('Zend_Translate');
 <?php echo $this->companyname;?>
 <br />
 
-<h2><?php echo sprintf($tr->_("%s - Branch offices"), $this->companyname);?>:</h2>
+<img src="<?php echo $this->baseUrl();?>/images/icons/branch-office.png" alt="" border="0" style="float:left; width: 32px; height:32px;" /><h2><?php echo sprintf($tr->_("%s - Branch offices"), $this->companyname);?>:</h2>
 
 <?php echo $this->branches;?>
 
@@ -30,3 +30,24 @@ $tr = Zend_Registry::get('Zend_Translate');
   <h2><?php echo sprintf($tr->_("%s - Customers"), $this->companyname);?></h2>
   <?php echo $this->customers;?>
 <?php endif;?>
+
+<br />
+
+<img src="<?php echo $this->baseUrl();?>/images/icons/tickets.png" alt="" border="0" style="float:left; width: 32px; height:32px;" /><h2><?php echo sprintf($tr->_("%s - Tickets"), $this->companyname);?>:</h2>
+TODO
+
+<br />
+
+<h2><?php echo sprintf($tr->_("%s - Networks"), $this->companyname);?>:</h2>
+TODO
+
+<br />
+
+<img src="<?php echo $this->baseUrl();?>/images/icons/domain.png" alt="" border="0" style="float:left; width: 32px; height:32px;" /><h2><?php echo sprintf($tr->_("%s - Domains"), $this->companyname);?>:</h2>
+TODO
+<br />
+
+<img src="<?php echo $this->baseUrl();?>/images/icons/users.png" alt="" border="0" style="float:left; width: 32px; height:32px;" /><h2><?php echo sprintf($tr->_("%s - People"), $this->companyname);?>:</h2>
+
+<?php echo $this->users; ?>
+<br />
