@@ -7,7 +7,12 @@ ini_set('magic_quotes_gpc', false);
 ini_set('magic_quotes_runtime', false);
 ini_set('display_startup_errors', 1);  
 ini_set('display_errors', 1);
-ini_set('default_charset', 'utf-8'); 
+ini_set('default_charset', 'UTF-8'); 
+
+// iconv
+ini_set('iconv.input_encoding', 'UTF-8');
+ini_set('iconv.output_encoding', 'UTF-8');
+ini_set('iconv.internal_encoding', 'UTF-8');
 
 // Set XDebug settings
 ini_set('xdebug.auto_trace', false);
@@ -45,7 +50,7 @@ if (version_compare(PHP_VERSION, '5.2') === -1)
 }
 
 $required_extensions = array(
-  'session', 'spl', 'reflection', 'standard', 'mbstring', 'gd', 'pdo', 'pdo_mysql', 'date', 'pcre', 'soap'
+  'session', 'spl', 'reflection', 'standard', 'mbstring', 'gd', 'pdo', 'pdo_mysql', 'date', 'pcre', 'soap', 'iconv'
 );
 
 $loaded_extensions = array_map('strtolower', get_loaded_extensions());
@@ -89,6 +94,7 @@ require_once 'crmform.php';
 require_once 'function.hexdump.php';
 require_once 'function.mb_trim.php';
 require_once 'valid_xml.php';
+require_once 'function.html_trim.php';
 
 $config = new Zend_Config_Ini(dirname(__FILE__) . '/../config.ini', 'database');
 
