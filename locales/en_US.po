@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XoNoiD CRM 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-24 09:44+0200\n"
+"POT-Creation-Date: 2008-12-26 21:48+0200\n"
 "PO-Revision-Date: 2008-12-17 19:25+0200\n"
 "Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
 "Language-Team: \n"
@@ -18,29 +18,31 @@ msgstr ""
 "X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../application/bootstrap.php:43
+#: ../application/bootstrap.php:48
 #, php-format
 msgid "Too old PHP version (%s). Please update."
 msgstr ""
 
-#: ../application/bootstrap.php:57
+#: ../application/bootstrap.php:62
 #, php-format
 msgid "Extension '%s' not found!"
 msgstr ""
 
-#: ../application/bootstrap.php:72
+#: ../application/bootstrap.php:77
 #, php-format
 msgid "Too old ZF (%s). Please update."
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:51
-#: ../application/controllers/CompanyController.php:357
-#: ../application/controllers/CompanyController.php:364
-#: ../application/controllers/CompanyController.php:400
-#: ../application/controllers/CompanyController.php:622
-#: ../application/controllers/CompanyController.php:629
-#: ../application/controllers/CompanyController.php:805
-#: ../application/controllers/CompanyController.php:812
+#: ../application/controllers/CompanyController.php:358
+#: ../application/controllers/CompanyController.php:365
+#: ../application/controllers/CompanyController.php:402
+#: ../application/controllers/CompanyController.php:450
+#: ../application/controllers/CompanyController.php:457
+#: ../application/controllers/CompanyController.php:680
+#: ../application/controllers/CompanyController.php:687
+#: ../application/controllers/CompanyController.php:863
+#: ../application/controllers/CompanyController.php:870
 #: ../application/controllers/UserController.php:51
 #: ../application/controllers/UserController.php:58
 msgid "Manage"
@@ -49,65 +51,71 @@ msgstr ""
 #: ../application/controllers/CompanyController.php:58
 #: ../application/controllers/CompanyController.php:68
 #: ../application/controllers/CompanyController.php:75
-#: ../application/controllers/CompanyController.php:378
-#: ../application/controllers/CompanyController.php:385
-#: ../application/controllers/CompanyController.php:407
-#: ../application/controllers/CompanyController.php:420
-#: ../application/controllers/CompanyController.php:427
-#: ../application/controllers/CompanyController.php:640
-#: ../application/controllers/CompanyController.php:647
-#: ../application/controllers/CompanyController.php:825
-#: ../application/controllers/CompanyController.php:832
-#: ../application/controllers/CompanyController.php:1003
-#: ../application/controllers/CompanyController.php:1010
-#: ../application/controllers/CompanyController.php:1028
-#: ../application/controllers/CompanyController.php:1035
+#: ../application/controllers/CompanyController.php:379
+#: ../application/controllers/CompanyController.php:386
+#: ../application/controllers/CompanyController.php:409
+#: ../application/controllers/CompanyController.php:422
+#: ../application/controllers/CompanyController.php:429
+#: ../application/controllers/CompanyController.php:470
+#: ../application/controllers/CompanyController.php:477
+#: ../application/controllers/CompanyController.php:698
+#: ../application/controllers/CompanyController.php:705
+#: ../application/controllers/CompanyController.php:883
+#: ../application/controllers/CompanyController.php:890
+#: ../application/controllers/CompanyController.php:1061
+#: ../application/controllers/CompanyController.php:1068
+#: ../application/controllers/CompanyController.php:1086
+#: ../application/controllers/CompanyController.php:1093
 #: ../application/controllers/UserController.php:71
 #: ../application/controllers/UserController.php:78
 msgid "Edit"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:64
-#: ../application/controllers/CompanyController.php:369
-#: ../application/controllers/CompanyController.php:412
-#: ../application/controllers/CompanyController.php:634
-#: ../application/controllers/CompanyController.php:817
-#: ../application/controllers/CompanyController.php:991
-#: ../application/controllers/CompanyController.php:1024
-#: ../application/controllers/TicketController.php:57
+#: ../application/controllers/CompanyController.php:370
+#: ../application/controllers/CompanyController.php:414
+#: ../application/controllers/CompanyController.php:463
+#: ../application/controllers/CompanyController.php:692
+#: ../application/controllers/CompanyController.php:875
+#: ../application/controllers/CompanyController.php:1049
+#: ../application/controllers/CompanyController.php:1082
+#: ../application/controllers/TicketController.php:60
+#: ../application/controllers/TicketController.php:63
 #: ../application/controllers/UserController.php:64
 msgid "Id"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:65
-#: ../application/controllers/CompanyController.php:370
-#: ../application/controllers/CompanyController.php:413
-#: ../application/controllers/CompanyController.php:635
-#: ../application/controllers/CompanyController.php:818
+#: ../application/controllers/CompanyController.php:371
+#: ../application/controllers/CompanyController.php:415
+#: ../application/controllers/CompanyController.php:693
+#: ../application/controllers/CompanyController.php:876
 msgid "Title"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:81
 #: ../application/controllers/CompanyController.php:88
+#: ../application/controllers/CompanyController.php:483
+#: ../application/controllers/CompanyController.php:490
 #: ../application/controllers/UserController.php:84
 #: ../application/controllers/UserController.php:91
 msgid "Remove"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:130
-#: ../application/controllers/CompanyController.php:467
-#: ../application/controllers/CompanyController.php:691
-#: ../application/controllers/CompanyController.php:874
-#: ../application/controllers/CompanyController.php:1067
-#: ../application/controllers/CompanyController.php:1143
-#: ../application/controllers/TicketController.php:153
-#: ../application/controllers/TicketController.php:304
+#: ../application/controllers/CompanyController.php:525
+#: ../application/controllers/CompanyController.php:749
+#: ../application/controllers/CompanyController.php:932
+#: ../application/controllers/CompanyController.php:1125
+#: ../application/controllers/CompanyController.php:1201
+#: ../application/controllers/TicketController.php:165
+#: ../application/controllers/TicketController.php:343
 msgid "Add"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:134
-#: ../application/controllers/CompanyController.php:471
-#: ../application/controllers/CompanyController.php:695
+#: ../application/controllers/CompanyController.php:529
+#: ../application/controllers/CompanyController.php:753
 msgid "Contact person"
 msgstr ""
 
@@ -116,19 +124,19 @@ msgid "Company name"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:146
-#: ../application/controllers/CompanyController.php:491
+#: ../application/controllers/CompanyController.php:549
 msgid "Street"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:151
-#: ../application/controllers/CompanyController.php:503
+#: ../application/controllers/CompanyController.php:561
 msgid "ZIP Code"
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:157
-#: ../application/controllers/CompanyController.php:374
-#: ../application/controllers/CompanyController.php:417
-#: ../application/controllers/CompanyController.php:516
+#: ../application/controllers/CompanyController.php:375
+#: ../application/controllers/CompanyController.php:419
+#: ../application/controllers/CompanyController.php:574
 msgid "Post office"
 msgstr ""
 
@@ -137,7 +145,7 @@ msgid "No rights."
 msgstr ""
 
 #: ../application/controllers/CompanyController.php:238
-#: ../application/controllers/CompanyController.php:581
+#: ../application/controllers/CompanyController.php:639
 msgid "Given address exists already"
 msgstr ""
 
@@ -145,93 +153,117 @@ msgstr ""
 msgid "Remove company"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:372
-#: ../application/controllers/CompanyController.php:415
+#: ../application/controllers/CompanyController.php:373
+#: ../application/controllers/CompanyController.php:417
 msgid "Street address"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:373
-#: ../application/controllers/CompanyController.php:416
+#: ../application/controllers/CompanyController.php:374
+#: ../application/controllers/CompanyController.php:418
 msgid "Post number"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:450
+#: ../application/controllers/CompanyController.php:464
+#: ../application/controllers/UserController.php:65
+#: ../application/controllers/UserController.php:139
+#: ../application/controllers/UserController.php:314
+msgid "Last name"
+msgstr ""
+
+#: ../application/controllers/CompanyController.php:465
+#: ../application/controllers/UserController.php:66
+#: ../application/controllers/UserController.php:132
+#: ../application/controllers/UserController.php:301
+msgid "First name"
+msgstr ""
+
+#: ../application/controllers/CompanyController.php:466
+#: ../application/controllers/UserController.php:67
+msgid "Email"
+msgstr ""
+
+#: ../application/controllers/CompanyController.php:467
+#: ../application/controllers/UserController.php:68
+msgid "Phone"
+msgstr ""
+
+#: ../application/controllers/CompanyController.php:508
 msgid "Fail."
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:476
-#: ../application/controllers/CompanyController.php:705
-#: ../application/controllers/CompanyController.php:878
+#: ../application/controllers/CompanyController.php:534
+#: ../application/controllers/CompanyController.php:763
+#: ../application/controllers/CompanyController.php:936
 msgid "Name"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:637
+#: ../application/controllers/CompanyController.php:695
 msgid "Units"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:700
+#: ../application/controllers/CompanyController.php:758
 msgid "Responsible company"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:712
+#: ../application/controllers/CompanyController.php:770
 msgid "Rack Unit Size"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:820
-#: ../application/controllers/CompanyController.php:896
+#: ../application/controllers/CompanyController.php:878
+#: ../application/controllers/CompanyController.php:954
 msgid "Side"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:822
-#: ../application/controllers/CompanyController.php:901
+#: ../application/controllers/CompanyController.php:880
+#: ../application/controllers/CompanyController.php:959
 msgid "Port type"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:891
-#: ../application/controllers/CompanyController.php:1281
+#: ../application/controllers/CompanyController.php:949
+#: ../application/controllers/CompanyController.php:1339
 msgid "Front side"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:892
-#: ../application/controllers/CompanyController.php:1284
+#: ../application/controllers/CompanyController.php:950
+#: ../application/controllers/CompanyController.php:1342
 msgid "Back side"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:992
+#: ../application/controllers/CompanyController.php:1050
 msgid "IP Address"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:994
-#: ../application/controllers/CompanyController.php:1176
+#: ../application/controllers/CompanyController.php:1052
+#: ../application/controllers/CompanyController.php:1234
 msgid "CIDR"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:995
+#: ../application/controllers/CompanyController.php:1053
 msgid "Mask"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:997
+#: ../application/controllers/CompanyController.php:1055
 msgid "Network"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:998
+#: ../application/controllers/CompanyController.php:1056
 msgid "Broadcast"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:1000
+#: ../application/controllers/CompanyController.php:1058
 msgid "IP Count"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:1025
-#: ../application/controllers/CompanyController.php:1071
+#: ../application/controllers/CompanyController.php:1083
+#: ../application/controllers/CompanyController.php:1129
 msgid "VLAN ID"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:1147
+#: ../application/controllers/CompanyController.php:1205
 msgid "IPv4 Address"
 msgstr ""
 
-#: ../application/controllers/CompanyController.php:1303
+#: ../application/controllers/CompanyController.php:1361
 msgid "IP Adresses:"
 msgstr ""
 
@@ -278,80 +310,88 @@ msgstr ""
 msgid "[XoNoiD] Reset password"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:45
-#: ../application/controllers/TicketController.php:52
+#: ../application/controllers/TicketController.php:48
+#: ../application/controllers/TicketController.php:55
 msgid "Read"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:58
+#: ../application/controllers/TicketController.php:67
 msgid "Date added"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:60
-#: ../application/controllers/TicketController.php:157
+#: ../application/controllers/TicketController.php:69
+#: ../application/controllers/TicketController.php:169
 msgid "Subject"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:64
+#: ../application/controllers/TicketController.php:73
 msgid "Company"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:65
+#: ../application/controllers/TicketController.php:74
 msgid "Added by"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:68
+#: ../application/controllers/TicketController.php:77
 msgid "Priority"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:85
+#: ../application/controllers/TicketController.php:94
 msgid "Move up"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:98
+#: ../application/controllers/TicketController.php:107
 msgid "Move down"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:111
+#: ../application/controllers/TicketController.php:120
 msgid "Move to first"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:124
+#: ../application/controllers/TicketController.php:133
 msgid "Move to last"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:164
-#: ../application/controllers/TicketController.php:165
+#: ../application/controllers/TicketController.php:176
+#: ../application/controllers/TicketController.php:177
 msgid "Description"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:180
+#: ../application/controllers/TicketController.php:192
 msgid "Add to company"
 msgstr ""
 
-#: ../application/controllers/TicketController.php:308
-#: ../application/controllers/TicketController.php:309
-msgid "Reply"
+#: ../application/controllers/TicketController.php:348
+#: ../application/controllers/TicketController.php:349
+msgid "My reply"
 msgstr ""
 
-#: ../application/controllers/UserController.php:65
-#: ../application/controllers/UserController.php:139
-#: ../application/controllers/UserController.php:314
-msgid "Last name"
+#: ../application/controllers/TicketController.php:368
+msgid "Used hours:"
 msgstr ""
 
-#: ../application/controllers/UserController.php:66
-#: ../application/controllers/UserController.php:132
-#: ../application/controllers/UserController.php:301
-msgid "First name"
+#: ../application/controllers/TicketController.php:381
+msgid "Used minutes:"
 msgstr ""
 
-#: ../application/controllers/UserController.php:67
-msgid "Email"
+#: ../application/controllers/TicketController.php:397
+msgid "Confirm"
 msgstr ""
 
-#: ../application/controllers/UserController.php:68
-msgid "Phone"
+#: ../application/controllers/TicketController.php:412
+msgid "Waits customer reply"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:413
+msgid "Closed"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:417
+msgid "Set ticket status to"
+msgstr ""
+
+#: ../application/controllers/TicketController.php:517
+msgid "Confirm all fields"
 msgstr ""
 
 #: ../application/controllers/UserController.php:117
@@ -401,47 +441,47 @@ msgstr ""
 msgid "Given e-mail address is in use"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:65
+#: ../application/views/layouts/layout.phtml:66
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Disabled"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:65
+#: ../application/views/layouts/layout.phtml:66
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Enabled"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:65
+#: ../application/views/layouts/layout.phtml:66
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Encryption:"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:65
+#: ../application/views/layouts/layout.phtml:66
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "SSL"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:65
+#: ../application/views/layouts/layout.phtml:66
 #: ../application/views/layouts/login_layout.phtml:31
 msgid "Secure Socket Layer"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:77
+#: ../application/views/layouts/layout.phtml:78
 #, php-format
 msgid "Executed %s SQL queries in %s seconds"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:81
+#: ../application/views/layouts/layout.phtml:82
 #, php-format
 msgid "Rendered in %s seconds"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:85
+#: ../application/views/layouts/layout.phtml:86
 #, php-format
 msgid "Version %s"
 msgstr ""
 
-#: ../application/views/layouts/layout.phtml:132
+#: ../application/views/layouts/layout.phtml:133
 #, php-format
 msgid "New version %s is available!"
 msgstr ""
@@ -460,9 +500,10 @@ msgstr ""
 #: ../application/views/scripts/company/remove.phtml:8
 #: ../application/views/scripts/company/remove.phtml:10
 #: ../application/views/scripts/ticket/add.phtml:7
-#: ../application/views/scripts/ticket/read.phtml:7
+#: ../application/views/scripts/ticket/read.phtml:18
 #: ../application/views/scripts/user/add.phtml:6
 #: ../application/views/scripts/user/edit.phtml:6
+#: ../application/views/scripts/user/manage.phtml:6
 msgid "Back"
 msgstr ""
 
@@ -555,6 +596,26 @@ msgstr ""
 msgid "%s - Customers"
 msgstr ""
 
+#: ../application/views/scripts/company/manage.phtml:36
+#, php-format
+msgid "%s - Tickets"
+msgstr ""
+
+#: ../application/views/scripts/company/manage.phtml:41
+#, php-format
+msgid "%s - Networks"
+msgstr ""
+
+#: ../application/views/scripts/company/manage.phtml:46
+#, php-format
+msgid "%s - Domains"
+msgstr ""
+
+#: ../application/views/scripts/company/manage.phtml:50
+#, php-format
+msgid "%s - People"
+msgstr ""
+
 #: ../application/views/scripts/company/remove.phtml:21
 #, php-format
 msgid "Remove company '%s'"
@@ -600,45 +661,57 @@ msgstr ""
 msgid "Ticket list"
 msgstr ""
 
-#: ../application/views/scripts/ticket/read.phtml:11
+#: ../application/views/scripts/ticket/read.phtml:22
 #, php-format
 msgid "Ticket #%s: %s"
 msgstr ""
 
-#: ../application/views/scripts/ticket/read.phtml:12
+#: ../application/views/scripts/ticket/read.phtml:23
 #, php-format
 msgid "Considers company: %s"
 msgstr ""
 
-#: ../application/views/scripts/ticket/read.phtml:13
+#: ../application/views/scripts/ticket/read.phtml:24
 #, php-format
 msgid "Priority: %s"
 msgstr ""
 
-#: ../application/views/scripts/ticket/read.phtml:14
+#: ../application/views/scripts/ticket/read.phtml:25
 #, php-format
 msgid "Added: %s"
 msgstr ""
 
-#: ../application/views/scripts/ticket/read.phtml:15
+#: ../application/views/scripts/ticket/read.phtml:26
 #, php-format
 msgid "Reported by %s | %s | %s"
 msgstr ""
 
-#: ../application/views/scripts/ticket/read.phtml:18
+#: ../application/views/scripts/ticket/read.phtml:29
 msgid "People worked with this ticket:"
 msgstr ""
 
-#: ../application/views/scripts/ticket/read.phtml:31
+#: ../application/views/scripts/ticket/read.phtml:42
 msgid "History"
 msgstr ""
 
-#: ../application/views/scripts/ticket/read.phtml:54
+#: ../application/views/scripts/ticket/read.phtml:65
 msgid "Reply to this ticket"
+msgstr ""
+
+#: ../application/views/scripts/user/add.phtml:11
+msgid "Add user"
 msgstr ""
 
 #: ../application/views/scripts/user/index.phtml:11
 msgid "User list"
+msgstr ""
+
+#: ../application/views/scripts/user/manage.phtml:10
+msgid "User details"
+msgstr ""
+
+#: ../application/views/scripts/user/manage.phtml:15
+msgid "User tickets"
 msgstr ""
 
 #: ../classes/form_translation.php:5
