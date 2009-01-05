@@ -18,14 +18,29 @@ Example for Ubuntu:
 `/etc/apache2/sites-available/crm.vhost` contents:
 {{{
 <VirtualHost *>
-  DocumentRoot /home/xenoid/public_html
+  DocumentRoot /home/xonoid/public_html
   ServerName crm.dev.lan
   Options +All
 </VirtualHost>
 }}}
 
 = Add MySQL Database =
-  * Add MySQL Database
+Example:
+Database = crm
+Username = xonoid
+Password = xonoidcrm
+{{{
+mysql -u root -p
+}}}
+
+SQL:
+{{{
+CREATE DATABASE crm;
+GRANT USAGE ON *.* to xonoid@localhost IDENTIFIED BY 'xonoidcrm';
+GRANT ALL PRIVILEGES ON crm.* TO xonoid@localhost;
+FLUSH PRIVILEGES;
+}}}
+To quit write `quit` or `\q`
 
 = Configure XoNoiD =
   * Modify `config.ini` with database settings
@@ -68,6 +83,9 @@ VALUES
 
 = Add permissions =
   * Add write permissions to `cache` directory
+{{{
+chmod a+rwx cache
+}}}
 
 = Ready to go =
 Now you can login and add companies etc.
