@@ -9,6 +9,13 @@ aptitude install mysql-server-5.0
 aptitude install php5 php5-{curl,gd,mysql,mcrypt,mhash} phpmyadmin
 }}}
 
+= Get latest version from SVN trunk =
+Example:
+{{{
+svn --force export http://xonoid.googlecode.com/svn/trunk/ /home/xonoid
+}}}
+Or if you want SVN metadata, use [http://code.google.com/p/xonoid/source/checkout checkout]
+
 = Add Apache virtual host =
 Example for Ubuntu:
   * Open file `/etc/apache2/sites-available/crm.vhost` with your favorite editor
