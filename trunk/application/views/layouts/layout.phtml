@@ -61,8 +61,9 @@ if ($this->dojo()->isEnabled())
   
   <hr />
   <br />
+
 <div id="footer">
-  <span id="ssl-status-<?php echo ($ssl_enabled ? 'on' : 'off');?>"><abbr title="<?php echo $tr->_("Secure Socket Layer");?>"><?php echo $tr->_("SSL");?></abbr> <?php echo $tr->_("Encryption:");?> <?php echo ($ssl_enabled ? $tr->_("Enabled") : $tr->_("Disabled"));?></span>
+  <a href="http://code.google.com/p/xonoid/">XoNoiD CRM</a> &copy; Pekka Järvinen 2008- | <span id="ssl-status-<?php echo ($ssl_enabled ? 'on' : 'off');?>"><abbr title="<?php echo $tr->_("Secure Socket Layer");?>"><?php echo $tr->_("SSL");?></abbr> <?php echo $tr->_("Encryption:");?> <?php echo ($ssl_enabled ? $tr->_("Enabled") : $tr->_("Disabled"));?></span>
   <a href="http://framework.zend.com/"><img src="<?php echo $this->baseUrl();?>/images/misc/PoweredBy_ZF_4LightBG.png" alt="" border="0" /></a><br />
 
 <br />
@@ -136,5 +137,8 @@ if (file_exists($LATEST_VERSION_FILE))
 </div>
 
 </div>
+
+<br />
+
 </body>
 </html>
