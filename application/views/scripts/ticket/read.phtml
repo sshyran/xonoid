@@ -62,9 +62,13 @@ echo "</table>\n";
 
 <br />
 
+<a name="replyform" id="replyform"></a>
 <h2><?php echo $tr->_("Reply to this ticket");?></h2>
 <?php if(!empty($this->message)):?>
-<span class="error"><?php echo $this->message;?></span><br />
+<span class="error">
+<img src="<?php echo $this->baseUrl();?>/images/icons/error.png" alt="" border="0" />
+<?php echo $this->message;?>
+</span><br />
 <?php
 endif;
 
