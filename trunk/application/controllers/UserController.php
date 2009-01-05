@@ -102,6 +102,8 @@ class UserController extends Zend_Controller_Action
    */
   public function addAction()
   {
+    $config = new Zend_Config_Ini(dirname(__FILE__) . '/../../config.ini', array('database', 'contact'));
+
     $defined_companyid = $this->getRequest()->getParam('companyid', false);
 
     $companies = new Companies();
@@ -212,7 +214,7 @@ class UserController extends Zend_Controller_Action
             $this->_db->commit();
             
             // Send login information checkbox was checked. Send email.
-            if( $form->getElement('send')->isChecked())
+            if($form->getElement('send')->isChecked())
             {
               $body = sprintf($this->tr->_("You have been added.\nLogin: %s\nPassword: %s\n\n-- \nXoNoiD"), $values['email'], $new_password);
             
