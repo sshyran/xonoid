@@ -337,7 +337,7 @@ class TicketController extends Zend_Controller_Action
 
     $form = new crmForm();
     $form->setMethod(Zend_Form::METHOD_POST);
-    $form->setAction($this->_request->getBaseUrl() . "/ticket/read/id/$ticketid");
+    $form->setAction($this->_request->getBaseUrl() . "/ticket/read/id/$ticketid#replyform");
 
     $submit = new Zend_Form_Element_Submit('submit');
     $submit->setLabel($this->tr->_('Add'));
