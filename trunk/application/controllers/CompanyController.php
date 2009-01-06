@@ -263,7 +263,173 @@ class CompanyController extends Zend_Controller_Action
       throw new Zend_Exception("Fail.");
     }
     
-    // TODO
+    $users = new Users();
+    $users_list = $users->getList();
+
+    $companies = new Companies();
+
+    $select = $companies->select();
+    $select->from($companies, array('name', 'resellerid', 'streetaddress', 'postoffice', 'postnumber', 'contactid'));
+    $select->where('id = ?', $companyid);
+    
+    $companydata = $companies->fetchRow($select)->toArray();
+    unset($select);
+
+    $select = $companies->select();
+    $select->from($companies, array('id', 'name'));
+    $select->where('((id = resellerid) OR (resellerid IS NULL)) AND id != ?', $companyid);
+    
+    $resellerc = $companies->fetchAll($select)->toArray();
+    
+    $resellercompanies = array();
+    $resellercompanies[0] = $this->tr->_('This company is reseller itself');
+    
+    for ($i=0; $i<count($resellerc); $i++)
+    {
+      $id = $resellerc[$i]['id'];
+      $name = $resellerc[$i]['name'];
+
+      $resellercompanies[$id] = $name;
+    }
+  
+    $form = new crmForm();
+    $form->setMethod(Zend_Form::METHOD_POST);
+    $form->setAction($this->_request->getBaseUrl() . "/company/edit/id/$companyid/");
+
+    $submit = new Zend_Form_Element_Submit('submit');
+    $submit->setLabel($this->tr->_('Edit'));
+
+    $reseller = new Zend_Form_Element_Select('resellerid');
+    $reseller->setRequired(true);
+    $reseller->setLabel($this->tr->_('Reseller company is'));
+    $reseller->addMultiOptions($resellercompanies);
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $reseller->setValue($companydata['resellerid']);
+    }
+
+    $contact = new Zend_Form_Element_Select('contactid');
+    $contact->setRequired(true);
+    $contact->setLabel($this->tr->_('Contact person'));
+    $contact->addMultiOptions($users_list);
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $contact->setValue($companydata['contactid']);
+    }
+
+    $name = new Zend_Form_Element_Text('name');
+    $name->setRequired(true);
+    $name->setLabel($this->tr->_('Company name'));
+    $name->addFilter('StringTrim');
+    $name->addValidator('NotEmpty', true);
+    $name->addValidator('StringLength', false, array(3, 100));
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $name->setValue($companydata['name']);
+    }
+
+    $street = new Zend_Form_Element_Text('streetaddress');
+    $street->setRequired(true);
+    $street->setLabel($this->tr->_('Street'));
+    $street->addFilter('StringTrim');
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $street->setValue($companydata['streetaddress']);
+    }
+
+    $code = new Zend_Form_Element_Text('postnumber');
+    $code->setRequired(true);
+    $code->setLabel($this->tr->_('ZIP Code'));
+    $code->addFilter('StringTrim');
+    $code->addValidator('Digits');
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $code->setValue($companydata['postnumber']);
+    }
+
+    $office = new Zend_Form_Element_Text('postoffice');
+    $office->setRequired(true);
+    $office->setLabel($this->tr->_('Post office'));
+    $office->addFilter('StringTrim');
+    $office->addValidator('Alnum');
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $office->setValue($companydata['postoffice']);
+    }
+
+    $form->addElement($reseller);
+
+    $form->addElement($name);
+
+    $form->addElement($contact);
+
+    $form->addElement($street);
+    $form->addElement($code);
+    $form->addElement($office);
+
+    $form->addElement($submit);
+
+    $form->addDisplayGroup(array('resellerid'), 'reseller');
+    $form->addDisplayGroup(array('name'), 'name');
+    $form->addDisplayGroup(array('contactid'), 'contact');
+    $form->addDisplayGroup(array('streetaddress', 'postnumber', 'postoffice'), 'address');
+    $form->addDisplayGroup(array('submit'), 'submit');
+
+    // Form POSTed
+    if ($this->getRequest()->isPost())
+    {
+      if ($form->isValid($_POST))
+      {
+        $values = $form->getValues();
+        
+        if((int)$values['resellerid'] === 0)
+        {
+          $values['resellerid'] = new Zend_Db_Expr('NULL');
+        }
+
+        $update = array(
+          'name' => $values['name'],
+          'contactid' => $values['contactid'],
+          'streetaddress' => $values['streetaddress'],
+          'postnumber' => $values['postnumber'],
+          'postoffice' => $values['postoffice'],
+          'resellerid' => $values['resellerid']
+        );
+        
+        $this->_db->beginTransaction();
+
+        try
+        {
+          $companies->update($update, $companies->getAdapter()->quoteInto('id = ?', $companyid));
+
+          $this->_db->commit();
+          
+          return $this->_helper->redirector->gotoUrl("/company");
+
+        }
+        catch (Exception $e)
+        {
+          $this->_db->rollBack();
+          var_dump($e);
+        }
+
+      }
+    }
+
+    $this->view->form = $form;
+
   }
 
   /**
