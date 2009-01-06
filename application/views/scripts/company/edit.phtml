@@ -1,0 +1,13 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+
+<div id="submenu">
+  <ul>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'index'), '', true); ?>"><?php echo $tr->_("Back");?></a></li> 
+  </ul>
+</div>
+
+<img src="/images/icons/branch-office.png" alt="" /><h2><?php echo $tr->_("Edit company billing information");?></h2>
+
+<?php echo $this->form;?>
