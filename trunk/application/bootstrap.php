@@ -79,6 +79,7 @@ $translate->setLocale($language_config->language);
 Zend_Registry::set('Zend_Translate', $translate);
 
 require_once 'db.php';
+require_once 'crmcontroller.php';
 require_once 'vat.php';
 require_once 'joker.php';
 require_once 'pdf.php';
