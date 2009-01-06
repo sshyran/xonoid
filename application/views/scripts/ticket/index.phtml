@@ -5,6 +5,7 @@ $tr = Zend_Registry::get('Zend_Translate');
 <div id="submenu">
   <ul>
     <li class="add"><a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'add'), '', true); ?>"><?php echo $tr->_("Add ticket");?></a></li> 
+    <li class="search"><a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'search'), '', true); ?>"><?php echo $tr->_("Search tickets");?></a></li>
   </ul>
 </div>
 
