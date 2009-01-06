@@ -26,24 +26,30 @@
 require_once 'Zend/Gdata.php';
 
 /**
- * Service class for interacting with the services which use the 
+ * Service class for interacting with the services which use the
  * DublinCore extensions.
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage DublinCore
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_DublinCore extends Zend_Gdata
 {
 
+    /**
+     * Namespaces used for Zend_Gdata_DublinCore
+     *
+     * @var array
+     */
     public static $namespaces = array(
-            'dc' => 'http://purl.org/dc/terms'
+        array('dc', 'http://purl.org/dc/terms', 1, 0)
     );
 
     /**
      * Create Zend_Gdata_DublinCore object
-     * 
+     *
      * @param Zend_Http_Client $client (optional) The HTTP client to use when
      *          when communicating with the Google servers.
      * @param string $applicationId The identity of the app in the form of Company-AppName-Version

@@ -22,7 +22,7 @@
 
 require_once "Zend/Soap/Wsdl/Strategy/DefaultComplexType.php";
 
-class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy_Abstract
+class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy_DefaultComplexType
 {
     /**
      * Add an ArrayOfType based on the xsd:complexType syntax if type[] is detected in return value doc comment.
@@ -60,7 +60,9 @@ class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy
         }
 
         // The array for the objects has been created, now build the object definition:
-        $this->_addObjectComplexType($singularType);
+        if(!in_array($singularType, $this->getContext()->getTypes())) {
+            parent::addComplexType($singularType);
+        }
 
         return "tns:".$xsdComplexTypeName;
     }
@@ -77,11 +79,11 @@ class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy
         $complexType->appendChild($complexContent);
 
         $xsdRestriction = $dom->createElement("xsd:restriction");
-        $xsdRestriction->setAttribute('base', 'soapenc:Array');
+        $xsdRestriction->setAttribute('base', 'soap-enc:Array');
         $complexContent->appendChild($xsdRestriction);
 
         $xsdAttribute = $dom->createElement("xsd:attribute");
-        $xsdAttribute->setAttribute("ref", "soapenc:arrayType");
+        $xsdAttribute->setAttribute("ref", "soap-enc:arrayType");
         $xsdAttribute->setAttribute("wsdl:arrayType", sprintf("tns:%s[]", $singularType));
         $xsdRestriction->appendChild($xsdAttribute);
 
@@ -89,19 +91,6 @@ class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy
         $this->getContext()->addType($type);
 
         return $xsdComplexTypeName;
-    }
-
-    protected function _addObjectComplexType($singularType)
-    {
-        $complexStrategy = $this->getContext()->getComplexTypeStrategy();
-
-        // Override strategy to stay DRY
-        $objectStrategy = new Zend_Soap_Wsdl_Strategy_DefaultComplexType();
-        $this->getContext()->setComplexTypeStrategy($objectStrategy);
-        $this->getContext()->addComplexType($singularType);
-
-        // Reset strategy
-        $this->getContext()->setComplexTypeStrategy($complexStrategy);
     }
 
     protected function _getXsdComplexTypeName($type)

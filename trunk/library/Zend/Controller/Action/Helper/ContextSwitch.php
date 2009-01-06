@@ -17,7 +17,7 @@
  * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ContextSwitch.php 12315 2008-11-05 22:31:23Z sidhighwind $
+ * @version    $Id: ContextSwitch.php 12812 2008-11-24 20:46:45Z matthew $
  */
 
 /**
@@ -115,6 +115,12 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     protected $_viewRenderer;
 
     /**
+     * Original view suffix prior to detecting context switch
+     * @var string
+     */
+    protected $_viewSuffixOrig;
+
+    /**
      * Constructor
      *
      * @param  array|Zend_Config $options
@@ -143,6 +149,25 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
                     'headers'   => array('Content-Type' => 'application/xml'),
                 )
             ));
+        }
+
+        $this->init();
+    }
+
+    /**
+     * Initialize at start of action controller
+     *
+     * Reset the view script suffix to the original state, or store the 
+     * original state.
+     * 
+     * @return void
+     */
+    public function init()
+    {
+        if (null === $this->_viewSuffixOrig) {
+            $this->_viewSuffixOrig = $this->_getViewRenderer()->getViewSuffix();
+        } else {
+            $this->_getViewRenderer()->setViewSuffix($this->_viewSuffixOrig);
         }
     }
 
@@ -248,6 +273,7 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
         }
 
         $suffix = $this->getSuffix($context);
+
         $this->_getViewRenderer()->setViewSuffix($suffix);
 
         $headers = $this->getHeaders($context);

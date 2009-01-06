@@ -16,7 +16,7 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: PartialLoop.php 12577 2008-11-12 01:31:34Z sidhighwind $
+ * @version    $Id: PartialLoop.php 13032 2008-12-05 02:43:17Z sidhighwind $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -82,6 +82,8 @@ class Zend_View_Helper_PartialLoop extends Zend_View_Helper_Partial
         }
 
         $content = '';
+        // reset the counter if it's call again
+        $this->partialCounter = 0;
         foreach ($model as $item) {
             // increment the counter variable
             $this->partialCounter++;

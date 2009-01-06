@@ -30,6 +30,7 @@ require_once 'Zend/Gdata/App/Extension/Text.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage App
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -66,7 +67,7 @@ class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension_Text
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_Src
+     * @return string
      */
     public function getSrc()
     {
@@ -74,7 +75,7 @@ class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension_Text
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Src $value
+     * @param string $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
     public function setSrc($value)

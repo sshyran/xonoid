@@ -39,7 +39,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
      *
      * @var array
      */
-    protected $_itemKeys = array('charset', 'href', 'hreflang', 'media', 'rel', 'rev', 'type', 'title');
+    protected $_itemKeys = array('charset', 'href', 'hreflang', 'media', 'rel', 'rev', 'type', 'title', 'extras');
 
     /**
      * @var string registry key
@@ -91,14 +91,14 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
      * Overload method access
      *
      * Creates the following virtual methods:
-     * - appendStylesheet($href, $media, $conditionalStylesheet)
-     * - offsetSetStylesheet($index, $href, $media, $conditionalStylesheet)
-     * - prependStylesheet($href, $media, $conditionalStylesheet)
-     * - setStylesheet($href, $media, $conditionalStylesheet)
-     * - appendAlternate($href, $type, $title)
-     * - offsetSetAlternate($index, $href, $type, $title)
-     * - prependAlternate($href, $type, $title)
-     * - setAlternate($href, $type, $title)
+     * - appendStylesheet($href, $media, $conditionalStylesheet, $extras)
+     * - offsetSetStylesheet($index, $href, $media, $conditionalStylesheet, $extras)
+     * - prependStylesheet($href, $media, $conditionalStylesheet, $extras)
+     * - setStylesheet($href, $media, $conditionalStylesheet, $extras)
+     * - appendAlternate($href, $type, $title, $extras)
+     * - offsetSetAlternate($index, $href, $type, $title, $extras)
+     * - prependAlternate($href, $type, $title, $extras)
+     * - setAlternate($href, $type, $title, $extras)
      *
      * Items that may be added in the future:
      * - Navigation?  need to find docs on this
@@ -264,7 +264,13 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
         foreach ($this->_itemKeys as $itemKey) {
             if (isset($attributes[$itemKey])) {
-                $link .= sprintf('%s="%s" ', $itemKey, ($this->_autoEscape) ? $this->_escape($attributes[$itemKey]) : $attributes[$itemKey]);
+                if(is_array($attributes[$itemKey])) {
+                    foreach($attributes[$itemKey] as $key => $value) {
+                        $link .= sprintf('%s="%s" ', $key, ($this->_autoEscape) ? $this->_escape($value) : $value);
+                    }
+                } else {
+                    $link .= sprintf('%s="%s" ', $itemKey, ($this->_autoEscape) ? $this->_escape($attributes[$itemKey]) : $attributes[$itemKey]);
+                }
             }
         }
 
@@ -279,7 +285,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         }
 
         if (isset($attributes['conditionalStylesheet'])
-            && (false !== $attributes['conditionalStylesheet']))
+            && !empty($attributes['conditionalStylesheet'])
+            && is_string($attributes['conditionalStylesheet']))
         {
             $link = '<!--[if ' . $attributes['conditionalStylesheet'] . ']> ' . $link . '<![endif]-->';
         }
@@ -339,16 +346,27 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
         if (0 < count($args)) {
             $media = array_shift($args);
-            $media = (string) $media;
+            if(is_array($media)) {
+                $media = implode(',', $media);
+            } else {
+                $media = (string) $media;
+            }
         }
         if (0 < count($args)) {
             $conditionalStylesheet = array_shift($args);
-            if (false !== $conditionalStylesheet) {
+            if(!empty($conditionalStylesheet) && is_string($conditionalStylesheet)) {
                 $conditionalStylesheet = (string) $conditionalStylesheet;
+            } else {
+                $conditionalStylesheet = null;
             }
         }
 
-        $attributes = compact('rel', 'type', 'href', 'media', 'conditionalStylesheet');
+        if(0 < count($args) && is_array($args[0])) {
+            $extras = array_shift($args);
+            $extras = (array) $extras;
+        }
+
+        $attributes = compact('rel', 'type', 'href', 'media', 'conditionalStylesheet', 'extras');
         return $this->createData($attributes);
     }
 
@@ -386,11 +404,20 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         $type  = array_shift($args);
         $title = array_shift($args);
 
+        if(0 < count($args) && is_array($args[0])) {
+            $extras = array_shift($args);
+            $extras = (array) $extras;
+
+            if(isset($extras['media']) && is_array($extras['media'])) {
+                $extras['media'] = implode(',', $extras['media']);
+            }
+        }
+
         $href  = (string) $href;
         $type  = (string) $type;
         $title = (string) $title;
 
-        $attributes = compact('rel', 'href', 'type', 'title');
+        $attributes = compact('rel', 'href', 'type', 'title', 'extras');
         return $this->createData($attributes);
     }
 }

@@ -38,8 +38,13 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     public function __construct($options = array())
     {
+        if (ini_get('file_uploads') == false) {
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('File uploads are not allowed in your php config!');
+        }
+
         $this->_files = $this->_prepareFiles($_FILES);
-        $this->addValidator('Upload', null, $this->_files);
+        $this->addValidator('Upload', false, $this->_files);
 
         if (is_array($options)) {
             $this->setOptions($options);
@@ -56,7 +61,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     public function setValidators(array $validators, $files = null)
     {
         $this->clearValidators();
-        $this->addValidator('Upload', null, $this->_files);
+        $this->addValidator('Upload', false, $this->_files);
         return $this->addValidators($validators, $files);
     }
 
@@ -87,31 +92,36 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 
         $check = $this->_getFiles($files);
         foreach ($check as $file => $content) {
-            $directory   = '';
-            $destination = $this->getDestination($file);
-            if ($destination !== null) {
-                $directory = $destination . DIRECTORY_SEPARATOR;
-            }
-
-            // Should never return false when it's tested by the upload validator
-            if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
-                if ($content['options']['ignoreNoFile']) {
-                    $this->_files[$file]['received'] = true;
-                    $this->_files[$file]['filtered'] = true;
-                    continue;
+            if (!$content['received']) {
+                $directory   = '';
+                $destination = $this->getDestination($file);
+                if ($destination !== null) {
+                    $directory = $destination . DIRECTORY_SEPARATOR;
                 }
 
-                $this->_files[$file]['received'] = false;
-                return false;
+                // Should never return false when it's tested by the upload validator
+                if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
+                    if ($content['options']['ignoreNoFile']) {
+                        $this->_files[$file]['received'] = true;
+                        $this->_files[$file]['filtered'] = true;
+                        continue;
+                    }
+
+                    $this->_files[$file]['received'] = false;
+                    return false;
+                }
+
+                $this->_files[$file]['received'] = true;
             }
 
-            $this->_files[$file]['received'] = true;
-            if (!$this->_filter($file)) {
-                $this->_files[$file]['filtered'] = false;
-                return false;
-            }
+            if (!$content['filtered']) {
+                if (!$this->_filter($file)) {
+                    $this->_files[$file]['filtered'] = false;
+                    return false;
+                }
 
-            $this->_files[$file]['filtered'] = true;
+                $this->_files[$file]['filtered'] = true;
+            }
         }
 
         return true;
@@ -139,7 +149,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     public function isReceived($files = null)
     {
         $files = $this->_getFiles($files);
-        foreach ($files as $key => $content) {
+        foreach ($files as $content) {
             if ($content['received'] !== true) {
                 return false;
             }
@@ -157,7 +167,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     public function isFiltered($files = null)
     {
         $files = $this->_getFiles($files);
-        foreach ($files as $key => $content) {
+        foreach ($files as $content) {
             if ($content['filtered'] !== true) {
                 return false;
             }

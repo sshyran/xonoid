@@ -66,6 +66,7 @@ require_once 'Zend/Gdata/YouTube/PlaylistVideoFeed.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage YouTube
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -79,6 +80,15 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const STANDARD_MOST_VIEWED_URI = 'http://gdata.youtube.com/feeds/standardfeeds/most_viewed';
     const STANDARD_RECENTLY_FEATURED_URI = 'http://gdata.youtube.com/feeds/standardfeeds/recently_featured';
     const STANDARD_WATCH_ON_MOBILE_URI = 'http://gdata.youtube.com/feeds/standardfeeds/watch_on_mobile';
+
+    const STANDARD_TOP_RATED_URI_V2 =
+        'http://gdata.youtube.com/feeds/api/standardfeeds/top_rated';
+    const STANDARD_MOST_VIEWED_URI_V2 =
+        'http://gdata.youtube.com/feeds/api/standardfeeds/most_viewed';
+    const STANDARD_RECENTLY_FEATURED_URI_V2 =
+        'http://gdata.youtube.com/feeds/api/standardfeeds/recently_featured';
+    const STANDARD_WATCH_ON_MOBILE_URI_V2 =
+        'http://gdata.youtube.com/feeds/api/standardfeeds/watch_on_mobile';
 
     const USER_URI = 'http://gdata.youtube.com/feeds/api/users';
     const VIDEO_URI = 'http://gdata.youtube.com/feeds/api/videos';
@@ -97,12 +107,17 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const RESPONSES_URI_SUFFIX = 'responses';
     const RELATED_URI_SUFFIX = 'related';
 
+    /**
+     * Namespaces used for Zend_Gdata_YouTube
+     *
+     * @var array
+     */
     public static $namespaces = array(
-            'yt' => 'http://gdata.youtube.com/schemas/2007',
-            'georss' => 'http://www.georss.org/georss',
-            'gml' => 'http://www.opengis.net/gml',
-            'media' => 'http://search.yahoo.com/mrss/',
-            'app' => 'http://purl.org/atom/app#');
+        array('yt', 'http://gdata.youtube.com/schemas/2007', 1, 0),
+        array('georss', 'http://www.georss.org/georss', 1, 0),
+        array('gml', 'http://www.opengis.net/gml', 1, 0),
+        array('media', 'http://search.yahoo.com/mrss/', 1, 0)
+    );
 
     /**
      * Create Zend_Gdata_YouTube object
@@ -292,8 +307,14 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      */
     public function getTopRatedVideoFeed($location = null)
     {
+        $standardFeedUri = self::STANDARD_TOP_RATED_URI;
+
+        if ($this->getMajorProtocolVersion() == 2) {
+            $standardFeedUri = self::STANDARD_TOP_RATED_URI_V2;
+        }
+
         if ($location == null) {
-            $uri = self::STANDARD_TOP_RATED_URI;
+            $uri = $standardFeedUri;
         } else if ($location instanceof Zend_Gdata_Query) {
             if ($location instanceof Zend_Gdata_YouTube_VideoQuery) {
                 if (!isset($location->url)) {
@@ -318,8 +339,14 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      */
     public function getMostViewedVideoFeed($location = null)
     {
+        $standardFeedUri = self::STANDARD_MOST_VIEWED_URI;
+
+        if ($this->getMajorProtocolVersion() == 2) {
+            $standardFeedUri = self::STANDARD_MOST_VIEWED_URI_V2;
+        }
+
         if ($location == null) {
-            $uri = self::STANDARD_MOST_VIEWED_URI;
+            $uri = $standardFeedUri;
         } else if ($location instanceof Zend_Gdata_Query) {
             if ($location instanceof Zend_Gdata_YouTube_VideoQuery) {
                 if (!isset($location->url)) {
@@ -343,8 +370,14 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      */
     public function getRecentlyFeaturedVideoFeed($location = null)
     {
+        $standardFeedUri = self::STANDARD_RECENTLY_FEATURED_URI;
+
+        if ($this->getMajorProtocolVersion() == 2) {
+            $standardFeedUri = self::STANDARD_RECENTLY_FEATURED_URI_V2;
+        }
+
         if ($location == null) {
-            $uri = self::STANDARD_RECENTLY_FEATURED_URI;
+            $uri = $standardFeedUri;
         } else if ($location instanceof Zend_Gdata_Query) {
             if ($location instanceof Zend_Gdata_YouTube_VideoQuery) {
                 if (!isset($location->url)) {
@@ -369,8 +402,14 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      */
     public function getWatchOnMobileVideoFeed($location = null)
     {
+        $standardFeedUri = self::STANDARD_WATCH_ON_MOBILE_URI;
+
+        if ($this->getMajorProtocolVersion() == 2) {
+            $standardFeedUri = self::STANDARD_WATCH_ON_MOBILE_URI_V2;
+        }
+
         if ($location == null) {
-            $uri = self::STANDARD_WATCH_ON_MOBILE_URI;
+            $uri = $standardFeedUri;
         } else if ($location instanceof Zend_Gdata_Query) {
             if ($location instanceof Zend_Gdata_YouTube_VideoQuery) {
                 if (!isset($location->url)) {

@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Gdata
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -35,10 +36,16 @@ require_once 'Zend/Gdata/Extension/AttendeeStatus.php';
 require_once 'Zend/Gdata/Extension/AttendeeType.php';
 
 /**
+ * @see Zend_Gdata_Extension_EntryLink
+ */
+require_once 'Zend/Gdata/Extension/EntryLink.php';
+
+/**
  * Data model class to represent a participant
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Gdata
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */

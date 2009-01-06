@@ -37,6 +37,7 @@ require_once 'Zend/Gdata/Gbase/Extension/BaseAttribute.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Gbase
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -63,9 +64,7 @@ class Zend_Gdata_Gbase_Entry extends Zend_Gdata_Entry
      */
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Gbase::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Gbase::$namespaces);
         parent::__construct($element);
     }
 
@@ -121,7 +120,7 @@ class Zend_Gdata_Gbase_Entry extends Zend_Gdata_Entry
         }
     }
 
-    /** 
+    /**
      * Return all the Base attributes
      * @return Zend_Gdata_Gbase_Extension_BaseAttribute
      */
@@ -129,18 +128,18 @@ class Zend_Gdata_Gbase_Entry extends Zend_Gdata_Entry
         return $this->_baseAttributes;
     }
 
-    /** 
+    /**
      * Return an array of Base attributes that match the given attribute name
      *
      * @param string $name The name of the Base attribute to look for
      * @return array $matches Array that contains the matching list of Base attributes
      */
-    public function getGbaseAttribute($name) 
+    public function getGbaseAttribute($name)
     {
         $matches = array();
         for ($i = 0; $i < count($this->_baseAttributes); $i++) {
             $baseAttribute = $this->_baseAttributes[$i];
-            if ($baseAttribute->rootElement == $name && 
+            if ($baseAttribute->rootElement == $name &&
                 $baseAttribute->rootNamespaceURI == $this->lookupNamespace('g')) {
                 $matches[] = &$this->_baseAttributes[$i];
             }

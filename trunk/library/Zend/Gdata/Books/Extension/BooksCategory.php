@@ -22,15 +22,16 @@
  */
 
 /**
- * @see Zend_Gdata_Atom_Extension_Category
+ * @see Zend_Gdata_App_Extension_Category
  */
-require_once 'Zend/Gdata/Atom/Extension/Category.php';
+require_once 'Zend/Gdata/App/Extension/Category.php';
 
 /**
  * Describes a books category
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Books
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc.
  * (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -52,9 +53,7 @@ class Zend_Gdata_Books_Extension_BooksCategory extends
      */
     public function __construct($term = null, $scheme = null, $label = null)
     {
-        foreach (Zend_Gdata_Books::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Books::$namespaces);
         parent::__construct($term, $scheme, $label);
     }
 

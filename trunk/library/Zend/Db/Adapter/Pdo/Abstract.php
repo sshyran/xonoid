@@ -17,7 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 12629 2008-11-13 17:23:13Z alexander $
+ * @version    $Id: Abstract.php 13281 2008-12-15 20:53:30Z mikaelkael $
  */
 
 
@@ -143,6 +143,16 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
             throw new Zend_Db_Adapter_Exception($e->getMessage());
         }
 
+    }
+
+    /**
+     * Test if a connection is active
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return ((bool) ($this->_connection instanceof PDO));
     }
 
     /**
@@ -322,5 +332,21 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         }
     }
 
+    /**
+     * Retrieve server version in PHP style
+     *
+     * @return string
+     */
+    public function getServerVersion()
+    {
+        $this->_connect();
+        $version = $this->_connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+        $matches = null;
+        if (preg_match('/((?:[0-9]{1,2}\.){1,3}[0-9]{1,2})/', $version, $matches)) {
+            return $matches[1];
+        } else {
+            return null;
+        }
+    }
 }
 
