@@ -873,6 +873,20 @@ class CompanyController extends Zend_Controller_Action
       )
     ));
 
+    $grid->addColumn('remove', array(
+      'header' => $this->tr->_('Remove'),
+      'sortable' => false,
+      'width' => 1,
+      'type' => 'action',
+      'actions' => array(
+        'url' => $this->view->baseUrl() . '/company/remove-network-device/id/$id/',
+        'class' => 'icon',
+        'caption' => $this->tr->_('Remove'),
+        'image' => $this->view->baseUrl() . '/images/icons/remove.png'
+      )
+    ));
+
+
     $this->view->grid = $grid;
 
   }
@@ -1058,8 +1072,20 @@ class CompanyController extends Zend_Controller_Action
       )
     ));
 
-    $this->view->grid = $grid;
+    $grid->addColumn('remove', array(
+      'header' => $this->tr->_('Remove'),
+      'sortable' => false,
+      'width' => 1,
+      'type' => 'action',
+      'actions' => array(
+        'url' => $this->view->baseUrl() . '/company/remove-network-device-port/id/$id/',
+        'class' => 'icon',
+        'caption' => $this->tr->_('Remove'),
+        'image' => $this->view->baseUrl() . '/images/icons/remove.png'
+      )
+    ));
 
+    $this->view->grid = $grid;
   
   }
 
