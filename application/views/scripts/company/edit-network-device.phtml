@@ -1,0 +1,19 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+
+<div id="submenu">
+  <ul>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'company', 'action' => 'manage-branch', 'id' => $this->branchid), '', true); ?>"><?php echo $tr->_("Back");?></a></li> 
+  </ul>
+</div>
+
+
+<br />
+<br />
+<?php echo $this->companyname;?> &raquo; <?php echo $this->branchname;?> &raquo; <?php echo $this->devicename;?>
+<br />
+
+<img src="/images/icons/netdevice.png" alt="" /><h2><?php echo $tr->_("Edit network device");?></h2>
+
+<?php echo $this->form;?>
