@@ -3,16 +3,8 @@
 define('VERSION', '0.1.0');
 
 // Default settings
-ini_set('magic_quotes_gpc', false);
-ini_set('magic_quotes_runtime', false);
 ini_set('display_startup_errors', 1);  
 ini_set('display_errors', 1);
-ini_set('default_charset', 'UTF-8'); 
-
-// iconv
-ini_set('iconv.input_encoding', 'UTF-8');
-ini_set('iconv.output_encoding', 'UTF-8');
-ini_set('iconv.internal_encoding', 'UTF-8');
 
 // Set XDebug settings
 ini_set('xdebug.auto_trace', false);
