@@ -293,6 +293,7 @@ class TicketController extends Zend_Controller_Action
       throw new Zend_Exception("Fail.");
     }
 
+
     $VIEW_T_OPEN = new VIEW_T_OPEN();
     $VIEW_T_REPLIES = new VIEW_T_REPLIES();
     $ticketreplies = new TicketReplies();
@@ -348,9 +349,10 @@ class TicketController extends Zend_Controller_Action
     $descr->setLabel($this->tr->_('My reply'));
     $descr->setDescription($this->tr->_('My reply'));
     $descr->addFilter('StringTrim');
-    $descr->addValidator(new CRM_Validate_XML());
-    $descr->addValidator('NotEmpty', false);
+    $descr->addValidator('NotEmpty', true);
     $descr->addValidator('StringLength', false, array(5, 65535));
+    $descr->addValidator(new CRM_Validate_XML(), false);
+
     $descr->setPlugins(array(
       'undo', 'redo', '|', 
       'cut', 'copy', 'paste', '|',
@@ -436,14 +438,14 @@ class TicketController extends Zend_Controller_Action
     // Form POSTed
     if ($this->getRequest()->isPost())
     {
-      if (isset($_POST['description']))
+    
+      if (isset($_POST['description']) && !empty($_POST['description']))
       {
         $_POST['description'] = html_trim($_POST['description']);
       }
     
       if ($form->isValid($_POST))
       {
-
         $values = $form->getValues();
 
         $values['description'] = mb_trim($values['description']);
@@ -501,6 +503,7 @@ class TicketController extends Zend_Controller_Action
             $this->_db->commit();
   
             $reply_session->ok = false;
+
             return $this->_helper->redirector->gotoUrl("/ticket/read/id/$ticketid");
           }
           catch (Exception $e)
