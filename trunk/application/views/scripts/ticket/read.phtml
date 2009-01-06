@@ -19,7 +19,7 @@ $tr = Zend_Registry::get('Zend_Translate');
   </ul>
 </div>
 
-<h2><?php echo sprintf($tr->_("Ticket #%s: %s"), $this->id, $this->escape($this->subject));?></h2>
+<img src="/images/icons/tickets.png" alt="" /><h2><?php echo sprintf($tr->_("Ticket #%s: %s"), $this->id, $this->escape($this->subject));?></h2>
 <?php echo sprintf($tr->_("Considers company: %s"), $this->company);?><br />
 <?php echo sprintf($tr->_("Priority: %s"), $this->priority);?><br />
 <?php echo sprintf($tr->_("Added: %s"), $this->date);?><br />
@@ -39,7 +39,7 @@ echo "</ul>";
 
 <br />
 
-<h2><?php echo $tr->_("History");?></h2>
+<img src="/images/icons/chat.png" alt="" /><h2><?php echo $tr->_("History");?></h2>
 <?php
 $r = $this->replies;
 echo "<table>\n";
@@ -62,7 +62,7 @@ echo "</table>\n";
 
 <br />
 
-<a name="replyform" id="replyform"></a>
+<img src="/images/icons/add.png" alt="" /><a name="replyform" id="replyform"></a>
 <h2><?php echo $tr->_("Reply to this ticket");?></h2>
 <?php if(!empty($this->message)):?>
 <span class="error">
@@ -74,3 +74,9 @@ endif;
 
 echo $this->form;
 ?>
+
+<br />
+
+<img src="/images/icons/branch-office.png" alt="" /><h2><?php echo $tr->_("Add reference to existing ticket");?></h2>
+<iframe src="/ticket/add-reference/id/<?php echo $this->id;?>" width="100%" height="100" name="ticket-reference" scrolling="auto" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+<iframe src="/ticket/search/layout/disabled" width="100%" height="300" name="ticket-search" scrolling="auto" frameborder="0" marginheight="0" marginwidth="0"></iframe>

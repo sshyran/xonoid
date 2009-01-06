@@ -3,6 +3,13 @@ $tr = Zend_Registry::get('Zend_Translate');
 ?>
 
 <style type="text/css">
+<?php if($this->layout === 'disabled'):?>
+* 
+{
+  padding: 0;
+  margin: 0;
+}
+<?php endif;?>
 #fieldset-searchquery dl dt, #fieldset-searchquery dl dd 
 {
   display: inline;
