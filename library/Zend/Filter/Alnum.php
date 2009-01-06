@@ -17,7 +17,7 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Alnum.php 12501 2008-11-10 16:28:31Z matthew $
+ * @version    $Id: Alnum.php 12751 2008-11-21 18:30:48Z yoshida@zend.co.jp $
  */
 
 
@@ -51,17 +51,17 @@ class Zend_Filter_Alnum implements Zend_Filter_Interface
      * @var mixed
      **/
     protected static $_unicodeEnabled;
-    
+
     /**
      * Locale in browser.
-     * 
+     *
      * @var Zend_Locale object
      */
     protected $_locale;
-    
+
     /**
      * The Alphabet means english alphabet.
-     * 
+     *
      * @var boolean
      */
     protected static $_meansEnglishAlphabet;
@@ -80,12 +80,12 @@ class Zend_Filter_Alnum implements Zend_Filter_Interface
         }
 
         if (null === self::$_meansEnglishAlphabet) {
-            $this->_locale = new Zend_Locale(Zend_Locale::BROWSER);
+            $this->_locale = new Zend_Locale('auto');
             self::$_meansEnglishAlphabet = in_array($this->_locale->getLanguage(),
-                                                    array('ja')
+                                                    array('ja', 'ko', 'zh')
                                                     );
         }
-       
+
     }
 
     /**

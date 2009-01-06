@@ -16,7 +16,7 @@
  * @package   Zend_Locale
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Locale.php 12063 2008-10-21 17:54:23Z thomas $
+ * @version   $Id: Locale.php 12869 2008-11-26 11:07:02Z thomas $
  */
 
 /**
@@ -465,7 +465,7 @@ class Zend_Locale
 
     /**
      * Return the accepted charset of the client
-     * 
+     *
      * @return string
      */
     public static function getHttpCharset()
@@ -731,7 +731,7 @@ class Zend_Locale
         try {
             $locale = self::_prepareLocale($locale, $strict);
         } catch (Zend_Locale_Exception $e) {
-            return false; 
+            return false;
         }
 
         if (($compatible === true) and (self::$compatibilityMode === true)) {
@@ -762,7 +762,7 @@ class Zend_Locale
      * Returns a list of all known locales where the locale is the key
      * Only real locales are returned, the internal locales 'root', 'auto', 'browser'
      * and 'environment' are suppressed
-     * 
+     *
      * @return array List of all Locales
      */
     public static function getLocaleList()
@@ -843,6 +843,10 @@ class Zend_Locale
      */
     private static function _prepareLocale($locale, $strict = false)
     {
+        if ($locale instanceof Zend_Locale) {
+            $locale = $locale->toString();
+        }
+
         if (is_array($locale)) {
             return '';
         }
@@ -867,7 +871,7 @@ class Zend_Locale
                 $locale = self::$_default;
             }
 
-            if (($locale === 'auto') or (empty($locale))) {
+            if (($locale === 'auto') or ($locale === null)) {
                 $locale = self::$_auto;
             }
 
@@ -877,7 +881,7 @@ class Zend_Locale
         }
 
         // This can only happen when someone extends Zend_Locale and erases the default
-        if ((empty($locale))) {
+        if ($locale === null) {
             require_once 'Zend/Locale/Exception.php';
             throw new Zend_Locale_Exception('Autodetection of Locale has been failed!');
         }

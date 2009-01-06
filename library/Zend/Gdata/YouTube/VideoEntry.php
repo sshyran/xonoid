@@ -18,7 +18,7 @@
  * @subpackage YouTube
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: VideoEntry.php 12403 2008-11-08 03:16:43Z tjohns $
+ * @version    $Id: VideoEntry.php 13360 2008-12-18 22:54:14Z jhartmann $
  */
 
 /**
@@ -82,10 +82,16 @@ require_once 'Zend/Gdata/YouTube/Extension/Control.php';
 require_once 'Zend/Gdata/YouTube/Extension/Recorded.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_Location
+ */
+require_once 'Zend/Gdata/YouTube/Extension/Location.php';
+
+/**
  * Represents the YouTube video flavor of an Atom entry
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage YouTube
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -160,6 +166,13 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     protected $_recorded = null;
 
     /**
+     * Location informtion for the video
+     *
+     * @var Zend_Gdata_YouTube_Extension_Location|null
+     */
+    protected $_location = null;
+
+    /**
      * Creates a Video entry, representing an individual video
      *
      * @param DOMElement $element (optional) DOMElement from which this
@@ -167,10 +180,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      */
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_YouTube::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
-
+        $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
         parent::__construct($element);
     }
 
@@ -203,6 +213,10 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
             $element->appendChild($this->_recorded->getDOM(
                 $element->ownerDocument));
         }
+        if ($this->_location != null) {
+            $element->appendChild($this->_location->getDOM(
+                $element->ownerDocument));
+        }
         if ($this->_rating != null) {
             $element->appendChild($this->_rating->getDOM(
                 $element->ownerDocument));
@@ -233,6 +247,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
+
         switch ($absoluteNodeName) {
         case $this->lookupNamespace('yt') . ':' . 'statistics':
             $statistics = new Zend_Gdata_YouTube_Extension_Statistics();
@@ -248,6 +263,11 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
             $recorded = new Zend_Gdata_YouTube_Extension_Recorded();
             $recorded->transferFromDOM($child);
             $this->_recorded = $recorded;
+            break;
+        case $this->lookupNamespace('yt') . ':' . 'location':
+            $location = new Zend_Gdata_YouTube_Extension_Location();
+            $location->transferFromDOM($child);
+            $this->_location = $location;
             break;
         case $this->lookupNamespace('gd') . ':' . 'rating':
             $rating = new Zend_Gdata_Extension_Rating();
@@ -310,6 +330,29 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     public function getRecorded()
     {
         return $this->_recorded;
+    }
+
+    /**
+     * Sets the location information.
+     *
+     * @param Zend_Gdata_YouTube_Extension_Location $location Where the video
+     *        was recorded
+     * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface
+     */
+    public function setLocation($location = null)
+    {
+        $this->_location = $location;
+        return $this;
+    }
+
+    /**
+     * Gets the location where the video was recorded.
+     *
+     * @return Zend_Gdata_YouTube_Extension_Location|null
+     */
+    public function getLocation()
+    {
+        return $this->_location;
     }
 
     /**
@@ -378,10 +421,18 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      * Specifies that the video has racy content.
      *
      * @param Zend_Gdata_YouTube_Extension_Racy $racy The racy flag object
+     * @throws Zend_Gdata_App_VersionException
      * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface
      */
     public function setRacy($racy = null)
     {
+        if ($this->getMajorProtocolVersion() == 2) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException(
+                'Calling getRacy() on a YouTube VideoEntry is deprecated ' .
+                'as of version 2 of the API.');
+        }
+
         $this->_racy = $racy;
         return $this;
     }
@@ -389,10 +440,17 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     /**
      * Returns the racy flag object.
      *
+     * @throws Zend_Gdata_App_VersionException
      * @return Zend_Gdata_YouTube_Extension_Racy|null  The racy flag object
      */
     public function getRacy()
     {
+        if ($this->getMajorProtocolVersion() == 2) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException(
+                'Calling getRacy() on a YouTube VideoEntry is deprecated ' .
+                'as of version 2 of the API.');
+        }
         return $this->_racy;
     }
 
@@ -516,14 +574,20 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      */
     public function getVideoId()
     {
-        $fullId = $this->getId()->getText();
-        $position = strrpos($fullId, '/');
-        if ($position === false) {
-            require_once 'Zend/Gdata/App/Exception.php';
-            throw new Zend_Gdata_App_Exception('Slash not found in atom:id');
+        if ($this->getMajorProtocolVersion() == 2) {
+            $videoId = $this->getMediaGroup()->getVideoId()->text;
         } else {
-            return substr($fullId, strrpos($fullId,'/') + 1);
+            $fullId = $this->getId()->getText();
+            $position = strrpos($fullId, '/');
+            if ($position === false) {
+                require_once 'Zend/Gdata/App/Exception.php';
+                throw new Zend_Gdata_App_Exception(
+                    'Slash not found in atom:id of ' . $fullId);
+            } else {
+                $videoId = substr($fullId, $position + 1);
+            }
         }
+        return $videoId;
     }
 
     /**

@@ -22,15 +22,16 @@
  */
 
 /**
- * @see Zend_Gdata_Extension_Link
+ * @see Zend_Gdata_App_Extension_Link
  */
-require_once 'Zend/Gdata/Extension/Link.php';
+require_once 'Zend/Gdata/App/Extension/Link.php';
 
 /**
  * Extends the base Link class with Books extensions
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Books
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc.
  * (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -52,9 +53,7 @@ class Zend_Gdata_Books_Extension_BooksLink extends Zend_Gdata_App_Extension_Link
     public function __construct($href = null, $rel = null, $type = null,
             $hrefLang = null, $title = null, $length = null)
     {
-        foreach (Zend_Gdata_Books::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Books::$namespaces);
         parent::__construct($href, $rel, $type, $hrefLang, $title, $length);
     }
 

@@ -216,6 +216,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
                     require_once 'Zend/Loader/PluginLoader.php';
                     $this->_loaders[$type] = new Zend_Loader_PluginLoader($paths);
+                } else {
+                    $loader = $this->_loaders[$type];
+                    $prefix = 'Zend_' . $prefixSegment . '_File_';
+                    if (!$loader->getPaths($prefix)) {
+                        $loader->addPrefixPath($prefix, str_replace('_', '/', $prefix));
+                    }
                 }
                 return $this->_loaders[$type];
             default:
@@ -580,7 +586,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                         $validator->setTranslator($translator);
                     }
 
-                    if (!$validator->isValid($content['tmp_name'], $content)) {
+                    $tocheck = $content['tmp_name'];
+                    if (($class === 'Zend_Validate_File_Upload') and (empty($content['tmp_name']))) {
+                        $tocheck = $key;
+                    }
+
+                    if (!$validator->isValid($tocheck, $content)) {
                         $fileerrors += $validator->getMessages();
                     }
 
@@ -852,6 +863,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $result    = array();
         $directory = "";
         foreach($files as $file) {
+            if (empty($this->_files[$file]['name'])) {
+                continue;
+            }
+
             if ($path === true) {
                 $directory = $this->getDestination($file) . DIRECTORY_SEPARATOR;
             }
@@ -935,6 +950,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         if (!is_dir($destination)) {
             require_once 'Zend/File/Transfer/Exception.php';
             throw new Zend_File_Transfer_Exception('The given destination is no directory or does not exist');
+        }
+
+        if (!is_writable($destination)) {
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('The given destination is not writeable');
         }
 
         if ($files === null) {
@@ -1052,8 +1072,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function getHash($hash = 'crc32', $files = null)
     {
-        $algorithms = hash_algos();
-        if (!isset($algorithms[$hash])) {
+        if (!in_array($hash, hash_algos())) {
             require_once 'Zend/File/Transfer/Exception.php';
             throw new Zend_File_Transfer_Exception('Unknown hash algorithm');
         }
@@ -1108,7 +1127,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     }
 
     /**
-     * Determine system TMP directory
+     * Determine system TMP directory and detect if we have read access
      *
      * @return string
      * @throws Zend_File_Transfer_Exception if unable to determine directory
@@ -1116,28 +1135,74 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     protected function _getTmpDir()
     {
         if (null === $this->_tmpDir) {
+            $tmpdir = array();
             if (function_exists('sys_get_temp_dir')) {
-                $tmpdir = sys_get_temp_dir();
-            } elseif (!empty($_ENV['TMP'])) {
-                $tmpdir = realpath($_ENV['TMP']);
-            } elseif (!empty($_ENV['TMPDIR'])) {
-                $tmpdir = realpath($_ENV['TMPDIR']);
-            } else if (!empty($_ENV['TEMP'])) {
-                $tmpdir = realpath($_ENV['TEMP']);
-            } else {
+                $tmpdir[] = sys_get_temp_dir();
+            }
+
+            if (!empty($_ENV['TMP'])) {
+                $tmpdir[] = realpath($_ENV['TMP']);
+            }
+
+            if (!empty($_ENV['TMPDIR'])) {
+                $tmpdir[] = realpath($_ENV['TMPDIR']);
+            }
+
+            if (!empty($_ENV['TEMP'])) {
+                $tmpdir[] = realpath($_ENV['TEMP']);
+            }
+
+            $upload = ini_get('upload_tmp_dir');
+            if ($upload) {
+                $tmpdir[] = realpath($upload);
+            }
+
+            foreach($tmpdir as $directory) {
+                if ($this->_isPathWriteable($directory)) {
+                    $this->_tmpDir = $directory;
+                }
+            }
+
+            if (empty($this->_tmpDir)) {
                 // Attemp to detect by creating a temporary file
                 $tempFile = tempnam(md5(uniqid(rand(), TRUE)), '');
                 if ($tempFile) {
-                    $tmpdir = realpath(dirname($tempFile));
+                    $this->_tmpDir = realpath(dirname($tempFile));
                     unlink($tempFile);
                 } else {
                     require_once 'Zend/File/Transfer/Exception.php';
                     throw new Zend_File_Transfer_Exception('Could not determine temp directory');
                 }
             }
-            $this->_tmpDir = rtrim($tmpdir, "/\\");
+
+            $this->_tmpDir = rtrim($this->_tmpDir, "/\\");
         }
         return $this->_tmpDir;
+    }
+
+    /**
+     * Tries to detect if we can read and write to the given path
+     *
+     * @param string $path
+     */
+    protected function _isPathWriteable($path)
+    {
+        $tempFile = rtrim($path, "/\\");
+        $tempFile .= '/' . 'test.1';
+
+        $result = @file_put_contents($tempFile, 'TEST');
+
+        if ($result == false) {
+            return false;
+        }
+
+        $result = @unlink($tempFile);
+
+        if ($result == false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

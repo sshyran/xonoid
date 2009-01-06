@@ -101,6 +101,7 @@ require_once 'Zend/Gdata/Books/Extension/Viewability.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Books
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc.
  * (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -137,9 +138,7 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
      */
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Books::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Books::$namespaces);
         parent::__construct($element);
     }
 

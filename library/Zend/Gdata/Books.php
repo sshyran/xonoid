@@ -52,6 +52,7 @@ require_once 'Zend/Gdata/Books/VolumeFeed.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Books
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -62,9 +63,14 @@ class Zend_Gdata_Books extends Zend_Gdata
     const MY_ANNOTATION_FEED_URI = 'http://books.google.com/books/feeds/users/me/volumes';
     const AUTH_SERVICE_NAME = 'print';
 
+    /**
+     * Namespaces used for Zend_Gdata_Books
+     *
+     * @var array
+     */
     public static $namespaces = array(
-            'gbs' => 'http://schemas.google.com/books/2008',
-            'dc' => 'http://purl.org/dc/terms'
+        array('gbs', 'http://schemas.google.com/books/2008', 1, 0),
+        array('dc', 'http://purl.org/dc/terms', 1, 0)
     );
 
     /**
@@ -144,7 +150,7 @@ class Zend_Gdata_Books extends Zend_Gdata
     }
 
     /**
-     * Retrieves a feed of volumes, by default the User annotation feed 
+     * Retrieves a feed of volumes, by default the User annotation feed
      *
      * @param Zend_Gdata_Query|string|null $location (optional) The URL to
      *        query.
@@ -181,7 +187,7 @@ class Zend_Gdata_Books extends Zend_Gdata
     }
 
     /**
-     * Delete a Volume 
+     * Delete a Volume
      *
      * @param Zend_Gdata_Books_VolumeEntry $entry
      * @return void

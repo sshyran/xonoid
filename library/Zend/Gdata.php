@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Gdata
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -35,6 +36,7 @@ require_once 'Zend/Gdata/App.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Gdata
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -73,9 +75,11 @@ class Zend_Gdata extends Zend_Gdata_App
      * @var array
      */
     public static $namespaces = array(
-        'openSearch' => 'http://a9.com/-/spec/opensearchrss/1.0/',
-        'rss' => 'http://blogs.law.harvard.edu/tech/rss',
-        'gd' => 'http://schemas.google.com/g/2005');
+        array('gd', 'http://schemas.google.com/g/2005', 1, 0),
+        array('openSearch', 'http://a9.com/-/spec/opensearchrss/1.0/', 1, 0),
+        array('openSearch', 'http://a9.com/-/spec/opensearch/1.1/', 2, 0),
+        array('rss', 'http://blogs.law.harvard.edu/tech/rss', 1, 0)
+    );
 
     /**
      * Client object used to communicate
@@ -127,7 +131,7 @@ class Zend_Gdata extends Zend_Gdata_App
     }
 
     /**
-     * Retreive feed object
+     * Retrieve feed object
      *
      * @param mixed $location The location as string or Zend_Gdata_Query
      * @param string $className The class type to use for returning the feed
@@ -150,7 +154,7 @@ class Zend_Gdata extends Zend_Gdata_App
     }
 
     /**
-     * Retreive entry object
+     * Retrieve entry object
      *
      * @param mixed $location The location as string or Zend_Gdata_Query
      * @return Zend_Gdata_Feed

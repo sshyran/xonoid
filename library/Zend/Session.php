@@ -17,7 +17,7 @@
  * @package    Zend_Session
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Session.php 12385 2008-11-07 20:18:43Z thomas $
+ * @version    $Id: Session.php 12723 2008-11-20 20:12:08Z matthew $
  * @since      Preview Release 0.2
  */
 
@@ -524,13 +524,12 @@ class Zend_Session extends Zend_Session_Abstract
                 }
             }
 
-            if (empty($_SESSION['__ZF'][$namespace])) {
+            if (isset($namespace) && empty($_SESSION['__ZF'][$namespace])) {
                 unset($_SESSION['__ZF'][$namespace]);
             }
-
         }
 
-        if (empty($_SESSION['__ZF'])) {
+        if (isset($_SESSION['__ZF']) && empty($_SESSION['__ZF'])) {
             unset($_SESSION['__ZF']);
         }
     }

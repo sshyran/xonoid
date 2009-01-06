@@ -32,6 +32,7 @@ require_once 'Zend/Gdata/Extension.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage DublinCore
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc.
  * (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -52,9 +53,7 @@ class Zend_Gdata_DublinCore_Extension_Date extends Zend_Gdata_Extension
      */
     public function __construct($value = null)
     {
-        foreach (Zend_Gdata_DublinCore::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_DublinCore::$namespaces);
         parent::__construct();
         $this->_text = $value;
     }

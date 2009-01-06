@@ -35,6 +35,7 @@ require_once 'Zend/Gdata/App/FeedSourceParent.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage App
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -112,6 +113,8 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
         case $this->lookupNamespace('atom') . ':' . 'entry':
             $newEntry = new $this->_entryClassName($child);
             $newEntry->setHttpClient($this->getHttpClient());
+            $newEntry->setMajorProtocolVersion($this->getMajorProtocolVersion());
+            $newEntry->setMinorProtocolVersion($this->getMinorProtocolVersion());
             $this->_entry[] = $newEntry;
             break;
         default:
@@ -306,6 +309,43 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
         $service = new Zend_Gdata_App($this->getHttpClient());
 
         return $service->getFeed($previousLinkHref, get_class($this));
+    }
+
+    /**
+     * Set the major protocol version that should be used. Values < 1 will
+     * cause a Zend_Gdata_App_InvalidArgumentException to be thrown.
+     *
+     * This value will be propogated to all child entries.
+     *
+     * @see _majorProtocolVersion
+     * @param (int|NULL) $value The major protocol version to use.
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     */
+    public function setMajorProtocolVersion($value)
+    {
+        parent::setMajorProtocolVersion($value);
+        foreach ($this->entries as $entry) {
+            $entry->setMajorProtocolVersion($value);
+        }
+    }
+
+    /**
+     * Set the minor protocol version that should be used. If set to NULL, no
+     * minor protocol version will be sent to the server. Values < 0 will
+     * cause a Zend_Gdata_App_InvalidArgumentException to be thrown.
+     *
+     * This value will be propogated to all child entries.
+     *
+     * @see _minorProtocolVersion
+     * @param (int|NULL) $value The minor protocol version to use.
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     */
+    public function setMinorProtocolVersion($value)
+    {
+        parent::setMinorProtocolVersion($value);
+        foreach ($this->entries as $entry) {
+            $entry->setMinorProtocolVersion($value);
+        }
     }
 
 }
