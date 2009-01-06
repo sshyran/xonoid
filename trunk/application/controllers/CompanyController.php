@@ -1572,5 +1572,162 @@ class CompanyController extends Zend_Controller_Action
 
     $this->view->pdf = $pdf->Output('', 'S');
   } // /function
+  
+  public function editNetworkDeviceAction()
+  {
+    $networkdeviceid = $this->getRequest()->getParam('id', false);
+
+    if ($networkdeviceid === false)
+    {
+      throw new Zend_Exception("Fail.");
+    }
+
+    $this->view->deviceid = $networkdeviceid;
+
+    $NetworkDevices = new NetworkDevices();
+    $this->view->devicename = $NetworkDevices->getName($networkdeviceid);
+    $branchid = $NetworkDevices->getBranchID($networkdeviceid);
+    $this->view->branchid = $branchid;
+
+    $CompanyBranchOffices = new CompanyBranchOffices();
+    $this->view->branchname = $CompanyBranchOffices->getName($this->view->branchid);
+    $this->view->companyid = $CompanyBranchOffices->getCompanyID($this->view->branchid);
+
+    $branch_list = $CompanyBranchOffices->getList();
+
+    $Companies = new Companies();
+    $this->view->companyname = $Companies->getName($this->view->companyid); 
+
+    $company_list = $Companies->getList();
+
+    $users = new Users();
+    $users_list = $users->getList();
+
+    $select = $NetworkDevices->select();
+    $select->from($NetworkDevices, array('branchid', 'companyid', 'name', 'usize', 'contactid'));
+    $select->where('id = ?', $networkdeviceid);
+
+    $data = $NetworkDevices->fetchRow($select)->toArray();
+
+    $form = new crmForm();
+    $form->setMethod(Zend_Form::METHOD_POST);
+    $form->setAction($this->_request->getBaseUrl() . "/company/edit-network-device/id/$networkdeviceid/");
+
+    $submit = new Zend_Form_Element_Submit('submit');
+    $submit->setLabel($this->tr->_('Edit'));
+
+    $contact = new Zend_Form_Element_Select('contactid');
+    $contact->setRequired(true);
+    $contact->setLabel($this->tr->_('Contact person'));
+    $contact->addMultiOptions($users_list);
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $contact->setValue($data['contactid']);
+    }
+
+    $company = new Zend_Form_Element_Select('companyid');
+    $company->setRequired(true);
+    $company->setLabel($this->tr->_('Responsible company'));
+    $company->addMultiOptions($company_list);
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $company->setValue($data['companyid']);
+    }
+
+    $branch = new Zend_Form_Element_Select('branchid');
+    $branch->setRequired(true);
+    $branch->setLabel($this->tr->_('Located in branch office'));
+    $branch->addMultiOptions($branch_list);
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $branch->setValue($data['branchid']);
+    }
+
+    $name = new Zend_Form_Element_Text('name');
+    $name->setRequired(true);
+    $name->setLabel($this->tr->_('Name'));
+    $name->addFilter('StringTrim');
+    $name->addValidator('NotEmpty', true);
+    $name->addValidator('StringLength', false, array(3, 100));
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $name->setValue($data['name']);
+    }
+
+    $size = new Zend_Form_Element_Text('usize');
+    $size->setRequired(true);
+    $size->setLabel($this->tr->_('Rack Unit Size'));
+    $size->addFilter('StringTrim');
+    $size->addValidator('Digits', true);
+
+    // Load default value
+    if (!$this->getRequest()->isPost())
+    {
+      $size->setValue($data['usize']);
+    }
+
+    $form->addElement($name);
+    $form->addElement($size);
+
+    $form->addElement($contact);
+    $form->addElement($company);
+
+    $form->addElement($branch);
+
+    $form->addElement($submit);
+
+/*
+    $form->addDisplayGroup(array('name'), 'name');
+    $form->addDisplayGroup(array('contactid'), 'contact');
+    $form->addDisplayGroup(array('submit'), 'submit');
+*/
+
+    // Form POSTed
+    if ($this->getRequest()->isPost())
+    {
+      if ($form->isValid($_POST))
+      {
+        $values = $form->getValues();
+        
+        $update = array(
+          'name' => $values['name'],
+          'usize' => $values['usize'],
+          'contactid' => $values['contactid'],
+          'companyid' => $values['companyid'],
+          'branchid' => $values['branchid']
+        );
+        
+        $this->_db->beginTransaction();
+
+        try
+        {
+          $NetworkDevices->update($update, $NetworkDevices->getAdapter()->quoteInto('id = ?', $networkdeviceid));
+
+          $this->_db->commit();
+
+          return $this->_helper->redirector->gotoUrl("/company/manage-branch/id/$branchid");
+
+        }
+        catch (Exception $e)
+        {
+          $this->_db->rollBack();
+          var_dump($e);
+        }
+
+      }
+    }
+
+    $this->view->form = $form;
+
+
+  }
 
 } // /class

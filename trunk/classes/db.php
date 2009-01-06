@@ -216,17 +216,21 @@ class CompanyBranchOffices extends Zend_Db_Table_Abstract
 
   );
 
-  public function getBranchesList($id)
+  public function getBranchesList($id = null)
   {
     $select = $this->select();
     $select->from($this, array('id','name', 'streetaddress', 'postnumber', 'postoffice'));
     $select->order(array('name', 'id'));
-    $select->where('companyid=?', $id);
+
+    if ($id != null)
+    {
+      $select->where('companyid=?', $id);
+    }
     
     return $this->fetchAll($select)->toArray();
   }
 
-  public function getList($id)
+  public function getList($id = null)
   {
     $list = array();
 
