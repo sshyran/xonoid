@@ -336,6 +336,7 @@ class TicketController extends Zend_Controller_Action
     
     $this->view->replies = $replies; 
 
+    // Reply form
     $form = new crmForm();
     $form->setMethod(Zend_Form::METHOD_POST);
     $form->setAction($this->_request->getBaseUrl() . "/ticket/read/id/$ticketid#replyform");
@@ -435,7 +436,7 @@ class TicketController extends Zend_Controller_Action
     $form->addElement($submit);
     $form->addDisplayGroup(array('submit'), 'submit');
 
-    // Form POSTed
+    // Reply Form POSTed
     if ($this->getRequest()->isPost())
     {
     
@@ -534,7 +535,7 @@ class TicketController extends Zend_Controller_Action
 
     }// / is POST
 
-    $this->view->form = $form;    
+    $this->view->form = $form;
 
   } // /function
 
@@ -565,6 +566,9 @@ class TicketController extends Zend_Controller_Action
     return $this->_helper->redirector->gotoUrl("/ticket");
   } // /function
   
+  /**
+   * Search tickets  
+   */
   public function searchAction()
   {
     $layout = (string)$this->getRequest()->getParam('layout', 'enabled');
@@ -581,7 +585,7 @@ class TicketController extends Zend_Controller_Action
   
     $form = new crmForm();
     $form->setMethod(Zend_Form::METHOD_POST);
-    $form->setAction($this->_request->getBaseUrl() . "/ticket/search");
+    $form->setAction($this->_request->getBaseUrl() . "/ticket/search/layout/$layout");
 
     $submit = new Zend_Form_Element_Submit('submit');
     $submit->setLabel($this->tr->_('Search'));
@@ -657,14 +661,21 @@ class TicketController extends Zend_Controller_Action
         
         // Find ticket details
 
-        $select = $tickets->select();
-        $select->from($tickets, array('id', 'subject', 'added'));
+        if (count($found_ids) > 0)
+        {
+          $select = $tickets->select();
+          $select->from($tickets, array('id', 'subject', 'added'));
 
-        $select->Where('id IN (?)', new Zend_Db_Expr(join(',', $found_ids)));
+          $select->Where('id IN (?)', new Zend_Db_Expr(join(',', $found_ids)));
 
-        $ticket_list = $tickets->fetchAll($select)->toArray();
+          $ticket_list = $tickets->fetchAll($select)->toArray();
 
-        unset($select);
+          unset($select);
+        }
+        else
+        {
+          $ticket_list = array();
+        }
 
         // Create grid
 
@@ -704,6 +715,55 @@ class TicketController extends Zend_Controller_Action
     
     $this->view->form = $form;
     
+  }
+  
+  public function addReferenceAction()
+  {
+    $this->_helper->layout->disableLayout();
+
+    $id = $this->getRequest()->getParam('id', false);
+
+    if ($id === false)
+    {
+      throw new Exception("Fail.");
+    }
+
+    // Reference form
+    $form = new crmForm();
+    $form->setMethod(Zend_Form::METHOD_POST);
+    $form->setAction($this->_request->getBaseUrl() . "/ticket/add-reference/id/$id");
+
+    $submit = new Zend_Form_Element_Submit('submit');
+    $submit->setLabel($this->tr->_('Add'));
+    $submit->setOrder(1000);
+
+    $reference = new Zend_Form_Element_Text('refid');
+    $reference->setRequired(false);
+    $reference->setLabel($this->tr->_('Ticket ID'));
+    $reference->addFilter('StringTrim');
+    $reference->addValidator('StringLength', false, array(1, 100));
+    $reference->addValidator('Digits');
+    
+    $form->addElement($reference);
+    $form->addElement($submit);
+
+    $form->addDisplayGroup(array('refid', 'submit'), 'reference', array('legend' => $this->tr->_('Add ticket reference'), 'class' => 'ticket-reference'));
+
+    // Form POSTed
+    if ($this->getRequest()->isPost())
+    {
+      if ($form->isValid($_POST))
+      {
+        $values = $form->getValues();
+        
+        // @TODO
+        
+        return $this->_helper->redirector->gotoUrl("/ticket/add-reference/id/$id");
+      }
+    }
+    
+    $this->view->form = $form;
+
   }
 
 } // /class
