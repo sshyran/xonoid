@@ -401,7 +401,7 @@ class TicketController extends Zend_Controller_Action
     if ($user_is_in_reseller_company)
     {
       // Used time
-      $form->addDisplayGroup(array('usedhours', 'usedmins'), 'usedtime', array('legend' => 'Time used', 'class' => 'used-time'));
+      $form->addDisplayGroup(array('usedhours', 'usedmins'), 'usedtime', array('legend' => $this->tr->_('Time used'), 'class' => 'used-time'));
     }
 
     $form->addDisplayGroup(array('description'), 'info');
@@ -544,8 +544,166 @@ class TicketController extends Zend_Controller_Action
    */
   public function editPriorityAction()
   {
+    // @TODO
+    $ticketid = $this->getRequest()->getParam('id', false);
+    
+    if ($ticketid === false)
+    {
+      throw new Zend_Exception("Fail.");
+    }
+
+    $direction = $this->getRequest()->getParam('direction', false);
+    
+    if ($direction === false)
+    {
+      throw new Zend_Exception("Fail.");
+    }
+
     $this->_helper->layout->disableLayout();
     $this->getHelper('viewRenderer')->setNoRender();
+
+    return $this->_helper->redirector->gotoUrl("/ticket");
   } // /function
+  
+  public function searchAction()
+  {
+    $layout = (string)$this->getRequest()->getParam('layout', 'enabled');
+
+    if ($layout === 'disabled')
+    {
+      $this->_helper->layout->disableLayout();
+    }
+    
+    $this->view->layout = $layout; 
+
+    $ticketreplies = new TicketReplies();
+    $tickets = new Tickets();
+  
+    $form = new crmForm();
+    $form->setMethod(Zend_Form::METHOD_POST);
+    $form->setAction($this->_request->getBaseUrl() . "/ticket/search");
+
+    $submit = new Zend_Form_Element_Submit('submit');
+    $submit->setLabel($this->tr->_('Search'));
+    $submit->setOrder(1000);
+
+    $query = new Zend_Form_Element_Text('query');
+    $query->setRequired(false);
+    $query->setLabel($this->tr->_('Search Query'));
+    $query->addFilter('StringTrim');
+    $query->addValidator('StringLength', false, array(1, 100));
+    
+    $form->addElement($query);
+    $form->addElement($submit);
+
+    $form->addDisplayGroup(array('query', 'submit'), 'search-query', array('legend' => $this->tr->_('Search tickets'), 'class' => 'ticket-search'));
+
+    $this->view->search = null;
+
+    // Form POSTed
+    if ($this->getRequest()->isPost())
+    {
+      if ($form->isValid($_POST))
+      {
+        $values = $form->getValues();
+        $q = '%' . $values['query'] . '%';
+
+        $found_ids = array();
+
+        // Search from tickets
+
+        $select = $tickets->select();
+        $select->from($tickets, array('id'));
+
+        if (ctype_digit($values['query']))
+        {
+          $select->where('id = ?', $values['query']);
+        }
+
+        $select->where('subject LIKE ?', $q);
+        $select->group(array('id'));
+
+        $found = $tickets->fetchAll($select)->toArray();
+
+        unset($select);
+
+        foreach($found as $key => $val)
+        {
+          $found_ids[] = $val['id'];
+        }
+
+        // Search from replies
+
+        $select = $ticketreplies->select();
+        $select->from($ticketreplies, array('ticketid'));
+
+        if (count($found_ids) > 0)
+        {
+          $select->Where('ticketid NOT IN (?)', new Zend_Db_Expr(join(',', $found_ids)));
+        }
+
+        $select->where('descr LIKE ?', $q);
+
+        $select->group(array('ticketid'));
+
+        $found = $ticketreplies->fetchAll($select)->toArray();
+
+        unset($select);
+
+        foreach($found as $key => $val)
+        {
+          $found_ids[] = $val['ticketid'];
+        }
+        
+        // Find ticket details
+
+        $select = $tickets->select();
+        $select->from($tickets, array('id', 'subject', 'added'));
+
+        $select->Where('id IN (?)', new Zend_Db_Expr(join(',', $found_ids)));
+
+        $ticket_list = $tickets->fetchAll($select)->toArray();
+
+        unset($select);
+
+        // Create grid
+
+        $grid = new Core_DataGrid(new Core_DataGrid_DataSource_Array($ticket_list), 50);
+        $grid->setDefaultSort(array('added' => 'asc'));
+    
+        $grid->addColumn('read', array(
+          'header' => $this->tr->_('Read'),
+          'sortable' => false,
+          'width' => 1,
+          'type' => 'action',
+          'actions' => array(
+            'url' => $this->view->baseUrl() . '/ticket/read/id/$id/',
+            'class' => 'icon',
+            'caption' => $this->tr->_('Read'),
+            'image' => $this->view->baseUrl() . '/images/icons/view.png'
+          )
+        ));
+    
+        $grid->addColumn('id', new Core_DataGrid_Column('text', $this->tr->_('Id'), 1, 'left'));
+    
+        $ticket_url = $this->view->baseUrl() . '/ticket/read/id/$id/subject/$subject';
+        $tid = new Core_DataGrid_Column('link', $this->tr->_('Id'), 1, 'left');
+        $tid->setLinks($ticket_url);
+        $grid->addColumn('id', $tid);
+    
+        $grid->addColumn('added', new Core_DataGrid_Column('text', $this->tr->_('Date added'), 1, 'left'));
+    
+        $subject = new Core_DataGrid_Column('link', $this->tr->_('Subject'), null , 'left');
+        $subject->setLinks($ticket_url);
+        $grid->addColumn('subject', $subject);
+    
+        $this->view->search = $grid;
+        
+      }
+    }
+    
+    $this->view->form = $form;
+    
+  }
 
 } // /class

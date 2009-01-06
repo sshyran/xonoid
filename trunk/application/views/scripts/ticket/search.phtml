@@ -1,0 +1,28 @@
+<?php
+$tr = Zend_Registry::get('Zend_Translate');
+?>
+
+<style type="text/css">
+#fieldset-searchquery dl dt, #fieldset-searchquery dl dd 
+{
+  display: inline;
+}
+#fieldset-searchquery dl dd 
+{
+  padding-right: 1em;
+}
+</style>
+
+<?php if($this->layout === 'enabled'):?>
+<div id="submenu">
+  <ul>
+    <li class="back"><a href="<?php echo $this->url(array('controller' => 'ticket', 'action' => 'index'), '', true); ?>"><?php echo $tr->_("Back");?></a></li> 
+  </ul>
+</div>
+<?php endif;?>
+
+<h2><?php echo $tr->_("Search tickets");?></h2>
+
+<?php echo $this->form; ?>
+
+<?php echo $this->search; ?>
